@@ -31,6 +31,46 @@
   // (e.g. Wine bladders) - starts at 1, freely editable up to quantityMax.
   var itemQuantities = new Map();
 
+  // Session-only persistence: survives navigating to research pages and back
+  // or reloading, but sessionStorage is cleared when the tab/browser closes -
+  // deliberately not localStorage, which would outlive the session.
+  var STORAGE_KEY = "camping-checklist-session-v1";
+
+  function saveState() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        trip: state.trip,
+        season: state.season,
+        nights: state.nights,
+        categories: Array.from(state.categories),
+        checked: Array.from(checked),
+        consumableAmounts: Array.from(consumableAmounts.entries()),
+        itemQuantities: Array.from(itemQuantities.entries()),
+      }));
+    } catch (e) {
+      // Storage unavailable (private browsing, etc) - degrade to non-persistent.
+    }
+  }
+
+  function loadState() {
+    try {
+      var raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      if (saved.trip) state.trip = saved.trip;
+      if (saved.season) state.season = saved.season;
+      if (typeof saved.nights === "number") state.nights = saved.nights;
+      if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
+      if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
+      if (Array.isArray(saved.consumableAmounts)) consumableAmounts = new Map(saved.consumableAmounts);
+      if (Array.isArray(saved.itemQuantities)) itemQuantities = new Map(saved.itemQuantities);
+    } catch (e) {
+      // Corrupt or unavailable storage - fall back to defaults.
+    }
+  }
+
+  loadState();
+
   function tripOk(item) {
     if (state.trip === "all") return true;
     return item[TRIP_KEYS[state.trip]] === true;
@@ -230,6 +270,13 @@
     });
   }
 
+  function syncSegmentedUI(id, value) {
+    var group = document.getElementById(id);
+    group.querySelectorAll(".chip").forEach(function (b) {
+      b.classList.toggle("active", b.dataset.value === value);
+    });
+  }
+
   function renderNightsControl() {
     document.getElementById("nights-value").textContent = state.nights;
   }
@@ -255,6 +302,7 @@
     updateProgress(visible);
     updateAnjoProgress();
     updateConsumablesProgress();
+    saveState();
   }
 
   function renderCategorySection(cat, catItems) {
@@ -484,6 +532,8 @@
     renderChecklist();
   });
 
+  syncSegmentedUI("trip-filter", state.trip);
+  syncSegmentedUI("season-filter", state.season);
   renderCategoryChips();
   renderNightsControl();
   renderChecklist();

@@ -9,6 +9,33 @@
   var state = { anjo: true };
   var checked = new Set();
 
+  var STORAGE_KEY = "camping-first-aid-session-v1";
+
+  function saveState() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        anjo: state.anjo,
+        checked: Array.from(checked),
+      }));
+    } catch (e) {
+      // Storage unavailable (private browsing, etc) - degrade to non-persistent.
+    }
+  }
+
+  function loadState() {
+    try {
+      var raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      if (typeof saved.anjo === "boolean") state.anjo = saved.anjo;
+      if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
+    } catch (e) {
+      // Corrupt or unavailable storage - fall back to defaults.
+    }
+  }
+
+  loadState();
+
   document.getElementById("fa-note").textContent =
     "The itemised contents behind the single \"First aid kit\" line on the main checklist " +
     "(110.44 g for the human kit, 49.8 g for Anjo's). Items the dog's kit shares with the " +
@@ -128,6 +155,7 @@
 
     document.getElementById("progress-text").textContent = doneCount + " of " + visible.length + " packed";
     document.getElementById("progress-fill").style.width = visible.length ? (100 * doneCount / visible.length) + "%" : "0%";
+    saveState();
   }
 
   renderToggle();
