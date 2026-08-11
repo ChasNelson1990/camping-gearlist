@@ -109,12 +109,45 @@ ITEM_DETAIL_PAGES = {
 # reusable containers (Reservoir, Wine bladders, gas canisters) where the
 # listed weight is the container itself, not the substance it holds - only
 # true consumables are listed here.
-ITEM_CONSUMABLE = {
-    "Food", "Food UL", "Coffee", "Water",
-    "Gas can (100 g)", "Gas can (230 g)", "Beer",
-    "Suncream", "Talc", "Wet wipes", "Smidge", "Vaseline", "Skin So Soft",
-    "Toothpaste", "Poo bags",
+#
+# Value is None for a flagged-but-unscaled consumable (no known per-night
+# amount, so it just keeps its flat sheet weight - see Poo bags), or a dict:
+#   parent:  item this nests under in the UI, or None for standalone
+#   amount:  suggested quantity per night (editable in the UI afterwards)
+#   unit:    "g" or "ml" (ml counts 1:1 towards weight, in grams)
+#   comment: overrides the item's own sheet comment, if given
+#
+# Pack and anjo are separate dicts because a couple of names exist on both
+# sides ("Water", "Food") and need different parents/amounts on each.
+PACK_CONSUMABLE = {
+    "Gas can (100 g)": {"parent": "Stove with stash bag", "amount": 100, "unit": "g"},
+    "Gas can (230 g)": None,  # archived; not covered by the design - keeps old flat/unscaled behavior
+    "Coffee": {"parent": "Grinder", "amount": 14, "unit": "g"},
+    "Water": {"parent": "Reservoir", "amount": 2000, "unit": "g"},
+    "Food": {
+        "parent": "Small drybag for food", "amount": 880, "unit": "g",
+        "comment": "787 g/night if going ultralight (previously tracked as a separate \"Food UL\" line)",
+    },
+    "Suncream": {"parent": None, "amount": 50, "unit": "g"},
+    "Talc": {"parent": None, "amount": 9.4, "unit": "g"},
+    "Wet wipes": {"parent": None, "amount": 20, "unit": "g"},
+    "Vaseline": {"parent": None, "amount": 43.25, "unit": "g"},
+    "Smidge": {"parent": "Midge net", "amount": 100, "unit": "g"},
+    "Skin So Soft": {"parent": None, "amount": 150, "unit": "g"},
+    "Toothpaste": {"parent": "Toothbrush", "amount": 5, "unit": "g"},
+    "Poo bags": None,
+    "Beer": None,
 }
+ANJO_CONSUMABLE = {
+    "Water": {"parent": None, "amount": 850, "unit": "g"},
+    "Food": {"parent": "Drybag for food", "amount": 255, "unit": "g"},
+    "Poo bags": None,
+}
+
+# Nights defaults per trip type, matching the day-counts the old spreadsheet
+# used for each (overnight/trek/car camp) - exported to data.js so the
+# checklist's nights stepper can default sensibly when you switch trip type.
+NIGHTS_BY_TRIP = {"all": 2, "overnight": 2, "longTrek": 4, "carCamp": 5}
 
 # Hand-picked, not auto-matched by keyword - Unicode's outdoor-gear coverage
 # is thin enough that a keyword heuristic produces a lot of wrong guesses.
@@ -251,20 +284,29 @@ def check_header(rows, expected):
             )
 
 
-def build_items(rows, cols, category_const=None, research_links=None):
+def build_items(rows, cols, category_const=None, research_links=None, consumable_detail=None):
     check_header(rows, PACK_HEADER_CHECK if category_const is None else ANJO_HEADER_CHECK)
     research_links = research_links or {}
+    consumable_detail = consumable_detail or {}
     items = []
     for row in rows[1:]:
         name = cell(row, cols["name"])
         if not name or name == "Total":
+            continue
+        if name == "Food UL":
+            # Merged into "Food" - see PACK_CONSUMABLE's comment override.
             continue
         number = parse_num(cell(row, cols["number"]))
         archived = is_true(cell(row, cols["archive"])) if "archive" in cols else False
         active = bool(number and number > 0) and not archived
         current_raw = cell(row, cols["current"])
         onbody_raw = cell(row, cols["on_body"])
-        detail = ITEM_DETAIL_PAGES.get(name)
+        detail_page = ITEM_DETAIL_PAGES.get(name)
+        consumable = consumable_detail.get(name) if name in consumable_detail else None
+        is_consumable = name in consumable_detail
+        comment = cell(row, cols["comment"]) or None
+        if consumable and consumable.get("comment"):
+            comment = consumable["comment"]
         items.append({
             "name": name,
             "emoji": ITEM_EMOJI.get(name, ITEM_EMOJI_DEFAULT),
@@ -273,7 +315,7 @@ def build_items(rows, cols, category_const=None, research_links=None):
             "number": number,
             "weightG": parse_num(cell(row, cols["weight"])),
             "cost": cell(row, cols["cost"]) or None,
-            "comment": cell(row, cols["comment"]) or None,
+            "comment": comment,
             "current": current_raw or None,
             "currentIsUrl": current_raw.startswith("http"),
             "season": cell(row, cols["season"]) if "season" in cols else "",
@@ -282,13 +324,49 @@ def build_items(rows, cols, category_const=None, research_links=None):
             "carCamp": is_true(cell(row, cols["car_camp"])),
             "onBody": onbody_raw or None,
             "archived": archived,
-            "detailUrl": detail["url"] if detail else None,
-            "detailLabel": detail["label"] if detail else None,
-            "consumable": name in ITEM_CONSUMABLE,
+            "detailUrl": detail_page["url"] if detail_page else None,
+            "detailLabel": detail_page["label"] if detail_page else None,
             "researchLinks": research_links.get(name, []),
+            "consumable": is_consumable,
+            "parentName": consumable["parent"] if consumable else None,
+            "perNightAmount": consumable["amount"] if consumable else None,
+            "perNightUnit": consumable["unit"] if consumable else None,
         })
         items[-1]["season"] = items[-1]["season"] or None
     return items
+
+
+def synthetic_pack_items():
+    """Human hydration has no row in the spreadsheet at all (only the
+    Reservoir container that holds it) - this item is invented here, not
+    derived from any sheet cell. Every other entry in GEAR_ITEMS traces
+    back to a real row."""
+    detail = PACK_CONSUMABLE["Water"]
+    return [{
+        "name": "Water",
+        "emoji": ITEM_EMOJI.get("Water", ITEM_EMOJI_DEFAULT),
+        "category": "Kitchen",
+        "active": True,
+        "number": 1.0,
+        "weightG": None,
+        "cost": None,
+        "comment": None,
+        "current": None,
+        "currentIsUrl": False,
+        "season": None,
+        "overnight": True,
+        "longTrek": True,
+        "carCamp": True,
+        "onBody": None,
+        "archived": False,
+        "detailUrl": None,
+        "detailLabel": None,
+        "researchLinks": [],
+        "consumable": True,
+        "parentName": detail["parent"],
+        "perNightAmount": detail["amount"],
+        "perNightUnit": detail["unit"],
+    }]
 
 
 # ---------------------------------------------------------------------------
@@ -477,8 +555,11 @@ def main():
     # a comparison sheet yet, and a couple of item names (e.g. "Insulating
     # Jacket") are reused between the human and dog kit, so linking anjo
     # items too would misattribute the human's research to the dog's gear.
-    pack_items = build_items(sheets["pack"], PACK_COLS, research_links=pack_research_links)
-    anjo_items = build_items(sheets["anjo"], ANJO_COLS, category_const="Anjo")
+    pack_items = build_items(sheets["pack"], PACK_COLS, research_links=pack_research_links,
+                              consumable_detail=PACK_CONSUMABLE)
+    pack_items += synthetic_pack_items()
+    anjo_items = build_items(sheets["anjo"], ANJO_COLS, category_const="Anjo",
+                              consumable_detail=ANJO_CONSUMABLE)
     gear_items = pack_items + anjo_items
 
     unmapped = sorted({it["name"] for it in gear_items if it["name"] not in ITEM_EMOJI})
@@ -488,17 +569,20 @@ def main():
             print(f"  {name}")
 
     known_names = {it["name"] for it in gear_items}
-    stale_consumables = sorted(ITEM_CONSUMABLE - known_names)
+    all_consumable_names = set(PACK_CONSUMABLE) | set(ANJO_CONSUMABLE)
+    stale_consumables = sorted(all_consumable_names - known_names)
     if stale_consumables:
-        print(f"ITEM_CONSUMABLE has {len(stale_consumables)} name(s) that don't match any item (typo?):")
+        print(f"PACK_CONSUMABLE/ANJO_CONSUMABLE has {len(stale_consumables)} name(s) that don't match any item (typo?):")
         for name in stale_consumables:
             print(f"  {name}")
 
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
+    nights_js = json.dumps(NIGHTS_BY_TRIP, ensure_ascii=False)
     (ROOT / "data.js").write_text(
         "// Generated by scripts/extract_data.py - do not edit by hand.\n"
         f"const GEAR_ITEMS = {js_literal(gear_items)};\n"
-        f"const WEIGHT_CLASS_THRESHOLDS = [{weight_class_js}];\n",
+        f"const WEIGHT_CLASS_THRESHOLDS = [{weight_class_js}];\n"
+        f"const NIGHTS_BY_TRIP = {nights_js};\n",
         encoding="utf-8",
     )
 
