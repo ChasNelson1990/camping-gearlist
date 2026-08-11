@@ -18,7 +18,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/bags.html",
+        "label": "📊 backpacks"
+      }
+    ]
   },
   {
     "name": "Raincover",
@@ -38,7 +44,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Tent (1.65 m^2) w/ footprint",
@@ -58,7 +65,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/tents.html",
+        "label": "📊 tents"
+      }
+    ]
   },
   {
     "name": "Tent (4.4 m^2)",
@@ -78,7 +91,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Tarpaulin",
@@ -98,7 +112,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Repair kit",
@@ -118,7 +133,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping bag",
@@ -138,7 +154,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Thermal sleeping bag liner",
@@ -158,7 +175,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Silk sleeping bag liner",
@@ -178,7 +196,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping bag compression sack",
@@ -198,7 +217,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Quilt",
@@ -218,7 +238,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Quilt compression sack",
@@ -238,7 +259,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping mat, mummy, large",
@@ -258,7 +280,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping mat, mummy, short",
@@ -278,7 +301,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping mat, rectangular",
@@ -298,7 +322,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Footprint",
@@ -318,7 +343,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Chair",
@@ -338,7 +364,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/chairs.html",
+        "label": "📊 camp chairs"
+      }
+    ]
   },
   {
     "name": "Reservoir",
@@ -358,7 +390,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Water filter",
@@ -378,7 +411,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "1l bladder for dirty water",
@@ -398,7 +432,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Stove with stash bag",
@@ -418,7 +453,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/stoves.html",
+        "label": "📊 stoves"
+      }
+    ]
   },
   {
     "name": "Gas can (100 g)",
@@ -438,7 +479,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Gas can (230 g)",
@@ -458,7 +500,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Firesteel",
@@ -478,7 +521,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Firepit",
@@ -498,7 +542,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Charcoal",
@@ -518,7 +563,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Firelighters",
@@ -538,7 +584,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Aeropress",
@@ -558,7 +605,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Grinder",
@@ -578,7 +626,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Coffee",
@@ -598,7 +647,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Wine bladders",
@@ -618,7 +668,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Beer",
@@ -638,7 +689,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Spork",
@@ -658,7 +710,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Knife",
@@ -678,7 +731,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Skinner",
@@ -698,7 +752,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Pot",
@@ -718,7 +773,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Stash bag",
@@ -738,7 +794,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Food",
@@ -758,7 +815,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Food UL",
@@ -778,7 +836,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Small drybag for food",
@@ -798,7 +857,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Cup",
@@ -818,7 +878,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Bamboo cloth",
@@ -838,7 +899,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "First aid kit",
@@ -858,7 +920,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": "first-aid-kit.html",
-    "detailLabel": "🩹 open kit checklist"
+    "detailLabel": "🩹 open kit checklist",
+    "researchLinks": []
   },
   {
     "name": "Suncream",
@@ -878,7 +941,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Talc",
@@ -898,7 +962,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Wet wipes",
@@ -918,7 +983,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Poo bags",
@@ -938,7 +1004,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Towel",
@@ -958,7 +1025,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Vaseline",
@@ -978,7 +1046,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Toothbrush",
@@ -998,7 +1067,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Toothpaste",
@@ -1018,7 +1088,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Headlamp",
@@ -1038,7 +1109,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Solar panel",
@@ -1058,7 +1130,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Powerpack",
@@ -1078,7 +1151,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/power.html",
+        "label": "📊 power banks & solar panels"
+      }
+    ]
   },
   {
     "name": "USB-C Charging Cable",
@@ -1098,7 +1177,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Lantern",
@@ -1118,7 +1198,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Charger",
@@ -1138,7 +1219,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Mobile Phone",
@@ -1158,7 +1240,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Spare phone battery",
@@ -1178,7 +1261,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Mobile Phone",
@@ -1198,7 +1282,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "USB-C Charging Cable",
@@ -1218,7 +1303,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Earphones",
@@ -1238,7 +1324,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Watch",
@@ -1258,7 +1345,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Garmin charging cable",
@@ -1278,7 +1366,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "eReader",
@@ -1298,7 +1387,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "microUSB Charging Cable",
@@ -1318,7 +1408,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "GPS",
@@ -1338,7 +1429,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Active Camera",
@@ -1358,7 +1450,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Camera mount",
@@ -1378,7 +1471,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Midge net",
@@ -1398,7 +1492,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Smidge",
@@ -1418,7 +1513,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Skin So Soft",
@@ -1438,7 +1534,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Tights",
@@ -1458,7 +1555,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Top",
@@ -1478,7 +1576,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Pac Tube",
@@ -1498,7 +1597,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Merino neck tube",
@@ -1518,7 +1618,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Rain Jacket",
@@ -1538,7 +1639,13 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/waterproof-jackets.html",
+        "label": "📊 waterproof jackets"
+      }
+    ]
   },
   {
     "name": "Rain Pants",
@@ -1558,7 +1665,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Insulating Jacket",
@@ -1578,7 +1686,17 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": [
+      {
+        "url": "research/insulated-jackets-2022.html",
+        "label": "📊 insulated jackets (2022)"
+      },
+      {
+        "url": "research/insulated-jackets-2024.html",
+        "label": "📊 insulated jackets (2024)"
+      }
+    ]
   },
   {
     "name": "Summer Trousers",
@@ -1598,7 +1716,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Winter Trousers",
@@ -1618,7 +1737,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Spare top",
@@ -1638,7 +1758,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sun Hood",
@@ -1658,7 +1779,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Camp socks",
@@ -1678,7 +1800,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Swimming shorts",
@@ -1698,7 +1821,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Thermal top",
@@ -1718,7 +1842,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Thermal bottoms",
@@ -1738,7 +1863,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Thermal glove liners",
@@ -1758,7 +1884,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Walking Socks",
@@ -1778,7 +1905,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Liner Socks",
@@ -1798,7 +1926,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Boxers",
@@ -1818,7 +1947,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Walking Socks (spare)",
@@ -1838,7 +1968,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Liner Socks (spare)",
@@ -1858,7 +1989,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Boxers (spare)",
@@ -1878,7 +2010,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Pillow/Stuff Sack",
@@ -1898,7 +2031,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": true,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Clothes dry sack",
@@ -1918,7 +2052,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Walking Boots",
@@ -1938,7 +2073,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Spare small drybag",
@@ -1958,7 +2094,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Front Range pack",
@@ -1978,7 +2115,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Switchbak pack",
@@ -1998,7 +2136,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping bag",
@@ -2018,7 +2157,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Sleeping mat",
@@ -2038,7 +2178,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Blanket",
@@ -2058,7 +2199,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "XXS compression sack for blanket",
@@ -2078,7 +2220,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Half Bag",
@@ -2098,7 +2241,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Water",
@@ -2118,7 +2262,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Bowl",
@@ -2138,7 +2283,8 @@ const GEAR_ITEMS = [
     "onBody": "RIGHT",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Drybag for food",
@@ -2158,7 +2304,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Food",
@@ -2178,7 +2325,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "First aid kit",
@@ -2198,7 +2346,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": "first-aid-kit.html",
-    "detailLabel": "🩹 open kit checklist"
+    "detailLabel": "🩹 open kit checklist",
+    "researchLinks": []
   },
   {
     "name": "Poo bags",
@@ -2218,7 +2367,8 @@ const GEAR_ITEMS = [
     "onBody": "RIGHT",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Towel",
@@ -2238,7 +2388,8 @@ const GEAR_ITEMS = [
     "onBody": "RIGHT",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Drybag for poo",
@@ -2258,7 +2409,8 @@ const GEAR_ITEMS = [
     "onBody": "RIGHT",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Knot-a-Hitch",
@@ -2278,7 +2430,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Hitch Hiker",
@@ -2298,7 +2451,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Beacon",
@@ -2318,7 +2472,8 @@ const GEAR_ITEMS = [
     "onBody": "TRUE",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Leash",
@@ -2338,7 +2493,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Front Range harness",
@@ -2358,7 +2514,8 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Raincoat",
@@ -2378,7 +2535,8 @@ const GEAR_ITEMS = [
     "onBody": "LEFT",
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   },
   {
     "name": "Insulating Jacket",
@@ -2398,6 +2556,7 @@ const GEAR_ITEMS = [
     "onBody": null,
     "archived": false,
     "detailUrl": null,
-    "detailLabel": null
+    "detailLabel": null,
+    "researchLinks": []
   }
 ];

@@ -42,6 +42,16 @@
     return span;
   }
 
+  function linkBadge(href, label, external) {
+    var a = document.createElement("a");
+    a.href = href;
+    if (external) { a.target = "_blank"; a.rel = "noopener"; }
+    a.className = "badge item-link";
+    a.textContent = label;
+    a.addEventListener("click", function (e) { e.stopPropagation(); });
+    return a;
+  }
+
   function buildMeta(item) {
     var wrap = document.createElement("div");
     wrap.className = "item-meta";
@@ -50,25 +60,18 @@
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
       if (item.currentIsUrl) {
-        var a = document.createElement("a");
-        a.href = item.current;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.className = "badge item-link";
-        a.textContent = "↗ view item";
-        a.addEventListener("click", function (e) { e.stopPropagation(); });
-        wrap.appendChild(a);
+        wrap.appendChild(linkBadge(item.current, "↗ view item", true));
       } else {
         wrap.appendChild(badge(item.current));
       }
     }
     if (item.detailUrl) {
-      var link = document.createElement("a");
-      link.href = item.detailUrl;
-      link.className = "badge item-link";
-      link.textContent = item.detailLabel || "↗ details";
-      link.addEventListener("click", function (e) { e.stopPropagation(); });
-      wrap.appendChild(link);
+      wrap.appendChild(linkBadge(item.detailUrl, item.detailLabel || "↗ details", false));
+    }
+    if (item.researchLinks) {
+      item.researchLinks.forEach(function (link) {
+        wrap.appendChild(linkBadge(link.url, link.label, false));
+      });
     }
     return wrap;
   }

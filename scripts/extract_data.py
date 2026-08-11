@@ -236,8 +236,9 @@ def check_header(rows, expected):
             )
 
 
-def build_items(rows, cols, category_const=None):
+def build_items(rows, cols, category_const=None, research_links=None):
     check_header(rows, PACK_HEADER_CHECK if category_const is None else ANJO_HEADER_CHECK)
+    research_links = research_links or {}
     items = []
     for row in rows[1:]:
         name = cell(row, cols["name"])
@@ -268,6 +269,7 @@ def build_items(rows, cols, category_const=None):
             "archived": archived,
             "detailUrl": detail["url"] if detail else None,
             "detailLabel": detail["label"] if detail else None,
+            "researchLinks": research_links.get(name, []),
         })
         items[-1]["season"] = items[-1]["season"] or None
     return items
@@ -285,7 +287,7 @@ RESEARCH_SHEETS = [
      "and the sheet's own HH*B/weight performance score and price-per-ratio "
      "cost-efficiency score.",
      dict(brand="Patagonia", model="Torrentshell 3L", rank_col=10, rank_asc=True,
-          rank_label="price-per-ratio")),
+          rank_label="price-per-ratio", item="Rain Jacket")),
     ("20250403_flasks", "flasks", "Insulated flasks", "Gear comparisons",
      "Insulated bottle/flask options compared by hot/cold retention time, "
      "volume, weight, and cost - open research, nothing in the current pack "
@@ -295,25 +297,25 @@ RESEARCH_SHEETS = [
      "Backpack options compared by weight, volume, features, and the sheet's "
      "own cost-per-(volume/weight) efficiency score.",
      dict(brand="Osprey", model="Exos 48", rank_col=14, rank_asc=True,
-          rank_label="cost-per-(volume/weight)")),
+          rank_label="cost-per-(volume/weight)", item="Backpack 48 l")),
     ("202206_tents", "tents", "Tents", "Gear comparisons",
      "Tent options compared by weight, pack size, floor/fly fabric ratings, "
      "whether the dog fits inside, and cost-per-area-efficiency.",
      dict(brand="Nordisk", model="Halland 2 LW", rank_col=17, rank_asc=True,
-          rank_label="cost/(area/weight)")),
+          rank_label="cost/(area/weight)", item="Tent (1.65 m^2) w/ footprint")),
     ("202205_insulated-jackets", "insulated-jackets-2022", "Insulated jackets (2022)",
      "Gear comparisons",
      "Earlier insulated-jacket comparison by weight, insulation rating, and "
      "price-per-normalised-insulation.",
      dict(brand="Patagonia", model="Micro Puff", rank_col=9, rank_asc=True,
-          rank_label="price per")),
+          rank_label="price per", item="Insulating Jacket")),
     ("202402_insulated-jackets", "insulated-jackets-2024", "Insulated jackets (2024)",
      "Gear comparisons",
      "A later, larger insulated-jacket comparison using CLO/g/m² (warmth "
      "per weight) instead of the 2022 sheet's insulation rating - no single "
      "combined ratio column here, so rows aren't ranked, just listed.",
      dict(brand="Patagonia", model="Micro Puff Hoody", rank_col=None, rank_asc=True,
-          rank_label=None)),
+          rank_label=None, item="Insulating Jacket")),
     ("overnight-oats", "overnight-oats", "Overnight oats recipe", "Trip & nutrition planning",
      "The breakfast recipe used in the food-planning sheets: base ingredients, "
      "flavour/fruit/nut/protein options with min/max amounts, calories, fibre "
@@ -329,12 +331,12 @@ RESEARCH_SHEETS = [
      "Power bank / solar panel options compared by weight, solar/battery "
      "output, and the sheet's own price-per-ratio score.",
      dict(brand="PowerTraveller", model="Extreme (battery only)", rank_col=8,
-          rank_asc=True, rank_label="price/ratio")),
+          rank_asc=True, rank_label="price/ratio", item="Powerpack")),
     ("202205_chairs", "chairs", "Camp chairs", "Gear comparisons",
      "Camp chair options compared by weight, seat/back height, and price - no "
      "combined ratio column in this sheet, so it's listed rather than ranked.",
      dict(brand="Helinox", model="Sunset (Home)", rank_col=None, rank_asc=True,
-          rank_label=None)),
+          rank_label=None, item="Chair")),
     ("202208_snack-bars", "snack-bars", "Snack bars", "Gear comparisons",
      "Snack bar / energy ball nutrition comparison: calories, protein and "
      "fibre per gram, feeding the trek food-planning sheet - the packing list "
@@ -351,7 +353,7 @@ RESEARCH_SHEETS = [
      "\"Current Stove\" is the one in the pack list, but it has no cost/features "
      "recorded so it can't be ranked against the others.",
      dict(brand="Vango", model="Current Stove", rank_col=None, rank_asc=True,
-          rank_label=None)),
+          rank_label=None, item="Stove with stash bag")),
     ("example-food", "example-food", "Example meal plans", "Trip & nutrition planning",
      "Worked example day's food for an overnight trip vs. a longer trek, with "
      "running weight, calorie, protein and fibre totals.",
@@ -452,7 +454,29 @@ def js_literal(value):
 def main():
     sheets = load_sheets()
 
-    pack_items = build_items(sheets["pack"], PACK_COLS)
+    # Research sheets are built first so their currentPick matches can be
+    # turned into "see the research" links on the matching checklist item.
+    research = []
+    pack_research_links = {}
+    for sheet_name, slug, title, group, description, match in RESEARCH_SHEETS:
+        entry = build_research_sheet(sheet_name, slug, title, group, description, match, sheets)
+        research.append(entry)
+        if entry["currentPick"] and match and match.get("item"):
+            pack_research_links.setdefault(match["item"], []).append({
+                "url": f"research/{slug}.html",
+                "label": f"📊 {title.lower()}",
+            })
+    (ROOT / "research-data.js").write_text(
+        "// Generated by scripts/extract_data.py - do not edit by hand.\n"
+        f"const RESEARCH_SHEETS = {js_literal(research)};\n",
+        encoding="utf-8",
+    )
+
+    # Only pack items get research links - none of the anjo-specific gear has
+    # a comparison sheet yet, and a couple of item names (e.g. "Insulating
+    # Jacket") are reused between the human and dog kit, so linking anjo
+    # items too would misattribute the human's research to the dog's gear.
+    pack_items = build_items(sheets["pack"], PACK_COLS, research_links=pack_research_links)
     anjo_items = build_items(sheets["anjo"], ANJO_COLS, category_const="Anjo")
     gear_items = pack_items + anjo_items
 
@@ -465,16 +489,6 @@ def main():
     (ROOT / "data.js").write_text(
         "// Generated by scripts/extract_data.py - do not edit by hand.\n"
         f"const GEAR_ITEMS = {js_literal(gear_items)};\n",
-        encoding="utf-8",
-    )
-
-    research = [
-        build_research_sheet(sheet_name, slug, title, group, description, match, sheets)
-        for sheet_name, slug, title, group, description, match in RESEARCH_SHEETS
-    ]
-    (ROOT / "research-data.js").write_text(
-        "// Generated by scripts/extract_data.py - do not edit by hand.\n"
-        f"const RESEARCH_SHEETS = {js_literal(research)};\n",
         encoding="utf-8",
     )
 
