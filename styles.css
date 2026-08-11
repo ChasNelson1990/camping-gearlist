@@ -192,9 +192,23 @@ main#checklist {
     -webkit-column-break-inside: avoid;
   }
 
-  main#checklist.narrow {
-    max-width: 640px;
-    margin: 0 auto;
+  /* A single wide card (e.g. the first-aid kit) flows its own items into
+     columns instead of leaving one long list in all that width. Unlike
+     .multi above, there's always enough items to fill every column, so a
+     plain column-count is safe here. */
+  ul.items.flow {
+    column-count: 2;
+    column-gap: 1.25rem;
+  }
+  ul.items.flow .item {
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+  }
+}
+
+@media (min-width: 1100px) {
+  ul.items.flow {
+    column-count: 3;
   }
 }
 
@@ -266,6 +280,18 @@ ul.items {
   border-radius: 6px;
   padding: .1rem .4rem;
   white-space: nowrap;
+}
+
+.badge-anjo {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.paw {
+  font-size: 1.4em;
+  line-height: 1;
+  vertical-align: -0.15em;
+  margin-right: .05em;
 }
 
 .item-comment {

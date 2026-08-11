@@ -36,14 +36,28 @@
     return span;
   }
 
+  function pawBadge(text) {
+    var span = document.createElement("span");
+    span.className = "badge badge-anjo";
+    var paw = document.createElement("span");
+    paw.className = "paw";
+    paw.textContent = "🐾";
+    span.appendChild(paw);
+    span.appendChild(document.createTextNode(text));
+    return span;
+  }
+
   function renderToggle() {
     var wrap = document.getElementById("category-chips");
     wrap.innerHTML = "";
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "chip category" + (state.anjo ? " active" : " off");
-    var dogExclusiveCount = items.filter(isDogExclusive).length;
-    btn.textContent = "🐾 Anjo (+" + dogExclusiveCount + ")";
+    var paw = document.createElement("span");
+    paw.className = "paw";
+    paw.textContent = "🐾";
+    btn.appendChild(paw);
+    btn.appendChild(document.createTextNode(" Anjo"));
     btn.setAttribute("aria-pressed", state.anjo);
     btn.addEventListener("click", function () {
       state.anjo = !state.anjo;
@@ -58,7 +72,7 @@
     wrap.className = "item-meta";
     if (item.human != null) wrap.appendChild(badge("×" + item.human));
     if (item.dog != null && state.anjo) {
-      wrap.appendChild(badge(item.human != null ? "🐾 +" + item.dog : "🐾 ×" + item.dog));
+      wrap.appendChild(pawBadge(item.human != null ? " +" + item.dog : " ×" + item.dog));
     }
     if (item.weightG) wrap.appendChild(badge(formatWeight(item.weightG)));
     return wrap;
@@ -107,7 +121,7 @@
     section.appendChild(h2);
 
     var ul = document.createElement("ul");
-    ul.className = "items";
+    ul.className = "items flow";
     visible.forEach(function (item) { ul.appendChild(renderItem(item)); });
     section.appendChild(ul);
     main.appendChild(section);
