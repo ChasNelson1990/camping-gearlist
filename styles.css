@@ -1,28 +1,16 @@
 :root {
-  --bg: #f6f4ee;
-  --surface: #ffffff;
-  --text: #1f2a20;
-  --text-muted: #5c6b5e;
-  --border: #e0dbc9;
-  --primary: #2f6a4f;
-  --primary-contrast: #ffffff;
-  --accent: #c97b2e;
-  --danger: #a8432f;
+  /* Dark is the default look (set explicitly by theme.js, with this bare
+     block as the no-JS fallback) - light lives behind [data-theme="light"]. */
+  --bg: #12181a;
+  --surface: #1b2622;
+  --text: #e9f1ea;
+  --text-muted: #9db2a2;
+  --border: #2c3a33;
+  --primary: #6fbf95;
+  --primary-contrast: #0d1a12;
+  --accent: #e6a95c;
+  --danger: #e17a63;
   --radius: 12px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #12181a;
-    --surface: #1b2622;
-    --text: #e9f1ea;
-    --text-muted: #9db2a2;
-    --border: #2c3a33;
-    --primary: #6fbf95;
-    --primary-contrast: #0d1a12;
-    --accent: #e6a95c;
-    --danger: #e17a63;
-  }
 }
 
 :root[data-theme="dark"] {
@@ -101,6 +89,31 @@ a { color: var(--primary); }
   text-decoration: none;
 }
 .research-link:hover { text-decoration: underline; }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex: 0 0 auto;
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { background: var(--bg); }
 
 .controls {
   position: sticky;
