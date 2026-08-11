@@ -169,10 +169,7 @@
 
     var body = document.createElement("div");
     body.className = "item-body";
-    var name = document.createElement("div");
-    name.className = "item-name";
-    name.textContent = item.name;
-    body.appendChild(name);
+    body.appendChild(itemNameEl(item));
     body.appendChild(buildMeta(item));
     if (item.comment) {
       var comment = document.createElement("div");
@@ -182,6 +179,19 @@
     }
     li.appendChild(body);
     return li;
+  }
+
+  function itemNameEl(item, suffix) {
+    var name = document.createElement("div");
+    name.className = "item-name";
+    if (item.emoji) {
+      var icon = document.createElement("span");
+      icon.className = "item-emoji";
+      icon.textContent = item.emoji;
+      name.appendChild(icon);
+    }
+    name.appendChild(document.createTextNode(item.name + (suffix || "")));
+    return name;
   }
 
   function updateProgress(visible) {
@@ -208,9 +218,7 @@
       catItems.forEach(function (item) {
         var li = document.createElement("li");
         li.className = "archive-item";
-        var name = document.createElement("div");
-        name.textContent = item.name + (item.archived ? " — archived" : " — not currently used");
-        li.appendChild(name);
+        li.appendChild(itemNameEl(item, item.archived ? " — archived" : " — not currently used"));
         li.appendChild(buildMeta(item));
         if (item.comment) {
           var c = document.createElement("div");

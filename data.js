@@ -2,6 +2,7 @@
 const GEAR_ITEMS = [
   {
     "name": "Backpack 48 l",
+    "emoji": "🎒",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -21,6 +22,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Raincover",
+    "emoji": "☔",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -40,6 +42,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Tent (1.65 m^2) w/ footprint",
+    "emoji": "⛺",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -59,6 +62,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Tent (4.4 m^2)",
+    "emoji": "⛺",
     "category": "Basics",
     "active": false,
     "number": null,
@@ -78,6 +82,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Tarpaulin",
+    "emoji": "⛺",
     "category": "Basics",
     "active": false,
     "number": 1.0,
@@ -97,6 +102,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Repair kit",
+    "emoji": "🛠️",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -116,6 +122,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping bag",
+    "emoji": "🛏️",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -135,6 +142,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Thermal sleeping bag liner",
+    "emoji": "🛏️",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -154,6 +162,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Silk sleeping bag liner",
+    "emoji": "🛏️",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -173,6 +182,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping bag compression sack",
+    "emoji": "👝",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -192,6 +202,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Quilt",
+    "emoji": "🛏️",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -211,6 +222,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Quilt compression sack",
+    "emoji": "👝",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -230,6 +242,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping mat, mummy, large",
+    "emoji": "🛌",
     "category": "Basics",
     "active": true,
     "number": 1.0,
@@ -249,6 +262,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping mat, mummy, short",
+    "emoji": "🛌",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -268,6 +282,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping mat, rectangular",
+    "emoji": "🛌",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -287,6 +302,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Footprint",
+    "emoji": "⛺",
     "category": "Basics",
     "active": false,
     "number": 0.0,
@@ -306,6 +322,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Chair",
+    "emoji": "🪑",
     "category": "Miscellaneous",
     "active": true,
     "number": 1.0,
@@ -325,6 +342,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Reservoir",
+    "emoji": "💧",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -344,6 +362,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Water filter",
+    "emoji": "🚰",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -363,6 +382,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "1l bladder for dirty water",
+    "emoji": "💧",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -382,6 +402,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Stove with stash bag",
+    "emoji": "🔥",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -401,6 +422,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Gas can (100 g)",
+    "emoji": "⛽",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -420,6 +442,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Gas can (230 g)",
+    "emoji": "⛽",
     "category": "Kitchen",
     "active": false,
     "number": 0.0,
@@ -439,6 +462,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Firesteel",
+    "emoji": "⚡",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -458,6 +482,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Firepit",
+    "emoji": "🔥",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -477,6 +502,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Charcoal",
+    "emoji": "⚫",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -496,6 +522,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Firelighters",
+    "emoji": "🔥",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -515,6 +542,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Aeropress",
+    "emoji": "☕",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -534,6 +562,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Grinder",
+    "emoji": "☕",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -553,6 +582,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Coffee",
+    "emoji": "☕",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -572,6 +602,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Wine bladders",
+    "emoji": "🍷",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -591,6 +622,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Beer",
+    "emoji": "🍺",
     "category": "Kitchen",
     "active": false,
     "number": 0.0,
@@ -610,6 +642,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Spork",
+    "emoji": "🍴",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -629,6 +662,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Knife",
+    "emoji": "🔪",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -648,6 +682,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Skinner",
+    "emoji": "🔪",
     "category": "Kitchen",
     "active": false,
     "number": 0.0,
@@ -667,6 +702,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Pot",
+    "emoji": "🍲",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -686,6 +722,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Stash bag",
+    "emoji": "👝",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -705,6 +742,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Food",
+    "emoji": "🥘",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -724,6 +762,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Food UL",
+    "emoji": "🥘",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -743,6 +782,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Small drybag for food",
+    "emoji": "👝",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -762,6 +802,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Cup",
+    "emoji": "🥤",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -781,6 +822,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Bamboo cloth",
+    "emoji": "🧻",
     "category": "Kitchen",
     "active": true,
     "number": 1.0,
@@ -800,6 +842,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "First aid kit",
+    "emoji": "🩹",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -819,6 +862,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Suncream",
+    "emoji": "🧴",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -838,6 +882,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Talc",
+    "emoji": "🧂",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -857,6 +902,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Wet wipes",
+    "emoji": "🧻",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -876,6 +922,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Poo bags",
+    "emoji": "💩",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -895,6 +942,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Towel",
+    "emoji": "🧖",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -914,6 +962,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Vaseline",
+    "emoji": "🧴",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -933,6 +982,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Toothbrush",
+    "emoji": "🪥",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -952,6 +1002,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Toothpaste",
+    "emoji": "🪥",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -971,6 +1022,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Headlamp",
+    "emoji": "🔦",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -990,6 +1042,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Solar panel",
+    "emoji": "☀️",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1009,6 +1062,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Powerpack",
+    "emoji": "🔋",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1028,6 +1082,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "USB-C Charging Cable",
+    "emoji": "🔌",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1047,6 +1102,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Lantern",
+    "emoji": "🏮",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1066,6 +1122,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Charger",
+    "emoji": "🔌",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1085,6 +1142,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Mobile Phone",
+    "emoji": "📱",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1104,6 +1162,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Spare phone battery",
+    "emoji": "🔋",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1123,6 +1182,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Mobile Phone",
+    "emoji": "📱",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1142,6 +1202,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "USB-C Charging Cable",
+    "emoji": "🔌",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1161,6 +1222,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Earphones",
+    "emoji": "🎧",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1180,6 +1242,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Watch",
+    "emoji": "⌚",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1199,6 +1262,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Garmin charging cable",
+    "emoji": "🔌",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1218,6 +1282,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "eReader",
+    "emoji": "📖",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1237,6 +1302,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "microUSB Charging Cable",
+    "emoji": "🔌",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1256,6 +1322,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "GPS",
+    "emoji": "🛰️",
     "category": "Electronics",
     "active": true,
     "number": 1.0,
@@ -1275,6 +1342,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Active Camera",
+    "emoji": "📹",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1294,6 +1362,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Camera mount",
+    "emoji": "📷",
     "category": "Electronics",
     "active": false,
     "number": 0.0,
@@ -1313,6 +1382,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Midge net",
+    "emoji": "🦟",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -1332,6 +1402,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Smidge",
+    "emoji": "🧴",
     "category": "Health",
     "active": true,
     "number": 1.0,
@@ -1351,6 +1422,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Skin So Soft",
+    "emoji": "🧴",
     "category": "Health",
     "active": false,
     "number": 0.0,
@@ -1370,6 +1442,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Tights",
+    "emoji": "👖",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1389,6 +1462,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Top",
+    "emoji": "👕",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1408,6 +1482,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Pac Tube",
+    "emoji": "🧣",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1427,6 +1502,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Merino neck tube",
+    "emoji": "🧣",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1446,6 +1522,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Rain Jacket",
+    "emoji": "☔",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1465,6 +1542,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Rain Pants",
+    "emoji": "☔",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1484,6 +1562,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Insulating Jacket",
+    "emoji": "🧥",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1503,6 +1582,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Summer Trousers",
+    "emoji": "👖",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1522,6 +1602,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Winter Trousers",
+    "emoji": "👖",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1541,6 +1622,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Spare top",
+    "emoji": "👕",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1560,6 +1642,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sun Hood",
+    "emoji": "🧢",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1579,6 +1662,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Camp socks",
+    "emoji": "🧦",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1598,6 +1682,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Swimming shorts",
+    "emoji": "🩳",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1617,6 +1702,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Thermal top",
+    "emoji": "👕",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1636,6 +1722,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Thermal bottoms",
+    "emoji": "👖",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1655,6 +1742,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Thermal glove liners",
+    "emoji": "🧤",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1674,6 +1762,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Walking Socks",
+    "emoji": "🧦",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1693,6 +1782,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Liner Socks",
+    "emoji": "🧦",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1712,6 +1802,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Boxers",
+    "emoji": "🩲",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1731,6 +1822,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Walking Socks (spare)",
+    "emoji": "🧦",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1750,6 +1842,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Liner Socks (spare)",
+    "emoji": "🧦",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1769,6 +1862,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Boxers (spare)",
+    "emoji": "🩲",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1788,6 +1882,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Pillow/Stuff Sack",
+    "emoji": "🛏️",
     "category": "Clothing",
     "active": false,
     "number": 1.0,
@@ -1807,6 +1902,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Clothes dry sack",
+    "emoji": "👝",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1826,6 +1922,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Walking Boots",
+    "emoji": "🥾",
     "category": "Clothing",
     "active": true,
     "number": 1.0,
@@ -1845,6 +1942,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Spare small drybag",
+    "emoji": "👝",
     "category": "Miscellaneous",
     "active": false,
     "number": 0.0,
@@ -1864,6 +1962,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Front Range pack",
+    "emoji": "🎒",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1883,6 +1982,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Switchbak pack",
+    "emoji": "🦮",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1902,6 +2002,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping bag",
+    "emoji": "🛏️",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1921,6 +2022,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Sleeping mat",
+    "emoji": "🛌",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1940,6 +2042,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Blanket",
+    "emoji": "🛏️",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1959,6 +2062,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "XXS compression sack for blanket",
+    "emoji": "👝",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -1978,6 +2082,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Half Bag",
+    "emoji": "🛏️",
     "category": "Anjo",
     "active": false,
     "number": 0.0,
@@ -1997,6 +2102,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Water",
+    "emoji": "💧",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2016,6 +2122,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Bowl",
+    "emoji": "🥣",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2035,6 +2142,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Drybag for food",
+    "emoji": "👝",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2054,6 +2162,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Food",
+    "emoji": "🥘",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2073,6 +2182,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "First aid kit",
+    "emoji": "🩹",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2092,6 +2202,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Poo bags",
+    "emoji": "💩",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2111,6 +2222,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Towel",
+    "emoji": "🧖",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2130,6 +2242,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Drybag for poo",
+    "emoji": "👝",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2149,6 +2262,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Knot-a-Hitch",
+    "emoji": "🦮",
     "category": "Anjo",
     "active": false,
     "number": 0.0,
@@ -2168,6 +2282,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Hitch Hiker",
+    "emoji": "🦮",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2187,6 +2302,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Beacon",
+    "emoji": "🚨",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2206,6 +2322,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Leash",
+    "emoji": "🦮",
     "category": "Anjo",
     "active": false,
     "number": 0.0,
@@ -2225,6 +2342,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Front Range harness",
+    "emoji": "🦮",
     "category": "Anjo",
     "active": false,
     "number": 0.0,
@@ -2244,6 +2362,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Raincoat",
+    "emoji": "☔",
     "category": "Anjo",
     "active": true,
     "number": 1.0,
@@ -2263,6 +2382,7 @@ const GEAR_ITEMS = [
   },
   {
     "name": "Insulating Jacket",
+    "emoji": "🧥",
     "category": "Anjo",
     "active": true,
     "number": 1.0,

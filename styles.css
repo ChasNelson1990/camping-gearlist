@@ -265,6 +265,13 @@ ul.items {
   color: var(--text-muted);
 }
 
+.item-emoji {
+  display: inline-block;
+  font-size: 1.15em;
+  margin-right: .35em;
+  text-decoration: none;
+}
+
 .item-meta {
   display: flex;
   flex-wrap: wrap;
