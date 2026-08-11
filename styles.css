@@ -144,6 +144,39 @@ a { color: var(--primary); }
   opacity: .45;
 }
 
+.nights-control {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding-bottom: .6rem;
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+.nights-value {
+  font-weight: 600;
+  color: var(--text);
+  min-width: 1.4em;
+  text-align: center;
+}
+
+.stepper-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-size: .9rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.stepper-btn:hover { background: var(--bg); }
+
 .progress {
   padding: .1rem 1rem .8rem;
   display: flex;
@@ -290,6 +323,15 @@ ul.items {
 }
 .item:last-child { border-bottom: none; }
 
+.item.item-sub {
+  padding-left: 2.3rem;
+  background: color-mix(in srgb, var(--bg) 45%, var(--surface));
+}
+
+.item.item-sub .item-name {
+  font-size: .9rem;
+}
+
 .item input[type="checkbox"] {
   width: 22px;
   height: 22px;
@@ -337,6 +379,19 @@ ul.items {
 .badge-consumable {
   border-style: dashed;
   font-style: italic;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.stepper-value {
+  font-size: .72rem;
+  color: var(--text-muted);
+  min-width: 3.2em;
+  text-align: center;
 }
 
 .badge-anjo {
