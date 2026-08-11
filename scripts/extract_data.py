@@ -113,9 +113,18 @@ ITEM_DETAIL_PAGES = {
 # Value is None for a flagged-but-unscaled consumable (no known per-night
 # amount, so it just keeps its flat sheet weight - see Poo bags), or a dict:
 #   parent:  item this nests under in the UI, or None for standalone
-#   amount:  suggested quantity per night (editable in the UI afterwards)
-#   unit:    "g" or "ml" (ml counts 1:1 towards weight, in grams)
+#   amount:  suggested quantity per night (editable in the UI afterwards) -
+#            or, if scalesWithNights is False, a fixed per-trip quantity
+#   unit:    "g", "ml" (both count 1:1 towards weight, in grams), or "l"
+#            (counts x1000)
 #   comment: overrides the item's own sheet comment, if given
+#   overnight/longTrek/carCamp: overrides that trip-type flag, if given
+#   scalesWithNights: if False, `amount` is a fixed total (not multiplied
+#            by nights) - see Wine, which is capped at 2 bladders regardless
+#            of trip length
+#   max:     upper bound the UI stepper won't exceed, if given
+#   step:    fixed stepper increment, overriding the default magnitude-based
+#            step size, if given
 #
 # Pack and anjo are separate dicts because a couple of names exist on both
 # sides ("Water", "Food") and need different parents/amounts on each.
@@ -123,7 +132,7 @@ PACK_CONSUMABLE = {
     "Gas can (100 g)": {"parent": "Stove with stash bag", "amount": 100, "unit": "g"},
     "Gas can (230 g)": None,  # archived; not covered by the design - keeps old flat/unscaled behavior
     "Coffee": {"parent": "Grinder", "amount": 14, "unit": "g"},
-    "Water": {"parent": "Reservoir", "amount": 2000, "unit": "g"},
+    "Water": {"parent": "Reservoir", "amount": 2, "unit": "l"},
     "Food": {
         "parent": "Small drybag for food", "amount": 880, "unit": "g",
         "comment": "787 g/night if going ultralight (previously tracked as a separate \"Food UL\" line)",
@@ -142,11 +151,26 @@ PACK_CONSUMABLE = {
     "Toothpaste": {"parent": "Toothbrush", "amount": 5, "unit": "g"},
     "Poo bags": None,
     "Beer": None,
+    # Synthetic - see synthetic_pack_items(). One bladder (0.75 l) by
+    # default; up to 2 bladders (1.5 l) is the real-world cap, not a
+    # per-night rate, so it doesn't scale with trip length.
+    "Wine": {
+        "parent": "Wine bladders", "amount": 0.75, "unit": "l",
+        "scalesWithNights": False, "max": 1.5, "step": 0.75,
+        "overnight": True, "longTrek": False, "carCamp": True,
+    },
 }
 ANJO_CONSUMABLE = {
-    "Water": {"parent": None, "amount": 850, "unit": "g"},
+    "Water": {"parent": None, "amount": 0.85, "unit": "l"},
     "Food": {"parent": "Drybag for food", "amount": 255, "unit": "g"},
     "Poo bags": None,
+}
+
+# Manual weight corrections where the spreadsheet's own figure is known to
+# be wrong or outdated - keeps the .ods as the source of truth for
+# everything else while letting a specific number be corrected here.
+ITEM_WEIGHT_OVERRIDE = {
+    "Wine bladders": 24,  # sheet says 20 g; actual measured weight is 24 g
 }
 
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
@@ -269,6 +293,7 @@ ITEM_EMOJI = {
     "Water": "💧",
     "Water filter": "🚰",
     "Wet wipes": "🧻",
+    "Wine": "🍷",
     "Wine bladders": "🍷",
     "Winter Trousers": "👖",
     "XXS compression sack for blanket": "👝",
@@ -318,7 +343,7 @@ def build_items(rows, cols, category_const=None, research_links=None, consumable
             "category": category_const or cell(row, cols["category"]) or "Miscellaneous",
             "active": active,
             "number": number,
-            "weightG": parse_num(cell(row, cols["weight"])),
+            "weightG": ITEM_WEIGHT_OVERRIDE.get(name, parse_num(cell(row, cols["weight"]))),
             "cost": cell(row, cols["cost"]) or None,
             "comment": comment,
             "current": current_raw or None,
@@ -336,21 +361,24 @@ def build_items(rows, cols, category_const=None, research_links=None, consumable
             "parentName": consumable["parent"] if consumable else None,
             "perNightAmount": consumable["amount"] if consumable else None,
             "perNightUnit": consumable["unit"] if consumable else None,
+            "scalesWithNights": (consumable or {}).get("scalesWithNights", True),
+            "maxAmount": (consumable or {}).get("max"),
+            "stepOverride": (consumable or {}).get("step"),
         })
         items[-1]["season"] = items[-1]["season"] or None
     return items
 
 
-def synthetic_pack_items():
-    """Human hydration has no row in the spreadsheet at all (only the
-    Reservoir container that holds it) - this item is invented here, not
-    derived from any sheet cell. Every other entry in GEAR_ITEMS traces
-    back to a real row."""
-    detail = PACK_CONSUMABLE["Water"]
-    return [{
-        "name": "Water",
-        "emoji": ITEM_EMOJI.get("Water", ITEM_EMOJI_DEFAULT),
-        "category": "Kitchen",
+def synthetic_consumable_item(name, category):
+    """Build a synthetic item from its PACK_CONSUMABLE entry - used for
+    consumables with no row in the spreadsheet at all (only a durable
+    container that holds them). Every other entry in GEAR_ITEMS traces
+    back to a real row; these are invented here instead."""
+    detail = PACK_CONSUMABLE[name]
+    return {
+        "name": name,
+        "emoji": ITEM_EMOJI.get(name, ITEM_EMOJI_DEFAULT),
+        "category": category,
         "active": True,
         "number": 1.0,
         "weightG": None,
@@ -359,9 +387,9 @@ def synthetic_pack_items():
         "current": None,
         "currentIsUrl": False,
         "season": None,
-        "overnight": True,
-        "longTrek": True,
-        "carCamp": True,
+        "overnight": detail.get("overnight", True),
+        "longTrek": detail.get("longTrek", True),
+        "carCamp": detail.get("carCamp", True),
         "onBody": None,
         "archived": False,
         "detailUrl": None,
@@ -371,7 +399,21 @@ def synthetic_pack_items():
         "parentName": detail["parent"],
         "perNightAmount": detail["amount"],
         "perNightUnit": detail["unit"],
-    }]
+        "scalesWithNights": detail.get("scalesWithNights", True),
+        "maxAmount": detail.get("max"),
+        "stepOverride": detail.get("step"),
+    }
+
+
+def synthetic_pack_items():
+    return [
+        # Human hydration has no row in the spreadsheet at all (only the
+        # Reservoir container that holds it).
+        synthetic_consumable_item("Water", "Kitchen"),
+        # Same for wine - "Wine bladders" is the reusable container; the
+        # wine itself was never tracked as its own row.
+        synthetic_consumable_item("Wine", "Kitchen"),
+    ]
 
 
 # ---------------------------------------------------------------------------

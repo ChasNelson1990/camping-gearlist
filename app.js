@@ -73,7 +73,7 @@
     minus.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
-      adjustAmount(item._id, -stepSize(amount));
+      adjustAmount(item, -stepSize(item, amount));
     });
 
     var value = document.createElement("span");
@@ -88,7 +88,7 @@
     plus.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
-      adjustAmount(item._id, stepSize(amount));
+      adjustAmount(item, stepSize(item, amount));
     });
 
     wrap.appendChild(minus);
@@ -104,8 +104,14 @@
     if (item.perNightAmount != null) {
       if (interactive) {
         wrap.appendChild(buildConsumableStepper(item));
-        var nights = state.nights;
-        wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " / " + nights + " night" + (nights === 1 ? "" : "s")));
+        if (item.scalesWithNights === false) {
+          wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " total"));
+        } else {
+          var nights = state.nights;
+          wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " / " + nights + " night" + (nights === 1 ? "" : "s")));
+        }
+      } else if (item.scalesWithNights === false) {
+        wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + " total"));
       } else {
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
       }
@@ -267,21 +273,28 @@
 
   function effectiveWeight(item) {
     if (item.perNightAmount != null) {
-      return (consumableAmounts.get(item._id) || 0) * state.nights;
+      var amount = consumableAmounts.get(item._id) || 0;
+      var grams = item.perNightUnit === "l" ? amount * 1000 : amount;
+      var nights = item.scalesWithNights === false ? 1 : state.nights;
+      return grams * nights;
     }
     return item.weightG || 0;
   }
 
-  function stepSize(amount) {
+  function stepSize(item, amount) {
+    if (item.stepOverride != null) return item.stepOverride;
+    if (item.perNightUnit === "l") return 0.25;
     if (amount < 20) return 1;
     if (amount < 100) return 5;
     if (amount < 500) return 25;
     return 100;
   }
 
-  function adjustAmount(id, delta) {
-    var current = consumableAmounts.get(id) || 0;
-    consumableAmounts.set(id, Math.max(0, current + delta));
+  function adjustAmount(item, delta) {
+    var current = consumableAmounts.get(item._id) || 0;
+    var next = Math.max(0, current + delta);
+    if (item.maxAmount != null) next = Math.min(next, item.maxAmount);
+    consumableAmounts.set(item._id, next);
     renderChecklist();
   }
 
@@ -299,16 +312,21 @@
     var done = packedItems.length;
     document.getElementById("progress-text").textContent = done + " of " + total + " packed";
 
-    var totalWeight = sumWeight(visible);
-    var packedWeight = sumWeight(packedItems);
+    // Worn/on-body items aren't in the pack, so they don't count towards
+    // pack weight at all - not just the Ultralight/Light/Trad/Heavy
+    // classification below, but the headline total itself.
+    var weighable = visible.filter(function (it) { return !it.onBody; });
+    var packedWeighable = packedItems.filter(function (it) { return !it.onBody; });
+    var totalWeight = sumWeight(weighable);
+    var packedWeight = sumWeight(packedWeighable);
     document.getElementById("progress-fill").style.width = fillPercent(packedWeight, totalWeight);
 
-    var packedBaseWeight = sumWeight(packedItems.filter(function (it) { return !it.consumable && !it.onBody; }));
+    var packedBaseWeight = sumWeight(packedWeighable.filter(function (it) { return !it.consumable; }));
 
     var summaryEl = document.getElementById("weight-summary");
     summaryEl.innerHTML = "";
     summaryEl.appendChild(document.createTextNode(
-      "Total weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far "
+      "Pack weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far "
     ));
     if (packedBaseWeight > 0) {
       var cls = weightClass(packedBaseWeight);

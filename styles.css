@@ -144,6 +144,27 @@ a { color: var(--primary); }
   opacity: .45;
 }
 
+.trip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.trip-row .filter-group {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.trip-row .nights-control {
+  flex: 0 0 auto;
+}
+
+@media (min-width: 720px) {
+  .trip-row .nights-control {
+    margin-left: auto;
+  }
+}
+
 .nights-control {
   display: flex;
   align-items: center;
