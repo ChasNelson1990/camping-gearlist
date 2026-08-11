@@ -12,12 +12,20 @@
   var state = {
     trip: "all",
     season: "all",
+    nights: NIGHTS_BY_TRIP.all,
     categories: new Set(CATEGORY_ORDER.filter(function (c) {
       return items.some(function (it) { return it.category === c; });
     })),
   };
 
   var checked = new Set();
+
+  // Live per-night amount for each consumable, keyed by item._id. Seeded
+  // from perNightAmount, then freely editable via the +/- stepper.
+  var consumableAmounts = new Map();
+  items.forEach(function (it) {
+    if (it.perNightAmount != null) consumableAmounts.set(it._id, it.perNightAmount);
+  });
 
   function tripOk(item) {
     if (state.trip === "all") return true;
@@ -52,10 +60,58 @@
     return a;
   }
 
-  function buildMeta(item) {
+  function buildConsumableStepper(item) {
+    var wrap = document.createElement("span");
+    wrap.className = "stepper";
+    var amount = consumableAmounts.get(item._id) || 0;
+
+    var minus = document.createElement("button");
+    minus.type = "button";
+    minus.className = "stepper-btn";
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "Decrease " + item.name + " amount");
+    minus.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      adjustAmount(item._id, -stepSize(amount));
+    });
+
+    var value = document.createElement("span");
+    value.className = "stepper-value";
+    value.textContent = (amount % 1 === 0 ? amount : amount.toFixed(2)) + " " + item.perNightUnit;
+
+    var plus = document.createElement("button");
+    plus.type = "button";
+    plus.className = "stepper-btn";
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "Increase " + item.name + " amount");
+    plus.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      adjustAmount(item._id, stepSize(amount));
+    });
+
+    wrap.appendChild(minus);
+    wrap.appendChild(value);
+    wrap.appendChild(plus);
+    return wrap;
+  }
+
+  function buildMeta(item, interactive) {
+    interactive = interactive !== false;
     var wrap = document.createElement("div");
     wrap.className = "item-meta";
-    if (item.weightG) wrap.appendChild(badge(formatWeight(item.weightG)));
+    if (item.perNightAmount != null) {
+      if (interactive) {
+        wrap.appendChild(buildConsumableStepper(item));
+        var nights = state.nights;
+        wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " / " + nights + " night" + (nights === 1 ? "" : "s")));
+      } else {
+        wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
+      }
+    } else if (item.weightG) {
+      wrap.appendChild(badge(formatWeight(item.weightG)));
+    }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
@@ -109,15 +165,20 @@
     });
   }
 
-  function wireSegmented(id, stateKey) {
+  function wireSegmented(id, stateKey, onChange) {
     var group = document.getElementById(id);
     group.querySelectorAll(".chip").forEach(function (btn) {
       btn.addEventListener("click", function () {
         state[stateKey] = btn.dataset.value;
         group.querySelectorAll(".chip").forEach(function (b) { b.classList.toggle("active", b === btn); });
+        if (onChange) onChange(btn.dataset.value);
         renderChecklist();
       });
     });
+  }
+
+  function renderNightsControl() {
+    document.getElementById("nights-value").textContent = state.nights;
   }
 
   function renderChecklist() {
@@ -154,14 +215,19 @@
 
     var ul = document.createElement("ul");
     ul.className = "items";
-    catItems.forEach(function (item) { ul.appendChild(renderItem(item)); });
+    var topLevel = catItems.filter(function (it) { return !it.parentName; });
+    topLevel.forEach(function (item) {
+      ul.appendChild(renderItem(item));
+      catItems.filter(function (it) { return it.parentName === item.name; })
+        .forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
+    });
     section.appendChild(ul);
     return section;
   }
 
-  function renderItem(item) {
+  function renderItem(item, extraClass) {
     var li = document.createElement("label");
-    li.className = "item" + (checked.has(item._id) ? " checked" : "");
+    li.className = "item" + (checked.has(item._id) ? " checked" : "") + (extraClass ? " " + extraClass : "");
 
     var cb = document.createElement("input");
     cb.type = "checkbox";
@@ -199,8 +265,28 @@
     return name;
   }
 
+  function effectiveWeight(item) {
+    if (item.perNightAmount != null) {
+      return (consumableAmounts.get(item._id) || 0) * state.nights;
+    }
+    return item.weightG || 0;
+  }
+
+  function stepSize(amount) {
+    if (amount < 20) return 1;
+    if (amount < 100) return 5;
+    if (amount < 500) return 25;
+    return 100;
+  }
+
+  function adjustAmount(id, delta) {
+    var current = consumableAmounts.get(id) || 0;
+    consumableAmounts.set(id, Math.max(0, current + delta));
+    renderChecklist();
+  }
+
   function sumWeight(list) {
-    return list.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    return list.reduce(function (sum, it) { return sum + effectiveWeight(it); }, 0);
   }
 
   function fillPercent(packedWeight, totalWeight) {
@@ -293,7 +379,7 @@
         var li = document.createElement("li");
         li.className = "archive-item";
         li.appendChild(itemNameEl(item, item.archived ? " — archived" : " — not currently used"));
-        li.appendChild(buildMeta(item));
+        li.appendChild(buildMeta(item, false));
         if (item.comment) {
           var c = document.createElement("div");
           c.className = "item-comment";
@@ -307,9 +393,25 @@
     });
   }
 
-  wireSegmented("trip-filter", "trip");
+  wireSegmented("trip-filter", "trip", function (value) {
+    state.nights = NIGHTS_BY_TRIP[value];
+    renderNightsControl();
+  });
   wireSegmented("season-filter", "season");
+
+  document.getElementById("nights-minus").addEventListener("click", function () {
+    state.nights = Math.max(1, state.nights - 1);
+    renderNightsControl();
+    renderChecklist();
+  });
+  document.getElementById("nights-plus").addEventListener("click", function () {
+    state.nights = state.nights + 1;
+    renderNightsControl();
+    renderChecklist();
+  });
+
   renderCategoryChips();
+  renderNightsControl();
   renderChecklist();
   renderArchive();
 })();
