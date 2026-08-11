@@ -205,8 +205,27 @@
     var totalWeight = visible.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
     var packedWeight = visible.filter(function (it) { return checked.has(it._id); })
       .reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
-    document.getElementById("weight-summary").textContent =
-      "Total weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
+
+    var summaryEl = document.getElementById("weight-summary");
+    summaryEl.innerHTML = "";
+    summaryEl.appendChild(document.createTextNode("Total weight: " + formatWeight(totalWeight) + " "));
+    if (totalWeight > 0) {
+      var cls = weightClass(totalWeight);
+      var classBadge = document.createElement("span");
+      classBadge.className = "badge weight-class weight-class-" + cls.toLowerCase();
+      classBadge.textContent = cls;
+      summaryEl.appendChild(classBadge);
+    }
+    summaryEl.appendChild(document.createTextNode(" — " + formatWeight(packedWeight) + " packed so far"));
+  }
+
+  function weightClass(totalGrams) {
+    var kg = totalGrams / 1000;
+    var label = WEIGHT_CLASS_THRESHOLDS[0][1];
+    WEIGHT_CLASS_THRESHOLDS.forEach(function (pair) {
+      if (kg >= pair[0]) label = pair[1];
+    });
+    return label;
   }
 
   function renderArchive() {

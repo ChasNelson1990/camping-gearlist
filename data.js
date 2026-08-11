@@ -2560,3 +2560,4 @@ const GEAR_ITEMS = [
     "researchLinks": []
   }
 ];
+const WEIGHT_CLASS_THRESHOLDS = [[0, "Ultralight"], [4.5, "Light"], [7, "Trad"], [14, "Heavy"]];

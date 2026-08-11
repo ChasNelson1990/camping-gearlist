@@ -176,7 +176,20 @@ a { color: var(--primary); }
   margin: -.4rem 1rem .6rem;
   font-size: .8rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .3rem;
 }
+
+.weight-class {
+  font-weight: 600;
+}
+
+.weight-class-ultralight { color: var(--primary); border-color: var(--primary); }
+.weight-class-light { color: color-mix(in srgb, var(--primary) 50%, var(--accent)); border-color: color-mix(in srgb, var(--primary) 50%, var(--accent)); }
+.weight-class-trad { color: var(--accent); border-color: var(--accent); }
+.weight-class-heavy { color: var(--danger); border-color: var(--danger); }
 
 main#checklist {
   flex: 1;
