@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weight budget summary — Camping Gear Research</title>
+<meta name="description" content="Base weight, consumables weight and total pack weight for each trip type (overnight / trek / car camp), classified against Ultralight / Light / Trad / Heavy weight thresholds, plus the same for Anjo's pack and combined Chas+Anjo loads.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="research.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="research-link" href="index.html">← All research</a>
+  <a class="research-link" href="../index.html">Checklist</a>
+</header>
+<main class="research-main">
+  <h1 id="title"></h1>
+  <p id="description" class="description"></p>
+  <div id="callout"></div>
+  <div class="table-wrap"><table id="table"></table></div>
+</main>
+<script src="../research-data.js"></script>
+<script src="research.js"></script>
+<script>renderSheet("weight-summary");</script>
+</body>
+</html>

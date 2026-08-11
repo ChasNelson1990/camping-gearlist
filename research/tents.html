@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tents — Camping Gear Research</title>
+<meta name="description" content="Tent options compared by weight, pack size, floor/fly fabric ratings, whether the dog fits inside, and cost-per-area-efficiency.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="research.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="research-link" href="index.html">← All research</a>
+  <a class="research-link" href="../index.html">Checklist</a>
+</header>
+<main class="research-main">
+  <h1 id="title"></h1>
+  <p id="description" class="description"></p>
+  <div id="callout"></div>
+  <div class="table-wrap"><table id="table"></table></div>
+</main>
+<script src="../research-data.js"></script>
+<script src="research.js"></script>
+<script>renderSheet("tents");</script>
+</body>
+</html>
