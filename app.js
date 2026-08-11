@@ -27,6 +27,10 @@
     if (it.perNightAmount != null) consumableAmounts.set(it._id, it.perNightAmount);
   });
 
+  // Live "how many do I bring" count for durable items with a quantityMax
+  // (e.g. Wine bladders) - starts at 1, freely editable up to quantityMax.
+  var itemQuantities = new Map();
+
   function tripOk(item) {
     if (state.trip === "all") return true;
     return item[TRIP_KEYS[state.trip]] === true;
@@ -97,6 +101,43 @@
     return wrap;
   }
 
+  function buildQuantityStepper(item) {
+    var wrap = document.createElement("span");
+    wrap.className = "stepper";
+    var qty = itemQuantities.get(item._id) || 1;
+
+    var minus = document.createElement("button");
+    minus.type = "button";
+    minus.className = "stepper-btn";
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "Decrease " + item.name + " quantity");
+    minus.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      adjustQuantity(item, -1);
+    });
+
+    var value = document.createElement("span");
+    value.className = "stepper-value";
+    value.textContent = "×" + qty;
+
+    var plus = document.createElement("button");
+    plus.type = "button";
+    plus.className = "stepper-btn";
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "Increase " + item.name + " quantity");
+    plus.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      adjustQuantity(item, 1);
+    });
+
+    wrap.appendChild(minus);
+    wrap.appendChild(value);
+    wrap.appendChild(plus);
+    return wrap;
+  }
+
   function buildMeta(item, interactive) {
     interactive = interactive !== false;
     var wrap = document.createElement("div");
@@ -114,6 +155,12 @@
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + " total"));
       } else {
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
+      }
+    } else if (item.quantityMax != null) {
+      wrap.appendChild(badge(formatWeight(item.weightG) + " each"));
+      if (interactive) {
+        wrap.appendChild(buildQuantityStepper(item));
+        wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " total"));
       }
     } else if (item.weightG) {
       wrap.appendChild(badge(formatWeight(item.weightG)));
@@ -278,6 +325,9 @@
       var nights = item.scalesWithNights === false ? 1 : state.nights;
       return grams * nights;
     }
+    if (item.quantityMax != null) {
+      return (item.weightG || 0) * (itemQuantities.get(item._id) || 1);
+    }
     return item.weightG || 0;
   }
 
@@ -298,6 +348,14 @@
     renderChecklist();
   }
 
+  function adjustQuantity(item, delta) {
+    var current = itemQuantities.get(item._id) || 1;
+    var next = Math.max(1, current + delta);
+    if (item.quantityMax != null) next = Math.min(next, item.quantityMax);
+    itemQuantities.set(item._id, next);
+    renderChecklist();
+  }
+
   function sumWeight(list) {
     return list.reduce(function (sum, it) { return sum + effectiveWeight(it); }, 0);
   }
@@ -312,28 +370,26 @@
     var done = packedItems.length;
     document.getElementById("progress-text").textContent = done + " of " + total + " packed";
 
-    // Worn/on-body items aren't in the pack, so they don't count towards
-    // pack weight at all - not just the Ultralight/Light/Trad/Heavy
-    // classification below, but the headline total itself.
-    var weighable = visible.filter(function (it) { return !it.onBody; });
-    var packedWeighable = packedItems.filter(function (it) { return !it.onBody; });
+    // Pack weight is base gear only: worn/on-body items aren't in the pack
+    // at all, and consumables (food, fuel, toiletries) get their own
+    // dedicated bar below rather than double-counting here too.
+    var weighable = visible.filter(function (it) { return !it.onBody && !it.consumable; });
+    var packedWeighable = packedItems.filter(function (it) { return !it.onBody && !it.consumable; });
     var totalWeight = sumWeight(weighable);
     var packedWeight = sumWeight(packedWeighable);
     document.getElementById("progress-fill").style.width = fillPercent(packedWeight, totalWeight);
-
-    var packedBaseWeight = sumWeight(packedWeighable.filter(function (it) { return !it.consumable; }));
 
     var summaryEl = document.getElementById("weight-summary");
     summaryEl.innerHTML = "";
     summaryEl.appendChild(document.createTextNode(
       "Pack weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far "
     ));
-    if (packedBaseWeight > 0) {
-      var cls = weightClass(packedBaseWeight);
+    if (packedWeight > 0) {
+      var cls = weightClass(packedWeight);
       var classBadge = document.createElement("span");
       classBadge.className = "badge weight-class weight-class-" + cls.toLowerCase();
       classBadge.textContent = cls;
-      classBadge.title = "Based on packed gear, excluding consumables (food, fuel, toiletries...) and anything worn / on body";
+      classBadge.title = "Excludes consumables (food, fuel, toiletries...) and anything worn / on body - see the Consumables bar below for those";
       summaryEl.appendChild(classBadge);
     }
   }

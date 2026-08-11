@@ -31,7 +31,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Raincover",
@@ -59,7 +60,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Tent (1.65 m^2) w/ footprint",
@@ -92,7 +94,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Tent (4.4 m^2)",
@@ -120,7 +123,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Tarpaulin",
@@ -148,7 +152,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Repair kit",
@@ -176,7 +181,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping bag",
@@ -204,7 +210,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Thermal sleeping bag liner",
@@ -232,7 +239,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Silk sleeping bag liner",
@@ -260,7 +268,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping bag compression sack",
@@ -288,7 +297,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Quilt",
@@ -316,7 +326,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Quilt compression sack",
@@ -344,7 +355,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping mat, mummy, large",
@@ -372,7 +384,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping mat, mummy, short",
@@ -400,7 +413,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping mat, rectangular",
@@ -428,7 +442,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Footprint",
@@ -456,7 +471,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Chair",
@@ -489,7 +505,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Reservoir",
@@ -517,7 +534,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Water filter",
@@ -545,7 +563,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "1l bladder for dirty water",
@@ -573,7 +592,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Stove with stash bag",
@@ -606,7 +626,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Gas can (100 g)",
@@ -634,7 +655,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Gas can (230 g)",
@@ -662,7 +684,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Firesteel",
@@ -690,7 +713,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Firepit",
@@ -718,7 +742,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Charcoal",
@@ -746,7 +771,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Firelighters",
@@ -774,7 +800,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Aeropress",
@@ -802,7 +829,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Grinder",
@@ -830,7 +858,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Coffee",
@@ -858,7 +887,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Wine bladders",
@@ -886,7 +916,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": 2
   },
   {
     "name": "Beer",
@@ -914,7 +945,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Spork",
@@ -942,7 +974,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Knife",
@@ -970,7 +1003,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Skinner",
@@ -998,7 +1032,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Pot",
@@ -1026,7 +1061,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Stash bag",
@@ -1054,7 +1090,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Food",
@@ -1082,7 +1119,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Small drybag for food",
@@ -1110,7 +1148,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Cup",
@@ -1138,7 +1177,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Bamboo cloth",
@@ -1166,7 +1206,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "First aid kit",
@@ -1194,7 +1235,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Suncream",
@@ -1222,7 +1264,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Talc",
@@ -1250,7 +1293,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Wet wipes",
@@ -1278,7 +1322,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Poo bags",
@@ -1306,7 +1351,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Towel",
@@ -1334,7 +1380,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Vaseline",
@@ -1362,7 +1409,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Toothbrush",
@@ -1390,7 +1438,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Toothpaste",
@@ -1418,7 +1467,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Headlamp",
@@ -1446,7 +1496,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Solar panel",
@@ -1474,7 +1525,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Powerpack",
@@ -1507,7 +1559,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "USB-C Charging Cable",
@@ -1535,7 +1588,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Lantern",
@@ -1563,7 +1617,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Charger",
@@ -1591,7 +1646,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Mobile Phone",
@@ -1619,7 +1675,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Spare phone battery",
@@ -1647,7 +1704,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Mobile Phone",
@@ -1675,7 +1733,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "USB-C Charging Cable",
@@ -1703,7 +1762,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Earphones",
@@ -1731,7 +1791,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Watch",
@@ -1759,7 +1820,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Garmin charging cable",
@@ -1787,7 +1849,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "eReader",
@@ -1815,7 +1878,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "microUSB Charging Cable",
@@ -1843,7 +1907,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "GPS",
@@ -1871,7 +1936,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Active Camera",
@@ -1899,7 +1965,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Camera mount",
@@ -1927,7 +1994,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Midge net",
@@ -1955,7 +2023,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Smidge",
@@ -1983,7 +2052,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Skin So Soft",
@@ -2011,7 +2081,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Tights",
@@ -2039,7 +2110,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Top",
@@ -2067,7 +2139,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Pac Tube",
@@ -2095,7 +2168,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Merino neck tube",
@@ -2123,7 +2197,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Rain Jacket",
@@ -2156,7 +2231,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Rain Pants",
@@ -2184,7 +2260,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Insulating Jacket",
@@ -2221,7 +2298,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Summer Trousers",
@@ -2249,7 +2327,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Winter Trousers",
@@ -2277,7 +2356,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Spare top",
@@ -2305,7 +2385,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sun Hood",
@@ -2333,7 +2414,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Camp socks",
@@ -2361,7 +2443,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Swimming shorts",
@@ -2389,7 +2472,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Thermal top",
@@ -2417,7 +2501,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Thermal bottoms",
@@ -2445,7 +2530,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Thermal glove liners",
@@ -2473,7 +2559,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Walking Socks",
@@ -2501,7 +2588,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Liner Socks",
@@ -2529,7 +2617,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Boxers",
@@ -2557,7 +2646,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Walking Socks (spare)",
@@ -2585,7 +2675,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Liner Socks (spare)",
@@ -2613,7 +2704,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Boxers (spare)",
@@ -2641,7 +2733,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Pillow/Stuff Sack",
@@ -2669,7 +2762,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Clothes dry sack",
@@ -2697,7 +2791,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Walking Boots",
@@ -2725,7 +2820,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Spare small drybag",
@@ -2753,7 +2849,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Water",
@@ -2781,7 +2878,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "l",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Wine",
@@ -2809,7 +2907,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "l",
     "scalesWithNights": false,
     "maxAmount": 1.5,
-    "stepOverride": 0.75
+    "stepOverride": 0.75,
+    "quantityMax": null
   },
   {
     "name": "Front Range pack",
@@ -2837,7 +2936,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Switchbak pack",
@@ -2865,7 +2965,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping bag",
@@ -2893,7 +2994,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Sleeping mat",
@@ -2921,7 +3023,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Blanket",
@@ -2949,7 +3052,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "XXS compression sack for blanket",
@@ -2977,7 +3081,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Half Bag",
@@ -3005,7 +3110,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Water",
@@ -3033,7 +3139,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "l",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Bowl",
@@ -3061,7 +3168,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Drybag for food",
@@ -3089,7 +3197,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Food",
@@ -3117,7 +3226,8 @@ const GEAR_ITEMS = [
     "perNightUnit": "g",
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "First aid kit",
@@ -3145,7 +3255,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Poo bags",
@@ -3173,7 +3284,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Towel",
@@ -3201,7 +3313,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Drybag for poo",
@@ -3229,7 +3342,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Knot-a-Hitch",
@@ -3257,7 +3371,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Hitch Hiker",
@@ -3285,7 +3400,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Beacon",
@@ -3313,7 +3429,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Leash",
@@ -3341,7 +3458,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Front Range harness",
@@ -3369,7 +3487,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Raincoat",
@@ -3397,7 +3516,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   },
   {
     "name": "Insulating Jacket",
@@ -3425,7 +3545,8 @@ const GEAR_ITEMS = [
     "perNightUnit": null,
     "scalesWithNights": true,
     "maxAmount": null,
-    "stepOverride": null
+    "stepOverride": null,
+    "quantityMax": null
   }
 ];
 const WEIGHT_CLASS_THRESHOLDS = [[0, "Ultralight"], [4.5, "Light"], [7, "Trad"], [14, "Heavy"]];

@@ -173,6 +173,13 @@ ITEM_WEIGHT_OVERRIDE = {
     "Wine bladders": 24,  # sheet says 20 g; actual measured weight is 24 g
 }
 
+# Durable (non-consumable) items with an adjustable "how many do I bring"
+# quantity in the UI - the item's own weightG is treated as the per-unit
+# weight, multiplied by a live quantity (starts at 1, capped at max).
+ITEM_QUANTITY = {
+    "Wine bladders": {"max": 2},
+}
+
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
@@ -364,6 +371,7 @@ def build_items(rows, cols, category_const=None, research_links=None, consumable
             "scalesWithNights": (consumable or {}).get("scalesWithNights", True),
             "maxAmount": (consumable or {}).get("max"),
             "stepOverride": (consumable or {}).get("step"),
+            "quantityMax": ITEM_QUANTITY.get(name, {}).get("max"),
         })
         items[-1]["season"] = items[-1]["season"] or None
     return items
@@ -402,6 +410,7 @@ def synthetic_consumable_item(name, category):
         "scalesWithNights": detail.get("scalesWithNights", True),
         "maxAmount": detail.get("max"),
         "stepOverride": detail.get("step"),
+        "quantityMax": None,
     }
 
 
