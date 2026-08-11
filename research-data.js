@@ -233,7 +233,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": "price-per-ratio",
       "rank": 12,
       "outOf": 16
-    }
+    },
+    "note": null
   },
   {
     "slug": "flasks",
@@ -494,7 +495,8 @@ const RESEARCH_SHEETS = [
         "#DIV/0!"
       ]
     ],
-    "currentPick": null
+    "currentPick": null,
+    "note": null
   },
   {
     "slug": "bags",
@@ -831,7 +833,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": null,
       "rank": null,
       "outOf": 18
-    }
+    },
+    "note": null
   },
   {
     "slug": "tents",
@@ -2825,7 +2828,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": null,
       "rank": null,
       "outOf": 89
-    }
+    },
+    "note": null
   },
   {
     "slug": "insulated-jackets-2022",
@@ -3063,7 +3067,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": "price per",
       "rank": 4,
       "outOf": 15
-    }
+    },
+    "note": null
   },
   {
     "slug": "insulated-jackets-2024",
@@ -4037,7 +4042,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": null,
       "rank": null,
       "outOf": 59
-    }
+    },
+    "note": "Down jackets here are rated by fill power (FP); synthetics don't have one, so this sheet assigns them an equivalent FP for comparison. Both directions use the same formula, fitted from the sheet's own FP/CLO reference points (R² = 0.955): CLO/g/m² ≈ 1.81×10⁻⁸ × FP^2.227, or inverted, FP (equivalent) ≈ (CLO/g/m² ÷ 1.81×10⁻⁸)^(1/2.227)."
   },
   {
     "slug": "power",
@@ -4337,7 +4343,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": "price/ratio",
       "rank": 7,
       "outOf": 24
-    }
+    },
+    "note": null
   },
   {
     "slug": "chairs",
@@ -4511,7 +4518,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": null,
       "rank": null,
       "outOf": 19
-    }
+    },
+    "note": null
   },
   {
     "slug": "snack-bars",
@@ -5096,7 +5104,8 @@ const RESEARCH_SHEETS = [
         "0.101"
       ]
     ],
-    "currentPick": null
+    "currentPick": null,
+    "note": null
   },
   {
     "slug": "stoves",
@@ -5708,412 +5717,8 @@ const RESEARCH_SHEETS = [
       "rankLabel": null,
       "rank": null,
       "outOf": 25
-    }
-  },
-  {
-    "slug": "fp-to-clo",
-    "title": "Fill power → CLO regression",
-    "group": "Reference",
-    "description": "The linear regression (ln(FP) vs ln(CLO)) used to convert a down jacket's fill-power rating into CLO/g/m² so it can be compared against synthetic insulation in the insulated-jacket sheets. R² = 0.955.",
-    "columns": [
-      "FP",
-      "CLO",
-      "ln(FP)",
-      "ln(CLO)",
-      "",
-      "FP",
-      "ln(FP)",
-      "ln(CLO)",
-      "CLO",
-      "in g/m^2"
-    ],
-    "rows": [
-      [
-        "550",
-        "0.85",
-        "6.30991827822652",
-        "-0.162518929497775",
-        "",
-        "750",
-        "6.6201",
-        "0.4360",
-        "1.5466",
-        "0.0456"
-      ],
-      [
-        "650",
-        "1",
-        "6.47697236288968",
-        "0",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "800",
-        "1.68",
-        "6.68461172766793",
-        "0.518793793415168",
-        "",
-        "FP",
-        "ln(FP)",
-        "ln(CLO)",
-        "CLO",
-        "in g/m^2"
-      ],
-      [
-        "900",
-        "2.53",
-        "6.80239476332431",
-        "0.928219302739429",
-        "",
-        "572",
-        "6.3483",
-        "-0.1692",
-        "0.8444",
-        "0.0249"
-      ],
-      [
-        "Regression",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Regression Model",
-        "Linear",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "LINEST raw output",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "2.22687030990103",
-        "-14.3060168205573",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "0.341244081807477",
-        "2.24238421631418",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "0.955142154115513",
-        "0.129236710022904",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "42.5852884944627",
-        "2",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "0.711264906030335",
-        "0.0334042544350883",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Regression Statistics",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "R^2",
-        "0.955142154115513",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Standard Error",
-        "0.129236710022904",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Count of x-variables",
-        "1",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Observations",
-        "4",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Adjusted R^2",
-        "0.932713231173269",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Analysis of Variance (ANOVA)",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "",
-        "df",
-        "SS",
-        "MS",
-        "F",
-        "Significance F",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Regression",
-        "1",
-        "0.711264906030335",
-        "0.711264906030335",
-        "42.5852884944627",
-        "0.022686256049004",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Residual",
-        "2",
-        "0.0334042544350883",
-        "0.0167021272175442",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Total",
-        "3",
-        "0.744669160465423",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Confidence level",
-        "0.95",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "",
-        "Coefficients",
-        "Standard Error",
-        "t-Statistic",
-        "P-value",
-        "Lower 95%",
-        "Upper 95%",
-        "",
-        "",
-        ""
-      ],
-      [
-        "Intercept",
-        "-14.3060168205573",
-        "2.24238421631418",
-        "-6.37982408031404",
-        "0.0236988392049891",
-        "-23.9542173900286",
-        "-4.65781625108602",
-        "",
-        "",
-        ""
-      ],
-      [
-        "ln(FP)",
-        "2.22687030990103",
-        "0.341244081807477",
-        "6.5257404556466",
-        "0.022686256049004",
-        "0.758615529801241",
-        "3.69512509000082",
-        "",
-        "",
-        ""
-      ],
-      [
-        "ln(FP)",
-        "Predicted y",
-        "ln(CLO)",
-        "Residual",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "6.30991827822652",
-        "-0.254647148872865",
-        "-0.162518929497775",
-        "0.0921282193750896",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "6.47697236288968",
-        "0.117360632411234",
-        "0",
-        "-0.117360632411234",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "6.68461172766793",
-        "0.579746569002618",
-        "0.518793793415168",
-        "-0.0609527755874501",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      [
-        "6.80239476332431",
-        "0.842034114115833",
-        "0.928219302739429",
-        "0.0861851886235956",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
-    ],
-    "currentPick": null
+    },
+    "note": null
   },
   {
     "slug": "weight-summary",
@@ -6980,6 +6585,7 @@ const RESEARCH_SHEETS = [
         ""
       ]
     ],
-    "currentPick": null
+    "currentPick": null,
+    "note": null
   }
 ];

@@ -26,6 +26,12 @@
 
 .callout strong { color: var(--primary); }
 
+.callout.note {
+  border-color: var(--border);
+  border-left-color: var(--text-muted);
+  color: var(--text-muted);
+}
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);

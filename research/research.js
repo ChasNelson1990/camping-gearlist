@@ -52,13 +52,23 @@
     document.getElementById("description").textContent = sheet.description;
 
     var calloutEl = document.getElementById("callout");
+    calloutEl.innerHTML = "";
     if (sheet.currentPick) {
       var cp = sheet.currentPick;
       var row = sheet.rows[cp.rowIndex];
       var label = row[0] + (row[1] ? " " + row[1] : "");
       var text = "★ Currently used: " + label.trim();
       if (cp.rank) text += " — ranked #" + cp.rank + " of " + cp.outOf + " by " + cp.rankLabel;
-      calloutEl.innerHTML = "<div class=\"callout\">" + text + "</div>";
+      var pickBox = document.createElement("div");
+      pickBox.className = "callout";
+      pickBox.textContent = text;
+      calloutEl.appendChild(pickBox);
+    }
+    if (sheet.note) {
+      var noteBox = document.createElement("div");
+      noteBox.className = "callout note";
+      noteBox.textContent = sheet.note;
+      calloutEl.appendChild(noteBox);
     }
 
     var table = document.getElementById("table");

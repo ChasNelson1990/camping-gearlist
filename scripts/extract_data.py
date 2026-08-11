@@ -315,7 +315,12 @@ RESEARCH_SHEETS = [
      "per weight) instead of the 2022 sheet's insulation rating - no single "
      "combined ratio column here, so rows aren't ranked, just listed.",
      dict(brand="Patagonia", model="Micro Puff Hoody", rank_col=None, rank_asc=True,
-          rank_label=None, item="Insulating Jacket")),
+          rank_label=None, item="Insulating Jacket",
+          note="Down jackets here are rated by fill power (FP); synthetics don't have one, "
+               "so this sheet assigns them an equivalent FP for comparison. Both directions "
+               "use the same formula, fitted from the sheet's own FP/CLO reference points "
+               "(R² = 0.955): CLO/g/m² ≈ 1.81×10⁻⁸ × FP^2.227, or inverted, "
+               "FP (equivalent) ≈ (CLO/g/m² ÷ 1.81×10⁻⁸)^(1/2.227).")),
     ("202207_power", "power", "Power banks & solar panels", "Gear comparisons",
      "Power bank / solar panel options compared by weight, solar/battery "
      "output, and the sheet's own price-per-ratio score.",
@@ -338,12 +343,6 @@ RESEARCH_SHEETS = [
      "recorded so it can't be ranked against the others.",
      dict(brand="Vango", model="Current Stove", rank_col=None, rank_asc=True,
           rank_label=None, item="Stove with stash bag")),
-    ("FP_to_CLO_convertor", "fp-to-clo", "Fill power → CLO regression", "Reference",
-     "The linear regression (ln(FP) vs ln(CLO)) used to convert a down "
-     "jacket's fill-power rating into CLO/g/m² so it can be compared "
-     "against synthetic insulation in the insulated-jacket sheets. R² = "
-     "0.955.",
-     None),
     ("summary", "weight-summary", "Weight budget summary", "Reference",
      "Base weight, consumables weight and total pack weight for each trip "
      "type (overnight / trek / car camp), classified against Ultralight / "
@@ -396,6 +395,7 @@ def build_research_sheet(sheet_name, slug, title, group, description, match, all
         "columns": header,
         "rows": data_rows,
         "currentPick": current_pick,
+        "note": (match or {}).get("note"),
     }
 
 
