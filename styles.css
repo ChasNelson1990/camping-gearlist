@@ -178,13 +178,23 @@ main#checklist {
 }
 
 @media (min-width: 720px) {
-  main#checklist {
+  /* column-width lets the browser create as many columns as the viewport
+     fits, regardless of how much content there is - fine when there are
+     several uneven-height categories (avoids grid's row-locked gaps below
+     short ones), but it can leave a phantom empty column when there are
+     only one or two. Only used where that's actually the case. */
+  main#checklist.multi {
     column-width: 320px;
     column-gap: 1.5rem;
   }
-  main#checklist .category {
+  main#checklist.multi .category {
     break-inside: avoid-column;
     -webkit-column-break-inside: avoid;
+  }
+
+  main#checklist.narrow {
+    max-width: 640px;
+    margin: 0 auto;
   }
 }
 
