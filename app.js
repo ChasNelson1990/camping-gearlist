@@ -139,6 +139,7 @@
     }
 
     updateProgress(visible);
+    updateAnjoProgress();
   }
 
   function renderCategorySection(cat, catItems) {
@@ -206,7 +207,7 @@
     var totalWeight = visible.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
     var packedItems = visible.filter(function (it) { return checked.has(it._id); });
     var packedWeight = packedItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
-    var packedBaseWeight = packedItems.filter(function (it) { return !it.consumable; })
+    var packedBaseWeight = packedItems.filter(function (it) { return !it.consumable && !it.onBody; })
       .reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
 
     var summaryEl = document.getElementById("weight-summary");
@@ -219,9 +220,26 @@
       var classBadge = document.createElement("span");
       classBadge.className = "badge weight-class weight-class-" + cls.toLowerCase();
       classBadge.textContent = cls;
-      classBadge.title = "Based on packed gear, excluding consumables (food, fuel, toiletries...)";
+      classBadge.title = "Based on packed gear, excluding consumables (food, fuel, toiletries...) and anything worn / on body";
       summaryEl.appendChild(classBadge);
     }
+  }
+
+  function updateAnjoProgress() {
+    var anjoItems = items.filter(function (it) {
+      return it.category === "Anjo" && it.active && it.onBody && tripOk(it) && seasonOk(it);
+    });
+    var total = anjoItems.length;
+    var packedItems = anjoItems.filter(function (it) { return checked.has(it._id); });
+    var done = packedItems.length;
+
+    document.getElementById("anjo-progress-text").textContent = "🐾 " + done + " of " + total + " on Anjo";
+    document.getElementById("anjo-progress-fill").style.width = total ? (100 * done / total) + "%" : "0%";
+
+    var totalWeight = anjoItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    var packedWeight = packedItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    document.getElementById("anjo-weight-summary").textContent =
+      "On Anjo (worn + pouches): " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
   }
 
   function weightClass(totalGrams) {

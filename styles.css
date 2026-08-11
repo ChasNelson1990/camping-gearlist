@@ -166,10 +166,23 @@ a { color: var(--primary); }
   transition: width .2s ease;
 }
 
-#progress-text {
+.progress-text {
   font-size: .8rem;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+.progress-secondary {
+  padding-top: 0;
+  opacity: .85;
+}
+
+.progress-secondary .progress-bar {
+  height: 4px;
+}
+
+.progress-secondary .progress-fill {
+  background: var(--primary);
 }
 
 .weight-summary {
