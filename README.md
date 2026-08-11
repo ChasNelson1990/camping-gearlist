@@ -8,7 +8,7 @@ A mobile-friendly camping packing checklist, generated from `camping_gear.ods`.
 
 - `index.html` — the checklist. Filter by trip type (overnight / long trek / car camp) and season, toggle categories on/off (including Anjo the dog's gear), tick items off as you pack. Nothing is saved: reload the page and every checkbox resets. A collapsed **Archive** section at the bottom lists gear that's currently unused or retired, for reference.
 - `first-aid-kit.html` — its own checklist for the itemised first-aid kit contents (human + dog), linked from the "First aid kit" entry on the main checklist.
-- `research/` — one page per research sheet from the spreadsheet (jacket/tent/bag/stove/power-bank comparisons, food planning, the Hebridean Way trip log, etc). Rows marked ★ are what's actually in the current pack list, matched against each sheet's own data — nothing is invented beyond what the spreadsheet already computes.
+- `research/` — one page per gear-comparison and reference sheet from the spreadsheet (jacket/tent/bag/stove/power-bank comparisons, the fill-power/CLO regression, the weight-budget summary, etc). Rows marked ★ are what's actually in the current pack list, matched against each sheet's own data — nothing is invented beyond what the spreadsheet already computes.
 
 It's plain HTML/CSS/JS with no build step, no framework, and no backend, so it deploys straight from the repo via GitHub Pages.
 

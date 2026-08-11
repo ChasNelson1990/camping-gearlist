@@ -316,17 +316,6 @@ RESEARCH_SHEETS = [
      "combined ratio column here, so rows aren't ranked, just listed.",
      dict(brand="Patagonia", model="Micro Puff Hoody", rank_col=None, rank_asc=True,
           rank_label=None, item="Insulating Jacket")),
-    ("overnight-oats", "overnight-oats", "Overnight oats recipe", "Trip & nutrition planning",
-     "The breakfast recipe used in the food-planning sheets: base ingredients, "
-     "flavour/fruit/nut/protein options with min/max amounts, calories, fibre "
-     "and protein per 100 g.",
-     None),
-    ("202209_hebridean-way", "hebridean-way", "Hebridean Way itinerary (Sept 2022)",
-     "Trip & nutrition planning",
-     "The day-by-day trip log for the 2022 Hebridean Way hike: stages, "
-     "distances, terrain/bog ratings, overnight stops, resupply shops, and "
-     "onward travel.",
-     None),
     ("202207_power", "power", "Power banks & solar panels", "Gear comparisons",
      "Power bank / solar panel options compared by weight, solar/battery "
      "output, and the sheet's own price-per-ratio score.",
@@ -342,11 +331,6 @@ RESEARCH_SHEETS = [
      "fibre per gram, feeding the trek food-planning sheet - the packing list "
      "just says \"Food\", so no single bar is marked as the current pick.",
      None),
-    ("dietary-requirements", "dietary-requirements", "Daily dietary targets",
-     "Trip & nutrition planning",
-     "The daily protein and fibre targets the food-planning sheets are built "
-     "against.",
-     None),
     ("202304_stoves", "stoves", "Stoves", "Gear comparisons",
      "Stove options compared by fuel type, weight, boil/burn time, and the "
      "sheet's own features/weight/cost score. The row literally named "
@@ -354,10 +338,6 @@ RESEARCH_SHEETS = [
      "recorded so it can't be ranked against the others.",
      dict(brand="Vango", model="Current Stove", rank_col=None, rank_asc=True,
           rank_label=None, item="Stove with stash bag")),
-    ("example-food", "example-food", "Example meal plans", "Trip & nutrition planning",
-     "Worked example day's food for an overnight trip vs. a longer trek, with "
-     "running weight, calorie, protein and fibre totals.",
-     None),
     ("FP_to_CLO_convertor", "fp-to-clo", "Fill power → CLO regression", "Reference",
      "The linear regression (ln(FP) vs ln(CLO)) used to convert a down "
      "jacket's fill-power rating into CLO/g/m² so it can be compared "

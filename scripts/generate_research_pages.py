@@ -55,7 +55,7 @@ INDEX_TEMPLATE = """<!doctype html>
   <a class="research-link" href="../index.html">Checklist →</a>
 </header>
 <main class="research-main">
-  <p class="description">The comparison spreadsheets, trip logs and reference calculations behind the packing list. Rows marked ★ are what's actually in the current pack list, where a confident match exists.</p>
+  <p class="description">The comparison spreadsheets and reference calculations behind the packing list. Rows marked ★ are what's actually in the current pack list, where a confident match exists.</p>
   <div class="groups">
 {groups}
   </div>
@@ -64,7 +64,7 @@ INDEX_TEMPLATE = """<!doctype html>
 </html>
 """
 
-GROUP_ORDER = ["Gear comparisons", "Trip & nutrition planning", "Reference"]
+GROUP_ORDER = ["Gear comparisons", "Reference"]
 
 
 def esc(s):
