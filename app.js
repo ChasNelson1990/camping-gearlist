@@ -46,7 +46,6 @@
     var wrap = document.createElement("div");
     wrap.className = "item-meta";
     if (item.weightG) wrap.appendChild(badge(formatWeight(item.weightG)));
-    if (item.cost) wrap.appendChild(badge(item.cost));
     if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
@@ -199,6 +198,12 @@
     var done = visible.filter(function (it) { return checked.has(it._id); }).length;
     document.getElementById("progress-text").textContent = done + " of " + total + " packed";
     document.getElementById("progress-fill").style.width = total ? (100 * done / total) + "%" : "0%";
+
+    var totalWeight = visible.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    var packedWeight = visible.filter(function (it) { return checked.has(it._id); })
+      .reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    document.getElementById("weight-summary").textContent =
+      "Total weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
   }
 
   function renderArchive() {
