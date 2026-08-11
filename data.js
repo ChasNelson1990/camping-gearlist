@@ -958,7 +958,7 @@ const GEAR_ITEMS = [
     "currentIsUrl": false,
     "season": null,
     "overnight": true,
-    "longTrek": false,
+    "longTrek": true,
     "carCamp": true,
     "onBody": null,
     "archived": false,

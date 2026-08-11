@@ -127,6 +127,11 @@ PACK_CONSUMABLE = {
     "Food": {
         "parent": "Small drybag for food", "amount": 880, "unit": "g",
         "comment": "787 g/night if going ultralight (previously tracked as a separate \"Food UL\" line)",
+        # Food UL (now merged away) was the sheet's only longTrek-flagged food
+        # row; Food's own row is overnight/carCamp only. Without this
+        # override, merging them would leave longTrek with no food item at
+        # all - this restores the union of both rows' original coverage.
+        "longTrek": True,
     },
     "Suncream": {"parent": None, "amount": 50, "unit": "g"},
     "Talc": {"parent": None, "amount": 9.4, "unit": "g"},
@@ -319,9 +324,9 @@ def build_items(rows, cols, category_const=None, research_links=None, consumable
             "current": current_raw or None,
             "currentIsUrl": current_raw.startswith("http"),
             "season": cell(row, cols["season"]) if "season" in cols else "",
-            "overnight": is_true(cell(row, cols["overnight"])),
-            "longTrek": is_true(cell(row, cols["long_trek"])),
-            "carCamp": is_true(cell(row, cols["car_camp"])),
+            "overnight": (consumable or {}).get("overnight", is_true(cell(row, cols["overnight"]))),
+            "longTrek": (consumable or {}).get("longTrek", is_true(cell(row, cols["long_trek"]))),
+            "carCamp": (consumable or {}).get("carCamp", is_true(cell(row, cols["car_camp"]))),
             "onBody": onbody_raw or None,
             "archived": archived,
             "detailUrl": detail_page["url"] if detail_page else None,
@@ -575,6 +580,26 @@ def main():
         print(f"PACK_CONSUMABLE/ANJO_CONSUMABLE has {len(stale_consumables)} name(s) that don't match any item (typo?):")
         for name in stale_consumables:
             print(f"  {name}")
+
+    invalid_parents = []
+    for detail_dict, side_items in ((PACK_CONSUMABLE, pack_items), (ANJO_CONSUMABLE, anjo_items)):
+        names_by_category = {}
+        for it in side_items:
+            names_by_category.setdefault(it["category"], set()).add(it["name"])
+        for name, detail in detail_dict.items():
+            if not detail or not detail.get("parent"):
+                continue
+            owner = next((it for it in side_items if it["name"] == name), None)
+            if not owner:
+                continue  # already reported above as a stale consumable name
+            if detail["parent"] not in names_by_category.get(owner["category"], set()):
+                invalid_parents.append(
+                    f"{name!r} -> parent {detail['parent']!r} not found in category {owner['category']!r}"
+                )
+    if invalid_parents:
+        print(f"{len(invalid_parents)} consumable parent(s) don't resolve to a real item in the same category:")
+        for line in invalid_parents:
+            print(f"  {line}")
 
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
     nights_js = json.dumps(NIGHTS_BY_TRIP, ensure_ascii=False)
