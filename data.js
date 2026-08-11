@@ -19,6 +19,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/bags.html",
@@ -45,6 +46,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -66,6 +68,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/tents.html",
@@ -92,6 +95,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -113,6 +117,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -134,6 +139,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -155,6 +161,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -176,6 +183,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -197,6 +205,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -218,6 +227,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -239,6 +249,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -260,6 +271,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -281,6 +293,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -302,6 +315,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -323,6 +337,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -344,6 +359,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -365,6 +381,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/chairs.html",
@@ -391,6 +408,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -412,6 +430,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -433,6 +452,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -454,6 +474,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/stoves.html",
@@ -480,6 +501,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -501,6 +523,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -522,6 +545,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -543,6 +567,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -564,6 +589,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -585,6 +611,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -606,6 +633,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -627,6 +655,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -648,6 +677,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -669,6 +699,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -690,6 +721,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -711,6 +743,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -732,6 +765,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -753,6 +787,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -774,6 +809,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -795,6 +831,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -816,6 +853,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -837,6 +875,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -858,6 +897,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -879,6 +919,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -900,6 +941,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -921,6 +963,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": "first-aid-kit.html",
     "detailLabel": "🩹 open kit checklist",
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -942,6 +985,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -963,6 +1007,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -984,6 +1029,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1005,6 +1051,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1026,6 +1073,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1047,6 +1095,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1068,6 +1117,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1089,6 +1139,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1110,6 +1161,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1131,6 +1183,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1152,6 +1205,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/power.html",
@@ -1178,6 +1232,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1199,6 +1254,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1220,6 +1276,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1241,6 +1298,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1262,6 +1320,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1283,6 +1342,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1304,6 +1364,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1325,6 +1386,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1346,6 +1408,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1367,6 +1430,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1388,6 +1452,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1409,6 +1474,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1430,6 +1496,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1451,6 +1518,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1472,6 +1540,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1493,6 +1562,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1514,6 +1584,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1535,6 +1606,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -1556,6 +1628,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1577,6 +1650,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1598,6 +1672,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1619,6 +1694,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1640,6 +1716,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/waterproof-jackets.html",
@@ -1666,6 +1743,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1687,6 +1765,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": [
       {
         "url": "research/insulated-jackets-2022.html",
@@ -1717,6 +1796,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1738,6 +1818,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1759,6 +1840,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1780,6 +1862,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1801,6 +1884,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1822,6 +1906,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1843,6 +1928,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1864,6 +1950,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1885,6 +1972,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1906,6 +1994,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1927,6 +2016,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1948,6 +2038,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1969,6 +2060,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -1990,6 +2082,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2011,6 +2104,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2032,6 +2126,7 @@ const GEAR_ITEMS = [
     "archived": true,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2053,6 +2148,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2074,6 +2170,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2095,6 +2192,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2116,6 +2214,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2137,6 +2236,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2158,6 +2258,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2179,6 +2280,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2200,6 +2302,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2221,6 +2324,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2242,6 +2346,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2263,6 +2368,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -2284,6 +2390,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2305,6 +2412,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2326,6 +2434,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -2347,6 +2456,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": "first-aid-kit.html",
     "detailLabel": "🩹 open kit checklist",
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2368,6 +2478,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": true,
     "researchLinks": []
   },
   {
@@ -2389,6 +2500,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2410,6 +2522,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2431,6 +2544,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2452,6 +2566,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2473,6 +2588,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2494,6 +2610,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2515,6 +2632,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2536,6 +2654,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   },
   {
@@ -2557,6 +2676,7 @@ const GEAR_ITEMS = [
     "archived": false,
     "detailUrl": null,
     "detailLabel": null,
+    "consumable": false,
     "researchLinks": []
   }
 ];

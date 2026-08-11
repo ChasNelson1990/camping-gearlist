@@ -308,6 +308,11 @@ ul.items {
   white-space: nowrap;
 }
 
+.badge-consumable {
+  border-style: dashed;
+  font-style: italic;
+}
+
 .badge-anjo {
   color: var(--accent);
   border-color: var(--accent);

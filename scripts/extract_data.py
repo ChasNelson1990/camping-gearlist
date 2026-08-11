@@ -101,6 +101,21 @@ ITEM_DETAIL_PAGES = {
     "First aid kit": {"url": "first-aid-kit.html", "label": "🩹 open kit checklist"},
 }
 
+# Items whose listed weight is a depleting/per-trip substance rather than
+# durable gear - excluded from the weight-class calculation (which is meant
+# to track base weight, like the spreadsheet's own Ultralight/Light/Trad/
+# Heavy classification did) and flagged in the UI. Hand-picked rather than
+# driven by the sheet's "Con. / trip" column: that column is also set on
+# reusable containers (Reservoir, Wine bladders, gas canisters) where the
+# listed weight is the container itself, not the substance it holds - only
+# true consumables are listed here.
+ITEM_CONSUMABLE = {
+    "Food", "Food UL", "Coffee", "Water",
+    "Gas can (100 g)", "Gas can (230 g)", "Beer",
+    "Suncream", "Talc", "Wet wipes", "Smidge", "Vaseline", "Skin So Soft",
+    "Toothpaste", "Poo bags",
+}
+
 # Hand-picked, not auto-matched by keyword - Unicode's outdoor-gear coverage
 # is thin enough that a keyword heuristic produces a lot of wrong guesses.
 # Related-but-different items are deliberately given different icons where a
@@ -269,6 +284,7 @@ def build_items(rows, cols, category_const=None, research_links=None):
             "archived": archived,
             "detailUrl": detail["url"] if detail else None,
             "detailLabel": detail["label"] if detail else None,
+            "consumable": name in ITEM_CONSUMABLE,
             "researchLinks": research_links.get(name, []),
         })
         items[-1]["season"] = items[-1]["season"] or None
@@ -469,6 +485,13 @@ def main():
     if unmapped:
         print(f"No ITEM_EMOJI entry for {len(unmapped)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
         for name in unmapped:
+            print(f"  {name}")
+
+    known_names = {it["name"] for it in gear_items}
+    stale_consumables = sorted(ITEM_CONSUMABLE - known_names)
+    if stale_consumables:
+        print(f"ITEM_CONSUMABLE has {len(stale_consumables)} name(s) that don't match any item (typo?):")
+        for name in stale_consumables:
             print(f"  {name}")
 
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)

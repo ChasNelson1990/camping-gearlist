@@ -56,6 +56,7 @@
     var wrap = document.createElement("div");
     wrap.className = "item-meta";
     if (item.weightG) wrap.appendChild(badge(formatWeight(item.weightG)));
+    if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
@@ -203,20 +204,24 @@
     document.getElementById("progress-fill").style.width = total ? (100 * done / total) + "%" : "0%";
 
     var totalWeight = visible.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
-    var packedWeight = visible.filter(function (it) { return checked.has(it._id); })
+    var packedItems = visible.filter(function (it) { return checked.has(it._id); });
+    var packedWeight = packedItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    var packedBaseWeight = packedItems.filter(function (it) { return !it.consumable; })
       .reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
 
     var summaryEl = document.getElementById("weight-summary");
     summaryEl.innerHTML = "";
-    summaryEl.appendChild(document.createTextNode("Total weight: " + formatWeight(totalWeight) + " "));
-    if (totalWeight > 0) {
-      var cls = weightClass(totalWeight);
+    summaryEl.appendChild(document.createTextNode(
+      "Total weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far "
+    ));
+    if (packedBaseWeight > 0) {
+      var cls = weightClass(packedBaseWeight);
       var classBadge = document.createElement("span");
       classBadge.className = "badge weight-class weight-class-" + cls.toLowerCase();
       classBadge.textContent = cls;
+      classBadge.title = "Based on packed gear, excluding consumables (food, fuel, toiletries...)";
       summaryEl.appendChild(classBadge);
     }
-    summaryEl.appendChild(document.createTextNode(" — " + formatWeight(packedWeight) + " packed so far"));
   }
 
   function weightClass(totalGrams) {
