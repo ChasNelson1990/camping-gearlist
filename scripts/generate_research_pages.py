@@ -76,6 +76,14 @@ def main():
     payload = js.split("=", 1)[1].rstrip().rstrip(";")
     sheets = json.loads(payload)
 
+    # Remove pages for sheets that no longer exist (e.g. moved out of
+    # RESEARCH_SHEETS in extract_data.py) so stale pages don't linger.
+    current_slugs = {sheet["slug"] for sheet in sheets}
+    for existing in (ROOT / "research").glob("*.html"):
+        if existing.stem not in current_slugs and existing.name != "index.html":
+            existing.unlink()
+            print(f"Removed stale research/{existing.name}")
+
     for sheet in sheets:
         html = PAGE_TEMPLATE.format(
             title=esc(sheet["title"]),

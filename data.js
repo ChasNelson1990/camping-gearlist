@@ -15,7 +15,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Raincover",
@@ -32,7 +34,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Tent (1.65 m^2) w/ footprint",
@@ -49,7 +53,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Tent (4.4 m^2)",
@@ -66,7 +72,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Tarpaulin",
@@ -83,7 +91,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Repair kit",
@@ -100,7 +110,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping bag",
@@ -117,7 +129,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Thermal sleeping bag liner",
@@ -134,7 +148,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Silk sleeping bag liner",
@@ -151,7 +167,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping bag compression sack",
@@ -168,7 +186,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Quilt",
@@ -185,7 +205,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Quilt compression sack",
@@ -202,7 +224,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping mat, mummy, large",
@@ -219,7 +243,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping mat, mummy, short",
@@ -236,7 +262,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping mat, rectangular",
@@ -253,7 +281,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Footprint",
@@ -270,7 +300,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Chair",
@@ -287,7 +319,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Reservoir",
@@ -304,7 +338,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Water filter",
@@ -321,7 +357,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "1l bladder for dirty water",
@@ -338,7 +376,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Stove with stash bag",
@@ -355,7 +395,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Gas can (100 g)",
@@ -372,7 +414,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Gas can (230 g)",
@@ -389,7 +433,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Firesteel",
@@ -406,7 +452,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Firepit",
@@ -423,7 +471,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Charcoal",
@@ -440,7 +490,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Firelighters",
@@ -457,7 +509,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Aeropress",
@@ -474,7 +528,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Grinder",
@@ -491,7 +547,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Coffee",
@@ -508,7 +566,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Wine bladders",
@@ -525,7 +585,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Beer",
@@ -542,7 +604,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Spork",
@@ -559,7 +623,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Knife",
@@ -576,7 +642,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Skinner",
@@ -593,7 +661,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Pot",
@@ -610,7 +680,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Stash bag",
@@ -627,7 +699,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Food",
@@ -644,7 +718,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Food UL",
@@ -661,7 +737,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Small drybag for food",
@@ -678,7 +756,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Cup",
@@ -695,7 +775,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Bamboo cloth",
@@ -712,7 +794,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "First aid kit",
@@ -729,7 +813,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": "first-aid-kit.html",
+    "detailLabel": "🩹 open kit checklist"
   },
   {
     "name": "Suncream",
@@ -746,7 +832,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Talc",
@@ -763,7 +851,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Wet wipes",
@@ -780,7 +870,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Poo bags",
@@ -797,7 +889,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Towel",
@@ -814,7 +908,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Vaseline",
@@ -831,7 +927,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Toothbrush",
@@ -848,7 +946,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Toothpaste",
@@ -865,7 +965,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Headlamp",
@@ -882,7 +984,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Solar panel",
@@ -899,7 +1003,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Powerpack",
@@ -916,7 +1022,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "USB-C Charging Cable",
@@ -933,7 +1041,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Lantern",
@@ -950,7 +1060,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Charger",
@@ -967,7 +1079,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Mobile Phone",
@@ -984,7 +1098,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Spare phone battery",
@@ -1001,7 +1117,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Mobile Phone",
@@ -1018,7 +1136,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "USB-C Charging Cable",
@@ -1035,7 +1155,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Earphones",
@@ -1052,7 +1174,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Watch",
@@ -1069,7 +1193,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Garmin charging cable",
@@ -1086,7 +1212,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "eReader",
@@ -1103,7 +1231,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "microUSB Charging Cable",
@@ -1120,7 +1250,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "GPS",
@@ -1137,7 +1269,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Active Camera",
@@ -1154,7 +1288,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Camera mount",
@@ -1171,7 +1307,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Midge net",
@@ -1188,7 +1326,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Smidge",
@@ -1205,7 +1345,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Skin So Soft",
@@ -1222,7 +1364,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Tights",
@@ -1239,7 +1383,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Top",
@@ -1256,7 +1402,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Pac Tube",
@@ -1273,7 +1421,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Merino neck tube",
@@ -1290,7 +1440,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Rain Jacket",
@@ -1307,7 +1459,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Rain Pants",
@@ -1324,7 +1478,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Insulating Jacket",
@@ -1341,7 +1497,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Summer Trousers",
@@ -1358,7 +1516,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Winter Trousers",
@@ -1375,7 +1535,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Spare top",
@@ -1392,7 +1554,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sun Hood",
@@ -1409,7 +1573,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Camp socks",
@@ -1426,7 +1592,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Swimming shorts",
@@ -1443,7 +1611,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Thermal top",
@@ -1460,7 +1630,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Thermal bottoms",
@@ -1477,7 +1649,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Thermal glove liners",
@@ -1494,7 +1668,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Walking Socks",
@@ -1511,7 +1687,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Liner Socks",
@@ -1528,7 +1706,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Boxers",
@@ -1545,7 +1725,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Walking Socks (spare)",
@@ -1562,7 +1744,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Liner Socks (spare)",
@@ -1579,7 +1763,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Boxers (spare)",
@@ -1596,7 +1782,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Pillow/Stuff Sack",
@@ -1613,7 +1801,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": true
+    "archived": true,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Clothes dry sack",
@@ -1630,7 +1820,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Walking Boots",
@@ -1647,7 +1839,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Spare small drybag",
@@ -1664,7 +1858,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Front Range pack",
@@ -1681,7 +1877,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Switchbak pack",
@@ -1698,7 +1896,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping bag",
@@ -1715,7 +1915,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Sleeping mat",
@@ -1732,7 +1934,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Blanket",
@@ -1749,7 +1953,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "XXS compression sack for blanket",
@@ -1766,7 +1972,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Half Bag",
@@ -1783,7 +1991,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Water",
@@ -1800,7 +2010,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Bowl",
@@ -1817,7 +2029,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "RIGHT",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Drybag for food",
@@ -1834,7 +2048,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Food",
@@ -1851,7 +2067,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "First aid kit",
@@ -1868,7 +2086,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": "first-aid-kit.html",
+    "detailLabel": "🩹 open kit checklist"
   },
   {
     "name": "Poo bags",
@@ -1885,7 +2105,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "RIGHT",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Towel",
@@ -1902,7 +2124,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "RIGHT",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Drybag for poo",
@@ -1919,7 +2143,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "RIGHT",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Knot-a-Hitch",
@@ -1936,7 +2162,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Hitch Hiker",
@@ -1953,7 +2181,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": false,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Beacon",
@@ -1970,7 +2200,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "TRUE",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Leash",
@@ -1987,7 +2219,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Front Range harness",
@@ -2004,7 +2238,9 @@ const GEAR_ITEMS = [
     "longTrek": false,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Raincoat",
@@ -2021,7 +2257,9 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": "LEFT",
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   },
   {
     "name": "Insulating Jacket",
@@ -2038,6 +2276,8 @@ const GEAR_ITEMS = [
     "longTrek": true,
     "carCamp": true,
     "onBody": null,
-    "archived": false
+    "archived": false,
+    "detailUrl": null,
+    "detailLabel": null
   }
 ];

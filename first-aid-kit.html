@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Aid Kit — Camping Checklist</title>
+<meta name="description" content="Itemised first aid kit checklist for human and dog, generated from camping_gear.ods.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>🩹 First Aid Kit</h1>
+  <a class="research-link" href="index.html">← Checklist</a>
+</header>
+
+<div class="progress" id="progress">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <span id="progress-text">0 of 0 packed</span>
+</div>
+
+<main id="checklist"></main>
+
+<p class="archive-note" id="fa-note"></p>
+
+<footer>
+  <p>Generated from <code>camping_gear.ods</code>. Checkboxes reset every time this page loads - nothing is saved. Source on <a href="https://github.com/ChasNelson1990/camping-gearlist">GitHub</a>.</p>
+</footer>
+
+<script src="first-aid-data.js"></script>
+<script src="first-aid.js"></script>
+</body>
+</html>

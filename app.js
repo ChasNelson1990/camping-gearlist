@@ -63,6 +63,14 @@
         wrap.appendChild(badge(item.current));
       }
     }
+    if (item.detailUrl) {
+      var link = document.createElement("a");
+      link.href = item.detailUrl;
+      link.className = "badge item-link";
+      link.textContent = item.detailLabel || "↗ details";
+      link.addEventListener("click", function (e) { e.stopPropagation(); });
+      wrap.appendChild(link);
+    }
     return wrap;
   }
 
