@@ -140,6 +140,7 @@
 
     updateProgress(visible);
     updateAnjoProgress();
+    updateConsumablesProgress();
   }
 
   function renderCategorySection(cat, catItems) {
@@ -198,17 +199,25 @@
     return name;
   }
 
+  function sumWeight(list) {
+    return list.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+  }
+
+  function fillPercent(packedWeight, totalWeight) {
+    return totalWeight ? (100 * packedWeight / totalWeight) + "%" : "0%";
+  }
+
   function updateProgress(visible) {
     var total = visible.length;
-    var done = visible.filter(function (it) { return checked.has(it._id); }).length;
-    document.getElementById("progress-text").textContent = done + " of " + total + " packed";
-    document.getElementById("progress-fill").style.width = total ? (100 * done / total) + "%" : "0%";
-
-    var totalWeight = visible.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
     var packedItems = visible.filter(function (it) { return checked.has(it._id); });
-    var packedWeight = packedItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
-    var packedBaseWeight = packedItems.filter(function (it) { return !it.consumable && !it.onBody; })
-      .reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    var done = packedItems.length;
+    document.getElementById("progress-text").textContent = done + " of " + total + " packed";
+
+    var totalWeight = sumWeight(visible);
+    var packedWeight = sumWeight(packedItems);
+    document.getElementById("progress-fill").style.width = fillPercent(packedWeight, totalWeight);
+
+    var packedBaseWeight = sumWeight(packedItems.filter(function (it) { return !it.consumable && !it.onBody; }));
 
     var summaryEl = document.getElementById("weight-summary");
     summaryEl.innerHTML = "";
@@ -232,14 +241,29 @@
     var total = anjoItems.length;
     var packedItems = anjoItems.filter(function (it) { return checked.has(it._id); });
     var done = packedItems.length;
-
     document.getElementById("anjo-progress-text").textContent = "🐾 " + done + " of " + total + " on Anjo";
-    document.getElementById("anjo-progress-fill").style.width = total ? (100 * done / total) + "%" : "0%";
 
-    var totalWeight = anjoItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
-    var packedWeight = packedItems.reduce(function (sum, it) { return sum + (it.weightG || 0); }, 0);
+    var totalWeight = sumWeight(anjoItems);
+    var packedWeight = sumWeight(packedItems);
+    document.getElementById("anjo-progress-fill").style.width = fillPercent(packedWeight, totalWeight);
     document.getElementById("anjo-weight-summary").textContent =
       "On Anjo (worn + pouches): " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
+  }
+
+  function updateConsumablesProgress() {
+    var consumableItems = items.filter(function (it) {
+      return it.active && it.consumable && tripOk(it) && seasonOk(it);
+    });
+    var total = consumableItems.length;
+    var packedItems = consumableItems.filter(function (it) { return checked.has(it._id); });
+    var done = packedItems.length;
+    document.getElementById("consumables-progress-text").textContent = done + " of " + total + " consumables packed";
+
+    var totalWeight = sumWeight(consumableItems);
+    var packedWeight = sumWeight(packedItems);
+    document.getElementById("consumables-progress-fill").style.width = fillPercent(packedWeight, totalWeight);
+    document.getElementById("consumables-weight-summary").textContent =
+      "Consumables (yours + Anjo's): " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
   }
 
   function weightClass(totalGrams) {

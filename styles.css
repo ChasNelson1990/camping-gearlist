@@ -185,6 +185,19 @@ a { color: var(--primary); }
   background: var(--primary);
 }
 
+.progress-tertiary {
+  padding-top: 0;
+  opacity: .85;
+}
+
+.progress-tertiary .progress-bar {
+  height: 4px;
+}
+
+.progress-tertiary .progress-fill {
+  background: var(--text-muted);
+}
+
 .weight-summary {
   margin: -.4rem 1rem .6rem;
   font-size: .8rem;
