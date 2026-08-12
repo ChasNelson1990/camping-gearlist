@@ -367,7 +367,7 @@ const GEAR_ITEMS = [
     "weightG": 456.0,
     "cost": "£234.00",
     "comment": null,
-    "current": "https://www.thermarest.com/ie/sleeping-pads/fast-and-light/neoair-xtherm-sleeping-pad/neoair-xtherm.html",
+    "current": "https://web.archive.org/web/20220927092908/https://www.thermarest.com/ie/sleeping-pads/fast-and-light/neoair-xtherm-sleeping-pad/neoair-xtherm.html",
     "currentIsUrl": true,
     "season": null,
     "overnight": true,
