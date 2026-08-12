@@ -89,8 +89,8 @@ change at all in this migration.
   in shape from today.
 - `RESEARCH_SHEETS` metadata: drop the now-redundant ODS sheet-name field (the
   CSV filename already equals the slug). Change `rank_col` from a raw integer
-  index (`rank_col=10`) to the actual column header text (e.g.
-  `rank_col="Cost per (Vol/Weight)"`), resolved to a position via
+  index (`rank_col=14`) to the actual column header text (e.g. bags.csv's
+  `rank_col="Cost per (Volume per Weight)"`), resolved to a position via
   `header.index(...)` at runtime — removes the last positional magic number
   in the script and makes the metadata table self-documenting.
 - Everything else — `ITEM_EMOJI`, `PACK_CONSUMABLE`/`ANJO_CONSUMABLE`,
