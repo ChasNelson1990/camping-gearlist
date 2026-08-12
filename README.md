@@ -1,6 +1,6 @@
 # Camping Gearlist
 
-A mobile-friendly camping packing checklist, generated from `camping_gear.ods`.
+A mobile-friendly camping packing checklist, generated from CSV data files.
 
 **Live site:** https://chasnelson1990.github.io/camping-gearlist/
 
