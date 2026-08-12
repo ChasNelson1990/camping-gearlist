@@ -72,7 +72,7 @@ const GEAR_ITEMS = [
     "weightG": 1778.0,
     "cost": "£570.00",
     "comment": null,
-    "current": "https://nordisk.co.uk/halland-2-lw/burnt-red/p/74",
+    "current": "https://web.archive.org/web/20191016125700/https://nordisk.co.uk/halland-2-lw/burnt-red/p/74",
     "currentIsUrl": true,
     "season": null,
     "overnight": true,
