@@ -14,16 +14,14 @@ It's plain HTML/CSS/JS with no build step, no framework, and no backend, so it d
 
 ## Updating the data
 
-The spreadsheet (`data/camping_gear.ods`) is the source of truth. When it changes:
+Edit the relevant CSV file under `data/` (`data/pack.csv`, `data/anjo.csv`,
+`data/first-aid-kit.csv`, or a sheet under `data/research/`) in any
+spreadsheet app or text editor, then regenerate the generated `.js` files:
 
-```
-python3 scripts/extract_data.py          # regenerates data.js, first-aid-data.js, research-data.js
-python3 scripts/generate_research_pages.py  # regenerates research/*.html from research-data.js
-```
+    python3 scripts/extract_data.py
 
-Both scripts use only the Python standard library (`zipfile` + `xml.etree`) to read the `.ods` directly — no dependencies to install. Commit the regenerated `data.js`, `first-aid-data.js`, `research-data.js`, and `research/*.html` alongside the updated `.ods`. `generate_research_pages.py` also deletes any `research/*.html` for sheets that no longer exist, so removing a sheet from `RESEARCH_SHEETS` cleans up its page automatically.
-
-`scripts/extract_data.py` will raise an error if a column it depends on (e.g. `pack`'s `Category` or `Archive?` column, or `first-aid-kit`'s `For human`/`For dog` columns) has moved — update the relevant `*_COLS`/`*_HEADER_CHECK` constants at the top of the script to match if the sheet layout changes. The "currently used" matches on the research pages (`RESEARCH_SHEETS` in the same script) are hand-picked by brand/model name, not auto-detected — add or adjust entries there if gear changes. Items that get their own dedicated page (currently just "First aid kit") are listed in `ITEM_DETAIL_PAGES`.
+This overwrites `data.js`, `research-data.js`, and `first-aid-data.js`.
+Commit both the CSV change and the regenerated `.js` files together.
 
 ## Local preview
 
