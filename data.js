@@ -3550,4 +3550,4 @@ const GEAR_ITEMS = [
   }
 ];
 const WEIGHT_CLASS_THRESHOLDS = [[0, "Ultralight"], [4.5, "Light"], [7, "Trad"], [14, "Heavy"]];
-const NIGHTS_BY_TRIP = {"all": 2, "overnight": 2, "longTrek": 4, "carCamp": 5};
+const NIGHTS_BY_TRIP = {"all": 2, "overnight": 1, "longTrek": 4, "carCamp": 5};

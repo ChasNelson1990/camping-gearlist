@@ -155,7 +155,7 @@ ITEM_QUANTITY = {
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
-NIGHTS_BY_TRIP = {"all": 2, "overnight": 2, "longTrek": 4, "carCamp": 5}
+NIGHTS_BY_TRIP = {"all": 2, "overnight": 1, "longTrek": 4, "carCamp": 5}
 
 # Hand-picked, not auto-matched by keyword - Unicode's outdoor-gear coverage
 # is thin enough that a keyword heuristic produces a lot of wrong guesses.
