@@ -152,6 +152,86 @@ ITEM_QUANTITY = {
     "Wine bladders": {"max": 2},
 }
 
+# Brand + model label shown on the "view item" link when the item's
+# `current` field is a URL - hand-picked (not scraped from the URL/page
+# title) so the label stays a clean "Brand Model" even when the page itself
+# is a Wayback Machine snapshot or a retailer's own awkward product title.
+# Items with no entry here fall back to the generic "view item" label.
+# Split into pack/anjo like PACK_CONSUMABLE/ANJO_CONSUMABLE because a
+# couple of names ("Insulating Jacket", "Towel") exist on both sides with
+# different products behind them.
+PACK_CURRENT_LABEL = {
+    "1l bladder for dirty water": "Platypus SoftBottle 1L",
+    "Backpack 48 l": "Osprey Exos 48",
+    "Clothes dry sack": "Sea to Summit eVac Dry Sack",
+    "Cup": "Toaks Titanium Cup 375",
+    "Footprint": "Treadlite Gear Ripstop Aluminium Footprint",
+    "Gas can (100 g)": "Jetboil Jetpower Fuel",
+    "Gas can (230 g)": "Jetboil Jetpower Fuel",
+    "Headlamp": "BioLite HeadLamp 330",
+    "Insulating Jacket": "Patagonia Micro Puff Hoody",
+    "Knife": "Deejo 37g Titanium",
+    "Lantern": "BioLite PowerLight",
+    "Midge net": "Smidge Midge-Proof Headnet",
+    "Pac Tube": "P.A.C. Ocean Upcycling Multitube",
+    "Pillow/Stuff Sack": "Therm-a-Rest Stuff Sack Pillow",
+    "Pot": "Toaks Titanium Pot 550ml",
+    "Powerpack": "PowerTraveller Extreme (battery)",
+    "Quilt": "Therm-a-Rest Vesper 20F/-6C",
+    "Quilt compression sack": "Sea to Summit Ultra-Sil eVent Compression Sack",
+    "Rain Jacket": "Patagonia Torrentshell 3L",
+    "Rain Pants": "Patagonia Torrentshell 3L Pants",
+    "Reservoir": "Platypus Big Zip EVO",
+    "Silk sleeping bag liner": "Eurohike Silk Mummy Liner",
+    "Skin So Soft": "Avon Skin So Soft Dry Oil Spray",
+    "Skinner": "Marttiini Skinner Knife",
+    "Sleeping bag compression sack": "Sea to Summit eVent Compression Dry Sack",
+    "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
+    "Sleeping mat, mummy, short": "Therm-a-Rest NeoAir UberLite",
+    "Sleeping mat, rectangular": "Vango Comfort 75",
+    "Small drybag for food": "Exped Fold Drybag UL",
+    "Smidge": "Smidge Repellent",
+    "Solar panel": "PowerTraveller Extreme (solar)",
+    "Spare small drybag": "Exped Fold Drybag UL",
+    "Spare top": "Fjällräven Abisko Wool Long-Sleeve",
+    "Spork": "Toaks Titanium Spork",
+    "Stash bag": "Toaks Stash Bag",
+    "Stove with stash bag": "Vango Compact Gas Stove",
+    "Summer Trousers": "Fjällräven High Coast Lite Trousers",
+    "Sun Hood": "Fjällräven Abisko Sun Hoodie",
+    "Tent (1.65 m^2) w/ footprint": "Nordisk Halland 2 LW",
+    "Thermal bottoms": "Icebreaker Merino 200 Oasis Leggings",
+    "Thermal glove liners": "Icebreaker Merino 200 Oasis Glove Liners",
+    "Thermal sleeping bag liner": "Sea to Summit Thermolite Reactor Liner",
+    "Thermal top": "Icebreaker Merino 200 Oasis Crewe",
+    "Tights": "Fjällräven Abisko Trekking Tights",
+    "Top": "Fjällräven Singi Merino Henley",
+    "Towel": "Sea to Summit Airlite Towel",
+    "Walking Boots": "Lowa Renegade GTX Mid",
+    "Water filter": "Platypus QuickDraw 1L Filter System",
+    "Wine bladders": "Platypus PlatyPreserve",
+    "Winter Trousers": "Fjällräven Lappland Hybrid Trousers",
+}
+ANJO_CURRENT_LABEL = {
+    "Beacon": "Ruffwear The Beacon",
+    "Blanket": "Therm-a-Rest Juno Blanket",
+    "Bowl": "Treadlite Gear Hound-O Bowl",
+    "Drybag for food": "Exped Fold Drybag UL",
+    "Front Range harness": "Ruffwear Front Range Harness",
+    "Front Range pack": "Ruffwear Front Range Day Pack",
+    "Half Bag": "PHD Alpine Ultra Down Half Bag",
+    "Hitch Hiker": "Ruffwear Hitch Hiker Leash",
+    "Insulating Jacket": "Ruffwear Vert Jacket",
+    "Knot-a-Hitch": "Ruffwear Knot-a-Hitch",
+    "Leash": "Ruffwear Patroller Leash",
+    "Raincoat": "Ruffwear Sun Shower Raincoat",
+    "Sleeping bag": "Ruffwear Highlands Sleeping Bag",
+    "Sleeping mat": "Ruffwear Highlands Pad",
+    "Switchbak pack": "Ruffwear Switchbak Harness",
+    "Towel": "PackTowl UltraLite",
+    "XXS compression sack for blanket": "Sea to Summit Ultra-Sil eVent Compression Sack (XXS)",
+}
+
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
@@ -281,9 +361,10 @@ ITEM_EMOJI = {
 }
 
 
-def build_items(rows, category_const=None, research_links=None, consumable_detail=None):
+def build_items(rows, category_const=None, research_links=None, consumable_detail=None, current_label=None):
     research_links = research_links or {}
     consumable_detail = consumable_detail or {}
+    current_label = current_label or {}
     items = []
     for row in rows:
         name = field(row, "name")
@@ -314,6 +395,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "comment": comment,
             "current": current_raw or None,
             "currentIsUrl": current_raw.startswith("http"),
+            "currentLabel": current_label.get(name),
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
@@ -353,6 +435,7 @@ def synthetic_consumable_item(name, category):
         "comment": None,
         "current": None,
         "currentIsUrl": False,
+        "currentLabel": None,
         "season": None,
         "overnight": detail.get("overnight", True),
         "longTrek": detail.get("longTrek", True),
@@ -576,16 +659,24 @@ def main():
     # Jacket") are reused between the human and dog kit, so linking anjo
     # items too would misattribute the human's research to the dog's gear.
     pack_items = build_items(pack_rows, research_links=pack_research_links,
-                              consumable_detail=PACK_CONSUMABLE)
+                              consumable_detail=PACK_CONSUMABLE,
+                              current_label=PACK_CURRENT_LABEL)
     pack_items += synthetic_pack_items()
     anjo_items = build_items(anjo_rows, category_const="Anjo",
-                              consumable_detail=ANJO_CONSUMABLE)
+                              consumable_detail=ANJO_CONSUMABLE,
+                              current_label=ANJO_CURRENT_LABEL)
     gear_items = pack_items + anjo_items
 
     unmapped = sorted({it["name"] for it in gear_items if it["name"] not in ITEM_EMOJI})
     if unmapped:
         print(f"No ITEM_EMOJI entry for {len(unmapped)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
         for name in unmapped:
+            print(f"  {name}")
+
+    unlabeled = sorted({it["name"] for it in gear_items if it["currentIsUrl"] and not it["currentLabel"]})
+    if unlabeled:
+        print(f"No PACK_CURRENT_LABEL/ANJO_CURRENT_LABEL entry for {len(unlabeled)} item(s) with a current URL, using generic 'view item':")
+        for name in unlabeled:
             print(f"  {name}")
 
     known_names = {it["name"] for it in gear_items}

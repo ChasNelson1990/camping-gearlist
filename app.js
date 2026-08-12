@@ -210,7 +210,7 @@
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
       if (item.currentIsUrl) {
-        wrap.appendChild(linkBadge(item.current, "↗ view item", true));
+        wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true));
       } else {
         wrap.appendChild(badge(item.current));
       }
