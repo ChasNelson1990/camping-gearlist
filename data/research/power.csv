@@ -1,0 +1,26 @@
+Product,URL,Weight/g,Solar Power/W,Battery Capacity/Ah,Battery Power/W,Price,Pow. + (Cap. * 3V) / Mass,Price / Ratio
+Biolite Solar Panel 5+,https://uk.bioliteenergy.com/products/solarpanel-5-plus,390,5,3.2,16,72,0.0374,1923
+Biolite Solar Panel 10+,https://uk.bioliteenergy.com/products/solarpanel-10-plus,550,10,3.2,16,117,0.0356,3283
+Biolite Charge 20 PD,https://uk.bioliteenergy.com/products/charge-20-pd,165,0,6,30,30,0.1091,275
+Biolite Charge 40 PD,https://uk.bioliteenergy.com/products/charge-40-pd,265,0,10,50,45,0.1132,398
+Biolite Charge 80 PD,https://uk.bioliteenergy.com/products/charge-80-pd,465,0,20,100,63,0.1290,488
+PowerTraveller Solar Adventurer II,https://powertraveller.com/products/solar-adventurer-ii-solar-charger,385,3,10,50,73,0.0857,852
+PowerTraveller SolarGorilla,https://powertraveller.com/collections/chargers/products/solargorilla-multi-voltage-solar-charger,848,10,0,0,150,0.0118,12720
+PowerTraveller Extreme,https://powertraveller.com/collections/chargers/products/extreme-solar-kit,563,5,12,44,115,0.0728,1579
+PowerTraveller Extreme (battery only),https://powertraveller.com/collections/chargers/products/extreme-solar-kit,274,0,12,44,64,0.1314,487
+PowerTraveller Extreme (solar only),https://powertraveller.com/collections/chargers/products/extreme-solar-kit,289,5,0,0,65,0.0173,3757
+GoalZero Nomad 5,https://www.goalzero.co.uk/collections/solar-panels/products/nomad-5,360,5,0,0,45,0.0139,3240
+GoalZero Nomad 10,https://www.goalzero.co.uk/collections/solar-panels/products/nomad-5,510,10,0,0,85,0.0196,4335
+Goal Zero Venture 35 + Nomad 10 Kit ,,796.9,10,9.6,48,145,0.0487,2978
+PowerTraveller Harrier 25,https://powertraveller.com/collections/power-packs/products/harrier-25-wireless-power-pack,220,0,6.7,33.5,58,0.0914,635
+BioLite PowerLight,https://cdn.shopify.com/s/files/1/0666/9741/files/PowerLight_InstructionManual_reader.pdf?128112,210,0,4.4,22,65,0.0629,1034
+Anker 325,https://www.anker.com/uk/products/a1268?variant=37339971223716,350,0,20,100,40,0.1714,233
+Nitecore NB10000,,150,0,10,50,58,0.2000,290
+Nitecore NB20000,,324.5,0,20,100,85,0.1849,460
+PowerTraveller Merlin 75PD,https://powertraveller.com/collections/power-packs/products/merlin-75pd-multi-voltage-power-pack,540,0,20,100,95,0.1111,855
+PowerTraveller Condor 100,https://powertraveller.com/collections/power-packs/products/condor-100-multi-voltage-power-pack-with-ac-outlet,800,0,27,135,199,0.1013,1965
+PowerTraveller Sport 25 + Falcon 7,,417,7,6.7,33.5,105,0.0650,1616
+Anker 537,https://www.anker.com/uk/products/b1376?variant=37340050981028,730,0,26.8,45,130,0.1101,1180
+Anker 737,https://www.anker.com/uk/products/a1289?variant=42498009497764,630,0,24,140,140,0.1143,1225
+Anker 337,https://www.anker.com/uk/products/a1277?variant=37339392573604,495,0,26.8,30,67,0.1624,413
+,,,,0.054,0.04,,,
