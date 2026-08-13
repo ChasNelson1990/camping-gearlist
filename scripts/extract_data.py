@@ -102,7 +102,6 @@ ITEM_DETAIL_PAGES = {
 # sides ("Water", "Food") and need different parents/amounts on each.
 PACK_CONSUMABLE = {
     "Gas can (100 g)": {"parent": "Stove with stash bag", "amount": 100, "unit": "g"},
-    "Gas can (230 g)": None,  # archived; not covered by the design - keeps old flat/unscaled behavior
     "Coffee": {"parent": "Grinder", "amount": 14, "unit": "g"},
     "Water": {"parent": "Reservoir", "amount": 2, "unit": "l"},
     "Food": {
@@ -119,7 +118,6 @@ PACK_CONSUMABLE = {
     "Wet wipes": {"parent": None, "amount": 20, "unit": "g"},
     "Vaseline": {"parent": None, "amount": 43.25, "unit": "g"},
     "Smidge": {"parent": "Midge net", "amount": 100, "unit": "g"},
-    "Skin So Soft": {"parent": None, "amount": 150, "unit": "g"},
     "Toothpaste": {"parent": "Toothbrush", "amount": 5, "unit": "g"},
     "Poo bags": None,
     "Beer": None,
@@ -375,7 +373,12 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             continue
         number = parse_num(field(row, "number"))
         archived = is_true(field(row, "archived")) if "archived" in row else False
-        active = bool(number and number > 0) and not archived
+        if not (bool(number and number > 0) and not archived):
+            # Inactive/archived rows aren't emitted at all - there's no more
+            # archive section to show them in (see the "Unused gear" section
+            # in app.js, which is a different, dynamic concept: active gear
+            # that just doesn't match the current trip/season filters).
+            continue
         current_raw = field(row, "current")
         onbody_raw = field(row, "on_body")
         detail_page = ITEM_DETAIL_PAGES.get(name)
@@ -388,7 +391,6 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "name": name,
             "emoji": ITEM_EMOJI.get(name, ITEM_EMOJI_DEFAULT),
             "category": category_const or field(row, "category") or "Miscellaneous",
-            "active": active,
             "number": number,
             "weightG": ITEM_WEIGHT_OVERRIDE.get(name, parse_num(field(row, "weight_g"))),
             "cost": field(row, "cost_gbp") or None,
@@ -401,7 +403,6 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
             "carCamp": (consumable or {}).get("carCamp", is_true(field(row, "car_camp"))),
             "onBody": onbody_raw or None,
-            "archived": archived,
             "detailUrl": detail_page["url"] if detail_page else None,
             "detailLabel": detail_page["label"] if detail_page else None,
             "researchLinks": research_links.get(name, []),
@@ -428,7 +429,6 @@ def synthetic_consumable_item(name, category):
         "name": name,
         "emoji": ITEM_EMOJI.get(name, ITEM_EMOJI_DEFAULT),
         "category": category,
-        "active": True,
         "number": 1.0,
         "weightG": None,
         "cost": None,
@@ -441,7 +441,6 @@ def synthetic_consumable_item(name, category):
         "longTrek": detail.get("longTrek", True),
         "carCamp": detail.get("carCamp", True),
         "onBody": None,
-        "archived": False,
         "detailUrl": None,
         "detailLabel": None,
         "researchLinks": [],

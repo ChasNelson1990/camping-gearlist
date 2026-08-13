@@ -83,7 +83,7 @@
 
   function visibleActiveItems() {
     return items.filter(function (it) {
-      return it.active && state.categories.has(it.category) && tripOk(it) && seasonOk(it);
+      return state.categories.has(it.category) && tripOk(it) && seasonOk(it);
     });
   }
 
@@ -302,6 +302,7 @@
     updateProgress(visible);
     updateAnjoProgress();
     updateConsumablesProgress();
+    renderUnusedGear();
     saveState();
   }
 
@@ -444,7 +445,7 @@
 
   function updateAnjoProgress() {
     var anjoItems = items.filter(function (it) {
-      return it.category === "Anjo" && it.active && it.onBody && tripOk(it) && seasonOk(it);
+      return it.category === "Anjo" && it.onBody && tripOk(it) && seasonOk(it);
     });
     var total = anjoItems.length;
     var packedItems = anjoItems.filter(function (it) { return checked.has(it._id); });
@@ -460,7 +461,7 @@
 
   function updateConsumablesProgress() {
     var consumableItems = items.filter(function (it) {
-      return it.active && it.consumable && tripOk(it) && seasonOk(it);
+      return it.consumable && tripOk(it) && seasonOk(it);
     });
     var total = consumableItems.length;
     var packedItems = consumableItems.filter(function (it) { return checked.has(it._id); });
@@ -483,24 +484,39 @@
     return label;
   }
 
-  function renderArchive() {
-    var archived = items.filter(function (it) { return !it.active; });
-    document.getElementById("archive-count").textContent = "(" + archived.length + ")";
-    var wrap = document.getElementById("archive-content");
+  function renderUnusedGear() {
+    // Active gear that just doesn't match the current trip/season filters -
+    // distinct from the old "archive" concept (which no longer exists: gear
+    // that's actually unowned/retired is dropped from the data entirely by
+    // extract_data.py, not shown here). Category toggles still apply, so
+    // hiding a whole category also hides its items from this list.
+    var unused = items.filter(function (it) {
+      return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it));
+    });
+    document.getElementById("unused-gear-count").textContent = "(" + unused.length + ")";
+    var wrap = document.getElementById("unused-gear-content");
+    wrap.innerHTML = "";
+    if (!unused.length) {
+      var empty = document.createElement("p");
+      empty.className = "unused-note";
+      empty.textContent = "Nothing excluded by the current trip/season filters.";
+      wrap.appendChild(empty);
+      return;
+    }
     CATEGORY_ORDER.forEach(function (cat) {
-      var catItems = archived.filter(function (it) { return it.category === cat; });
+      var catItems = unused.filter(function (it) { return it.category === cat; });
       if (!catItems.length) return;
       var section = document.createElement("div");
-      section.className = "archive-category";
+      section.className = "unused-category";
       var h3 = document.createElement("h3");
       h3.textContent = cat;
       section.appendChild(h3);
       var ul = document.createElement("ul");
-      ul.className = "archive-items";
+      ul.className = "unused-items";
       catItems.forEach(function (item) {
         var li = document.createElement("li");
-        li.className = "archive-item";
-        li.appendChild(itemNameEl(item, item.archived ? " — archived" : " — not currently used"));
+        li.className = "unused-item";
+        li.appendChild(itemNameEl(item));
         li.appendChild(buildMeta(item, false));
         if (item.comment) {
           var c = document.createElement("div");
@@ -537,5 +553,4 @@
   renderCategoryChips();
   renderNightsControl();
   renderChecklist();
-  renderArchive();
 })();

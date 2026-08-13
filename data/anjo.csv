@@ -14,11 +14,11 @@ First aid kit,1,49.8,,,,TRUE,TRUE,TRUE,
 Poo bags,1,34,,,,TRUE,TRUE,TRUE,RIGHT
 Towel,1,42.4,£18.00,,https://web.archive.org/web/20240420134552/https://www.packtowl.com/ie/shop/towels/ultralite-towel/ultralite.html,TRUE,TRUE,TRUE,RIGHT
 Drybag for poo,1,19.3,,,,TRUE,TRUE,TRUE,RIGHT
-Knot-a-Hitch,0,340,£90.00,,https://ruffwear.co.uk/products/knot-a-hitch,,,TRUE,
+Knot-a-Hitch,1,340,£90.00,,https://ruffwear.co.uk/products/knot-a-hitch,,,TRUE,
 Hitch Hiker,1,225,£80.00,,https://ruffwear.co.uk/products/hitch-hiker-leash,,,,
 Beacon,1,20,£34.00,,https://ruffwear.co.uk/products/the-beacon-safety-dog-light,TRUE,TRUE,TRUE,TRUE
-Leash,0,91,£39.00,,https://web.archive.org/web/20220525201306/https://ruffwear.co.uk/products/patroller-dog-leash,,,TRUE,
-Front Range harness,0,165,£55.00,,https://ruffwear.co.uk/products/front-range-everyday-dog-harness,,,TRUE,
+Leash,1,91,£39.00,,https://web.archive.org/web/20220525201306/https://ruffwear.co.uk/products/patroller-dog-leash,,,TRUE,
+Front Range harness,1,165,£55.00,,https://ruffwear.co.uk/products/front-range-everyday-dog-harness,,,TRUE,
 Raincoat,1,136,£80.00,,https://ruffwear.co.uk/products/sun-shower-dog-raincoat,TRUE,TRUE,TRUE,LEFT
 Insulating Jacket,1,180,£110.00,,https://ruffwear.co.uk/products/vert-waterproof-insulated-dog-jacket,TRUE,TRUE,TRUE,
 Total,,,"£1,155.00",,,13,13,13,8
