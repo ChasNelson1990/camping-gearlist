@@ -11,6 +11,22 @@
     return span;
   }
 
+  function linkBadge(href, label, external) {
+    var a = document.createElement("a");
+    a.href = href;
+    if (external) { a.target = "_blank"; a.rel = "noopener"; }
+    a.className = "badge item-link";
+    a.textContent = label;
+    return a;
+  }
+
+  // detailUrl/researchLinks are generated relative to the site root (e.g.
+  // "research/bags.html"), but this page lives one level down at /review/ -
+  // item.current is a full external http(s) URL and never needs this.
+  function fromRoot(path) {
+    return "../" + path;
+  }
+
   function formatWeight(g) {
     if (g >= 1000) return (g / 1000).toFixed(g % 1000 === 0 ? 0 : 1) + " kg";
     return (g % 1 === 0 ? g : g.toFixed(1)) + " g";
@@ -55,6 +71,21 @@
     wrap.appendChild(badge(seasonLabel(item), "badge-season"));
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
+    if (item.current) {
+      if (item.currentIsUrl) {
+        wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true));
+      } else {
+        wrap.appendChild(badge(item.current));
+      }
+    }
+    if (item.detailUrl) {
+      wrap.appendChild(linkBadge(fromRoot(item.detailUrl), item.detailLabel || "↗ details", false));
+    }
+    if (item.researchLinks) {
+      item.researchLinks.forEach(function (link) {
+        wrap.appendChild(linkBadge(fromRoot(link.url), link.label, false));
+      });
+    }
     return wrap;
   }
 
