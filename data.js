@@ -7,7 +7,7 @@ const GEAR_ITEMS = [
     "number": 1.0,
     "weightG": 1330.0,
     "cost": "£160.00",
-    "comment": null,
+    "comment": "Link goes to the current Exos 48 listing - it may show a newer generation than the one actually owned; couldn't confirm which generation ours is.",
     "current": "https://ultralightoutdoorgear.co.uk/2022-exos-48-rucksack/",
     "currentIsUrl": true,
     "currentLabel": "Osprey Exos 48",
