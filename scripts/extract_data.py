@@ -735,6 +735,21 @@ def main():
         for line in invalid_item_parents:
             print(f"  {line}")
 
+    # app.js keys checkbox/consumable-amount/quantity state by "category::name"
+    # (a stable id, unlike an array index, that survives GEAR_ITEMS being
+    # reordered or resized between regenerations) - it must stay unique.
+    seen_keys = {}
+    duplicate_keys = []
+    for it in gear_items:
+        key = f"{it['category']}::{it['name']}"
+        if key in seen_keys:
+            duplicate_keys.append(key)
+        seen_keys[key] = True
+    if duplicate_keys:
+        print(f"{len(duplicate_keys)} duplicate category::name pair(s) - app.js's per-item state keying requires these to be unique:")
+        for key in duplicate_keys:
+            print(f"  {key}")
+
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
     nights_js = json.dumps(NIGHTS_BY_TRIP, ensure_ascii=False)
     (ROOT / "data.js").write_text(

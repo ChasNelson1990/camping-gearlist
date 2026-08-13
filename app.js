@@ -8,8 +8,15 @@
   };
   var TRIP_KEYS = { overnight: "overnight", longTrek: "longTrek", carCamp: "carCamp" };
 
-  var items = GEAR_ITEMS.map(function (item, i) {
-    item._id = i;
+  // Stable per item, not a positional array index: sessionStorage persists
+  // across page loads (and across a deploy, if the tab was already open),
+  // but GEAR_ITEMS' order/length can change between regenerations (items
+  // added, removed, reordered) - an index-based id would silently point at
+  // a different item, or none at all, after any such change. category+name
+  // is unique across the whole list (extract_data.py validates this at
+  // generation time) and stays stable regardless of array position.
+  var items = GEAR_ITEMS.map(function (item) {
+    item._id = item.category + "::" + item.name;
     return item;
   });
 
@@ -30,6 +37,14 @@
   items.forEach(function (it) {
     if (it.perNightAmount != null) consumableAmounts.set(it._id, it.perNightAmount);
   });
+
+  // Falls back to the item's own recommended amount (not 0) if the map has
+  // no entry - e.g. a sessionStorage snapshot saved before this item's id
+  // existed (a prior page load, before a deploy added/renamed/reordered
+  // items) shouldn't be able to make a consumable look zeroed-out.
+  function getAmount(item) {
+    return consumableAmounts.has(item._id) ? consumableAmounts.get(item._id) : item.perNightAmount;
+  }
 
   // Live "how many do I bring" count for durable items with a quantityMax
   // (e.g. Wine bladders) - starts at 1, freely editable up to quantityMax.
@@ -111,7 +126,7 @@
   function buildConsumableStepper(item) {
     var wrap = document.createElement("span");
     wrap.className = "stepper";
-    var amount = consumableAmounts.get(item._id) || 0;
+    var amount = getAmount(item);
 
     var minus = document.createElement("button");
     minus.type = "button";
@@ -374,7 +389,7 @@
 
   function effectiveWeight(item) {
     if (item.perNightAmount != null) {
-      var amount = consumableAmounts.get(item._id) || 0;
+      var amount = getAmount(item);
       var grams = item.perNightUnit === "l" ? amount * 1000 : amount;
       var nights = item.scalesWithNights === false ? 1 : state.nights;
       return grams * nights;
@@ -395,7 +410,7 @@
   }
 
   function adjustAmount(item, delta) {
-    var current = consumableAmounts.get(item._id) || 0;
+    var current = getAmount(item);
     var next = Math.max(0, current + delta);
     if (item.maxAmount != null) next = Math.min(next, item.maxAmount);
     consumableAmounts.set(item._id, next);
