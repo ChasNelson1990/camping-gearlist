@@ -185,7 +185,7 @@ PACK_CURRENT_LABEL = {
     "Pac Tube": "P.A.C. Ocean Upcycling Multitube",
     "Pillow/Stuff Sack": "Therm-a-Rest Stuff Sack Pillow",
     "Pot": "Toaks Titanium Pot 550ml",
-    "Powerpack": "PowerTraveller Extreme (battery)",
+    "Powerpack": "Nitecore NB20000",
     "Quilt": "Therm-a-Rest Vesper 20F/-6C",
     "Quilt compression sack": "Sea to Summit Ultra-Sil eVent Compression Sack",
     "Rain Jacket": "Patagonia Torrentshell 3L",
@@ -538,7 +538,7 @@ RESEARCH_SHEETS = [
     ("power", "Power banks & solar panels", "Gear comparisons",
      "Power bank / solar panel options compared by weight, solar/battery "
      "output, and the sheet's own price-per-ratio score.",
-     dict(brand="PowerTraveller", model="Extreme (battery only)", rank_col="Price / Ratio",
+     dict(brand="Nitecore", model="NB20000", rank_col="Price / Ratio",
           rank_asc=True, rank_label="price/ratio", item="Powerpack")),
     ("chairs", "Camp chairs", "Gear comparisons",
      "Camp chair options compared by weight, seat/back height, and price - no "
