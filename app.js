@@ -355,7 +355,16 @@
     cb.type = "checkbox";
     cb.checked = checked.has(item._id);
     cb.addEventListener("change", function () {
-      if (cb.checked) checked.add(item._id); else checked.delete(item._id);
+      if (cb.checked) {
+        checked.add(item._id);
+        // Checking a sub-item implies its parent is packed too - but this
+        // is one-directional and doesn't repeat: checking/unchecking the
+        // parent never touches the child, and unchecking a sub-item never
+        // unchecks its parent either.
+        if (item.parentName) checked.add(item.category + "::" + item.parentName);
+      } else {
+        checked.delete(item._id);
+      }
       renderChecklist();
     });
     li.appendChild(cb);
