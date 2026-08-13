@@ -295,11 +295,13 @@ main#checklist {
      several uneven-height categories (avoids grid's row-locked gaps below
      short ones), but it can leave a phantom empty column when there are
      only one or two. Only used where that's actually the case. */
-  main#checklist.multi {
+  main#checklist.multi,
+  #unused-gear-content.multi {
     column-width: 320px;
     column-gap: 1.5rem;
   }
-  main#checklist.multi .category {
+  main#checklist.multi .category,
+  #unused-gear-content.multi .category {
     break-inside: avoid-column;
     -webkit-column-break-inside: avoid;
   }
@@ -495,41 +497,7 @@ details#unused-gear[open] summary::before {
   margin: 0 1rem 1rem;
 }
 
-#unused-gear-content { padding: 0 1rem 1rem; }
-
-@media (min-width: 720px) {
-  #unused-gear-content {
-    column-width: 320px;
-    column-gap: 1.5rem;
-  }
-  .unused-category {
-    break-inside: avoid-column;
-    -webkit-column-break-inside: avoid;
-  }
-}
-
-.unused-category h3 {
-  font-size: .82rem;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--text-muted);
-  margin: 1rem 0 .3rem;
-}
-
-ul.unused-items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.unused-item {
-  padding: .5rem 0;
-  border-bottom: 1px solid var(--border);
-  font-size: .85rem;
-}
-.unused-item:last-child { border-bottom: none; }
-
-.unused-item .item-meta { margin-top: .25rem; }
+#unused-gear-content { padding: .25rem 1rem 1rem; }
 
 footer {
   padding: 1.2rem 1rem 2rem;

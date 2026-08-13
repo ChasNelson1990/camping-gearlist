@@ -489,7 +489,9 @@
     // distinct from the old "archive" concept (which no longer exists: gear
     // that's actually unowned/retired is dropped from the data entirely by
     // extract_data.py, not shown here). Category toggles still apply, so
-    // hiding a whole category also hides its items from this list.
+    // hiding a whole category also hides its items from this list. Cards are
+    // built with the same renderCategorySection() as the main checklist, so
+    // these items are just as checkable/interactive as any other category.
     var unused = items.filter(function (it) {
       return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it));
     });
@@ -498,7 +500,7 @@
     wrap.innerHTML = "";
     if (!unused.length) {
       var empty = document.createElement("p");
-      empty.className = "unused-note";
+      empty.className = "empty-state";
       empty.textContent = "Nothing excluded by the current trip/season filters.";
       wrap.appendChild(empty);
       return;
@@ -506,28 +508,7 @@
     CATEGORY_ORDER.forEach(function (cat) {
       var catItems = unused.filter(function (it) { return it.category === cat; });
       if (!catItems.length) return;
-      var section = document.createElement("div");
-      section.className = "unused-category";
-      var h3 = document.createElement("h3");
-      h3.textContent = cat;
-      section.appendChild(h3);
-      var ul = document.createElement("ul");
-      ul.className = "unused-items";
-      catItems.forEach(function (item) {
-        var li = document.createElement("li");
-        li.className = "unused-item";
-        li.appendChild(itemNameEl(item));
-        li.appendChild(buildMeta(item, false));
-        if (item.comment) {
-          var c = document.createElement("div");
-          c.className = "item-comment";
-          c.textContent = item.comment;
-          li.appendChild(c);
-        }
-        ul.appendChild(li);
-      });
-      section.appendChild(ul);
-      wrap.appendChild(section);
+      wrap.appendChild(renderCategorySection(cat, catItems));
     });
   }
 
