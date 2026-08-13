@@ -268,6 +268,7 @@
         wrap.appendChild(linkBadge(link.url, link.label, false));
       });
     }
+    if (item.needsCharge) wrap.appendChild(buildChargeToggle(item));
     return wrap;
   }
 
@@ -405,7 +406,6 @@
       comment.textContent = item.comment;
       body.appendChild(comment);
     }
-    if (item.needsCharge) body.appendChild(buildChargeToggle(item));
     li.appendChild(body);
     return li;
   }

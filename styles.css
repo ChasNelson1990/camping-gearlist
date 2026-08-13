@@ -466,17 +466,17 @@ ul.items {
   display: inline-flex;
   align-items: center;
   gap: .3rem;
-  font-size: .78rem;
+  font-size: .72rem;
   color: var(--text-muted);
-  margin-top: .3rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  margin-left: auto;
 }
 
 .charge-toggle input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
   accent-color: var(--accent);
 }
 
