@@ -462,6 +462,24 @@ ul.items {
   margin-top: .25rem;
 }
 
+.charge-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .78rem;
+  color: var(--text-muted);
+  margin-top: .3rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.charge-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  accent-color: var(--accent);
+}
+
 .item-link {
   font-size: .78rem;
   text-decoration: none;

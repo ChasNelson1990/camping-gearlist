@@ -31,6 +31,11 @@
 
   var checked = new Set();
 
+  // Independent from `checked` - tracks whether a rechargeable item's
+  // battery has been topped up before the trip, for items with
+  // needsCharge. Doesn't affect packed counts/weight, just its own toggle.
+  var charged = new Set();
+
   // Live per-night amount for each consumable, keyed by item._id. Seeded
   // from perNightAmount, then freely editable via the +/- stepper.
   var consumableAmounts = new Map();
@@ -63,6 +68,7 @@
         nights: state.nights,
         categories: Array.from(state.categories),
         checked: Array.from(checked),
+        charged: Array.from(charged),
         consumableAmounts: Array.from(consumableAmounts.entries()),
         itemQuantities: Array.from(itemQuantities.entries()),
       }));
@@ -81,6 +87,7 @@
       if (typeof saved.nights === "number") state.nights = saved.nights;
       if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
       if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
+      if (Array.isArray(saved.charged)) charged = new Set(saved.charged);
       if (Array.isArray(saved.consumableAmounts)) consumableAmounts = new Map(saved.consumableAmounts);
       if (Array.isArray(saved.itemQuantities)) itemQuantities = new Map(saved.itemQuantities);
     } catch (e) {
@@ -196,6 +203,24 @@
     wrap.appendChild(value);
     wrap.appendChild(plus);
     return wrap;
+  }
+
+  function buildChargeToggle(item) {
+    var label = document.createElement("label");
+    label.className = "charge-toggle";
+
+    var cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = charged.has(item._id);
+    cb.addEventListener("click", function (e) { e.stopPropagation(); });
+    cb.addEventListener("change", function (e) {
+      e.stopPropagation();
+      if (cb.checked) charged.add(item._id); else charged.delete(item._id);
+      renderChecklist();
+    });
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(" charged"));
+    return label;
   }
 
   function buildMeta(item, interactive) {
@@ -380,6 +405,7 @@
       comment.textContent = item.comment;
       body.appendChild(comment);
     }
+    if (item.needsCharge) body.appendChild(buildChargeToggle(item));
     li.appendChild(body);
     return li;
   }

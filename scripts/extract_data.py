@@ -250,6 +250,15 @@ PACK_CURRENT_NOTE = {
     "Backpack 48 l": "May show a newer generation than the one actually owned",
 }
 
+# Items with a rechargeable battery that should be charged before a trip -
+# rendered as a second, independent checkbox alongside the normal packed
+# one. Not split pack/anjo like PACK_CONSUMABLE - none of these names
+# collide between the two sides, so one flat set covers both.
+NEEDS_CHARGE = {
+    "Headlamp", "Powerpack", "Lantern", "Mobile Phone", "Earphones",
+    "Watch", "eReader", "GPS", "Beacon",
+}
+
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
@@ -420,6 +429,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "currentIsUrl": current_raw.startswith("http"),
             "currentLabel": current_label.get(name),
             "currentNote": current_note.get(name),
+            "needsCharge": name in NEEDS_CHARGE,
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
@@ -459,6 +469,7 @@ def synthetic_consumable_item(name, category):
         "currentIsUrl": False,
         "currentLabel": None,
         "currentNote": None,
+        "needsCharge": False,
         "season": None,
         "overnight": detail.get("overnight", True),
         "longTrek": detail.get("longTrek", True),
@@ -762,6 +773,12 @@ def main():
         print(f"{len(duplicate_keys)} duplicate category::name pair(s) - app.js's per-item state keying requires these to be unique:")
         for key in duplicate_keys:
             print(f"  {key}")
+
+    stale_needs_charge = sorted(NEEDS_CHARGE - known_names)
+    if stale_needs_charge:
+        print(f"NEEDS_CHARGE has {len(stale_needs_charge)} name(s) that don't match any item (typo?):")
+        for name in stale_needs_charge:
+            print(f"  {name}")
 
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
     nights_js = json.dumps(NIGHTS_BY_TRIP, ensure_ascii=False)
