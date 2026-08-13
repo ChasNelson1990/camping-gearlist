@@ -2,6 +2,11 @@
   "use strict";
 
   var CATEGORY_ORDER = ["Basics", "Kitchen", "Health", "Electronics", "Clothing", "Miscellaneous", "Anjo"];
+  var CATEGORY_EMOJI = {
+    Basics: "🎒", Kitchen: "🍳", Health: "🩹", Electronics: "🔌",
+    Clothing: "👕", Miscellaneous: "🧰", Anjo: "🐾",
+  };
+  var TRIP_EMOJI = { overnight: "🌙", longTrek: "🥾", carCamp: "🚗" };
   var items = GEAR_ITEMS;
 
   function badge(text, extraClass) {
@@ -41,16 +46,17 @@
 
   function tripLabel(item) {
     var flags = [];
-    if (item.overnight) flags.push("Overnight");
-    if (item.longTrek) flags.push("Long trek");
-    if (item.carCamp) flags.push("Car camp");
-    if (flags.length === 3) return "All trips";
+    if (item.overnight) flags.push(TRIP_EMOJI.overnight + " Overnight");
+    if (item.longTrek) flags.push(TRIP_EMOJI.longTrek + " Long trek");
+    if (item.carCamp) flags.push(TRIP_EMOJI.carCamp + " Car camp");
+    if (flags.length === 3) return "🧳 All trips";
     if (!flags.length) return "No trips flagged";
     return flags.join(", ");
   }
 
   function seasonLabel(item) {
-    return item.season || "All seasons";
+    if (!item.season) return "🌦 All seasons";
+    return (item.season === "Summer" ? "☀" : "❄") + " " + item.season;
   }
 
   function buildMeta(item) {
@@ -123,7 +129,8 @@
     var section = document.createElement("section");
     section.className = "category";
     var h2 = document.createElement("h2");
-    h2.innerHTML = "<span>" + cat + "</span><span>" + catItems.length + "</span>";
+    var catLabel = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+    h2.innerHTML = "<span>" + catLabel + "</span><span>" + catItems.length + "</span>";
     section.appendChild(h2);
     var ul = document.createElement("ul");
     ul.className = "items";

@@ -2,6 +2,10 @@
   "use strict";
 
   var CATEGORY_ORDER = ["Basics", "Kitchen", "Health", "Electronics", "Clothing", "Miscellaneous", "Anjo"];
+  var CATEGORY_EMOJI = {
+    Basics: "🎒", Kitchen: "🍳", Health: "🩹", Electronics: "🔌",
+    Clothing: "👕", Miscellaneous: "🧰", Anjo: "🐾",
+  };
   var TRIP_KEYS = { overnight: "overnight", longTrek: "longTrek", carCamp: "carCamp" };
 
   var items = GEAR_ITEMS.map(function (item, i) {
@@ -246,7 +250,7 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "chip category" + (state.categories.has(cat) ? " active" : " off");
-      btn.textContent = cat;
+      btn.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
       btn.setAttribute("aria-pressed", state.categories.has(cat));
       btn.addEventListener("click", function () {
         if (state.categories.has(cat)) state.categories.delete(cat);
@@ -312,7 +316,8 @@
 
     var h2 = document.createElement("h2");
     var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
-    h2.innerHTML = "<span>" + cat + "</span><span>" + checkedCount + "/" + catItems.length + "</span>";
+    var catLabel = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+    h2.innerHTML = "<span>" + catLabel + "</span><span>" + checkedCount + "/" + catItems.length + "</span>";
     section.appendChild(h2);
 
     var ul = document.createElement("ul");
