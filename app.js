@@ -113,10 +113,11 @@
     return span;
   }
 
-  function linkBadge(href, label, external) {
+  function linkBadge(href, label, external, title) {
     var a = document.createElement("a");
     a.href = href;
     if (external) { a.target = "_blank"; a.rel = "noopener"; }
+    if (title) a.title = title;
     a.className = "badge item-link";
     a.textContent = label;
     a.addEventListener("click", function (e) { e.stopPropagation(); });
@@ -229,7 +230,7 @@
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
       if (item.currentIsUrl) {
-        wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true));
+        wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true, item.currentNote));
       } else {
         wrap.appendChild(badge(item.current));
       }

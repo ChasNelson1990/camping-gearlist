@@ -241,6 +241,15 @@ ANJO_CURRENT_LABEL = {
     "XXS compression sack for blanket": "Sea to Summit Ultra-Sil eVent Compression Sack (XXS)",
 }
 
+# Short caveat shown as a hover tooltip on the "current" link badge, for
+# cases where the live page is known to drift from what's actually owned
+# (e.g. a retailer page that now shows a newer model generation) - kept out
+# of the item's `comment` field so it doesn't add a permanent visible line
+# for what's a link-specific caveat, not a general note about the item.
+PACK_CURRENT_NOTE = {
+    "Backpack 48 l": "May show a newer generation than the one actually owned",
+}
+
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
@@ -370,10 +379,11 @@ ITEM_EMOJI = {
 }
 
 
-def build_items(rows, category_const=None, research_links=None, consumable_detail=None, current_label=None):
+def build_items(rows, category_const=None, research_links=None, consumable_detail=None, current_label=None, current_note=None):
     research_links = research_links or {}
     consumable_detail = consumable_detail or {}
     current_label = current_label or {}
+    current_note = current_note or {}
     items = []
     for row in rows:
         name = field(row, "name")
@@ -409,6 +419,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "current": current_raw or None,
             "currentIsUrl": current_raw.startswith("http"),
             "currentLabel": current_label.get(name),
+            "currentNote": current_note.get(name),
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
@@ -447,6 +458,7 @@ def synthetic_consumable_item(name, category):
         "current": None,
         "currentIsUrl": False,
         "currentLabel": None,
+        "currentNote": None,
         "season": None,
         "overnight": detail.get("overnight", True),
         "longTrek": detail.get("longTrek", True),
@@ -670,7 +682,8 @@ def main():
     # items too would misattribute the human's research to the dog's gear.
     pack_items = build_items(pack_rows, research_links=pack_research_links,
                               consumable_detail=PACK_CONSUMABLE,
-                              current_label=PACK_CURRENT_LABEL)
+                              current_label=PACK_CURRENT_LABEL,
+                              current_note=PACK_CURRENT_NOTE)
     pack_items += synthetic_pack_items()
     anjo_items = build_items(anjo_rows, category_const="Anjo",
                               consumable_detail=ANJO_CONSUMABLE,
