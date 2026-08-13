@@ -284,7 +284,8 @@ a { color: var(--primary); }
 .weight-class-trad { color: var(--accent); border-color: var(--accent); }
 .weight-class-heavy { color: var(--danger); border-color: var(--danger); }
 
-main#checklist {
+main#checklist,
+main#review {
   flex: 1;
   padding: .25rem 1rem 1rem;
 }
@@ -296,11 +297,13 @@ main#checklist {
      short ones), but it can leave a phantom empty column when there are
      only one or two. Only used where that's actually the case. */
   main#checklist.multi,
+  main#review.multi,
   #unused-gear-content.multi {
     column-width: 320px;
     column-gap: 1.5rem;
   }
   main#checklist.multi .category,
+  main#review.multi .category,
   #unused-gear-content.multi .category {
     break-inside: avoid-column;
     -webkit-column-break-inside: avoid;
@@ -431,6 +434,16 @@ ul.items {
 }
 
 .badge-anjo {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge-trip {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.badge-season {
   color: var(--accent);
   border-color: var(--accent);
 }

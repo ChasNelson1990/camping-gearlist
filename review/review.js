@@ -1,0 +1,120 @@
+(function () {
+  "use strict";
+
+  var CATEGORY_ORDER = ["Basics", "Kitchen", "Health", "Electronics", "Clothing", "Miscellaneous", "Anjo"];
+  var items = GEAR_ITEMS;
+
+  function badge(text, extraClass) {
+    var span = document.createElement("span");
+    span.className = "badge" + (extraClass ? " " + extraClass : "");
+    span.textContent = text;
+    return span;
+  }
+
+  function formatWeight(g) {
+    if (g >= 1000) return (g / 1000).toFixed(g % 1000 === 0 ? 0 : 1) + " kg";
+    return (g % 1 === 0 ? g : g.toFixed(1)) + " g";
+  }
+
+  function onBodyLabel(raw) {
+    if (raw === "TRUE") return "worn / on body";
+    if (raw === "LEFT") return "left pouch";
+    if (raw === "RIGHT") return "right pouch";
+    return raw;
+  }
+
+  function tripLabel(item) {
+    var flags = [];
+    if (item.overnight) flags.push("Overnight");
+    if (item.longTrek) flags.push("Long trek");
+    if (item.carCamp) flags.push("Car camp");
+    if (flags.length === 3) return "All trips";
+    if (!flags.length) return "No trips flagged";
+    return flags.join(", ");
+  }
+
+  function seasonLabel(item) {
+    return item.season || "All seasons";
+  }
+
+  function buildMeta(item) {
+    var wrap = document.createElement("div");
+    wrap.className = "item-meta";
+    if (item.perNightAmount != null) {
+      if (item.scalesWithNights === false) {
+        wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + " total"));
+      } else {
+        wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
+      }
+    } else if (item.quantityMax != null) {
+      wrap.appendChild(badge(formatWeight(item.weightG) + " each"));
+    } else if (item.weightG) {
+      wrap.appendChild(badge(formatWeight(item.weightG)));
+    }
+    wrap.appendChild(badge(tripLabel(item), "badge-trip"));
+    wrap.appendChild(badge(seasonLabel(item), "badge-season"));
+    if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
+    if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
+    return wrap;
+  }
+
+  function itemNameEl(item) {
+    var name = document.createElement("div");
+    name.className = "item-name";
+    if (item.emoji) {
+      var icon = document.createElement("span");
+      icon.className = "item-emoji";
+      icon.textContent = item.emoji;
+      name.appendChild(icon);
+    }
+    name.appendChild(document.createTextNode(item.name));
+    return name;
+  }
+
+  function renderItem(item, extraClass) {
+    var row = document.createElement("div");
+    row.className = "item" + (extraClass ? " " + extraClass : "");
+    var body = document.createElement("div");
+    body.className = "item-body";
+    body.appendChild(itemNameEl(item));
+    body.appendChild(buildMeta(item));
+    if (item.comment) {
+      var c = document.createElement("div");
+      c.className = "item-comment";
+      c.textContent = item.comment;
+      body.appendChild(c);
+    }
+    row.appendChild(body);
+    return row;
+  }
+
+  function renderCategorySection(cat, catItems) {
+    var section = document.createElement("section");
+    section.className = "category";
+    var h2 = document.createElement("h2");
+    h2.innerHTML = "<span>" + cat + "</span><span>" + catItems.length + "</span>";
+    section.appendChild(h2);
+    var ul = document.createElement("ul");
+    ul.className = "items";
+    var topLevel = catItems.filter(function (it) { return !it.parentName; });
+    topLevel.forEach(function (item) {
+      ul.appendChild(renderItem(item));
+      catItems.filter(function (it) { return it.parentName === item.name; })
+        .forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
+    });
+    section.appendChild(ul);
+    return section;
+  }
+
+  function render() {
+    var main = document.getElementById("review");
+    main.innerHTML = "";
+    CATEGORY_ORDER.forEach(function (cat) {
+      var catItems = items.filter(function (it) { return it.category === cat; });
+      if (!catItems.length) return;
+      main.appendChild(renderCategorySection(cat, catItems));
+    });
+  }
+
+  render();
+})();
