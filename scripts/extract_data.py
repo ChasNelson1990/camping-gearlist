@@ -150,6 +150,17 @@ ITEM_QUANTITY = {
     "Wine bladders": {"max": 2},
 }
 
+# Durable (non-consumable) items nested under another item in the UI purely
+# for display grouping - distinct from PACK_CONSUMABLE/ANJO_CONSUMABLE's
+# parent nesting, which also carries per-night-amount/unit behaviour. These
+# just say "show this item indented under that one"; the item keeps its own
+# normal weight/quantity/current fields otherwise.
+ITEM_PARENT = {
+    "Quilt compression sack": "Quilt",
+    "Raincover": "Backpack 48 l",
+    "1l bladder for dirty water": "Water filter",
+}
+
 # Brand + model label shown on the "view item" link when the item's
 # `current` field is a URL - hand-picked (not scraped from the URL/page
 # title) so the label stays a clean "Brand Model" even when the page itself
@@ -407,7 +418,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "detailLabel": detail_page["label"] if detail_page else None,
             "researchLinks": research_links.get(name, []),
             "consumable": is_consumable,
-            "parentName": consumable["parent"] if consumable else None,
+            "parentName": consumable["parent"] if consumable else ITEM_PARENT.get(name),
             "perNightAmount": consumable["amount"] if consumable else None,
             "perNightUnit": consumable["unit"] if consumable else None,
             "scalesWithNights": (consumable or {}).get("scalesWithNights", True),
@@ -704,6 +715,24 @@ def main():
     if invalid_parents:
         print(f"{len(invalid_parents)} consumable parent(s) don't resolve to a real item in the same category:")
         for line in invalid_parents:
+            print(f"  {line}")
+
+    invalid_item_parents = []
+    names_by_category = {}
+    for it in gear_items:
+        names_by_category.setdefault(it["category"], set()).add(it["name"])
+    for name, parent in ITEM_PARENT.items():
+        owner = next((it for it in gear_items if it["name"] == name), None)
+        if not owner:
+            invalid_item_parents.append(f"{name!r} -> not a known active item (typo?)")
+            continue
+        if parent not in names_by_category.get(owner["category"], set()):
+            invalid_item_parents.append(
+                f"{name!r} -> parent {parent!r} not found in category {owner['category']!r}"
+            )
+    if invalid_item_parents:
+        print(f"{len(invalid_item_parents)} ITEM_PARENT entry(ies) invalid:")
+        for line in invalid_item_parents:
             print(f"  {line}")
 
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
