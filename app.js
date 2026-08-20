@@ -52,8 +52,20 @@
   }
 
   // Live "how many do I bring" count for durable items with a quantityMax
-  // (e.g. Wine bladders) - starts at 1, freely editable up to quantityMax.
+  // (e.g. Wine bladders) - starts at quantityMin (1 for most such items, but
+  // e.g. optional guy lines default to 0), freely editable up to quantityMax.
   var itemQuantities = new Map();
+
+  function quantityDefault(item) {
+    return item.quantityMin != null ? item.quantityMin : 1;
+  }
+
+  // Falls back to quantityDefault (not a bare 1) when unset - otherwise an
+  // explicit 0 (a valid, deliberately-chosen quantity for a 0-min item like
+  // guy lines) would read as falsy and get silently overridden back to 1.
+  function getQuantity(item) {
+    return itemQuantities.has(item._id) ? itemQuantities.get(item._id) : quantityDefault(item);
+  }
 
   // Session-only persistence: survives navigating to research pages and back
   // or reloading, but sessionStorage is cleared when the tab/browser closes -
@@ -102,9 +114,25 @@
     return item[TRIP_KEYS[state.trip]] === true;
   }
 
+  // Most items apply the same `season` restriction to every trip type
+  // they're flagged for. A few (via seasonByTrip) restrict only one trip
+  // type - e.g. carried on long treks/car camp in any season, but only on
+  // winter overnights - so the season to check depends on which trip type
+  // is actually in view.
+  function seasonForTrip(item, tripKey) {
+    if (item.seasonByTrip && item.seasonByTrip[tripKey] !== undefined) return item.seasonByTrip[tripKey];
+    return item.season;
+  }
+
   function seasonOk(item) {
     if (state.season === "all") return true;
-    return !item.season || item.season === state.season;
+    if (state.trip !== "all") return !seasonForTrip(item, state.trip) || seasonForTrip(item, state.trip) === state.season;
+    var flaggedTrips = Object.keys(TRIP_KEYS).filter(function (k) { return item[TRIP_KEYS[k]] === true; });
+    if (!flaggedTrips.length) return !item.season || item.season === state.season;
+    return flaggedTrips.some(function (k) {
+      var season = seasonForTrip(item, k);
+      return !season || season === state.season;
+    });
   }
 
   function visibleActiveItems() {
@@ -113,9 +141,10 @@
     });
   }
 
-  function badge(text, extraClass) {
+  function badge(text, extraClass, title) {
     var span = document.createElement("span");
     span.className = "badge" + (extraClass ? " " + extraClass : "");
+    if (title) span.title = title;
     span.textContent = text;
     return span;
   }
@@ -171,7 +200,7 @@
   function buildQuantityStepper(item) {
     var wrap = document.createElement("span");
     wrap.className = "stepper";
-    var qty = itemQuantities.get(item._id) || 1;
+    var qty = getQuantity(item);
 
     var minus = document.createElement("button");
     minus.type = "button";
@@ -248,7 +277,7 @@
         wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " total"));
       }
     } else if (item.weightG) {
-      wrap.appendChild(badge(formatWeight(item.weightG)));
+      wrap.appendChild(badge(formatWeight(item.weightG), null, item.weightNote));
     }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
@@ -431,7 +460,7 @@
       return grams * nights;
     }
     if (item.quantityMax != null) {
-      return (item.weightG || 0) * (itemQuantities.get(item._id) || 1);
+      return (item.weightG || 0) * getQuantity(item);
     }
     return item.weightG || 0;
   }
@@ -454,8 +483,9 @@
   }
 
   function adjustQuantity(item, delta) {
-    var current = itemQuantities.get(item._id) || 1;
-    var next = Math.max(1, current + delta);
+    var current = getQuantity(item);
+    var min = item.quantityMin != null ? item.quantityMin : 1;
+    var next = Math.max(min, current + delta);
     if (item.quantityMax != null) next = Math.min(next, item.quantityMax);
     itemQuantities.set(item._id, next);
     renderChecklist();

@@ -9,9 +9,10 @@
   var TRIP_EMOJI = { overnight: "🌙", longTrek: "🥾", carCamp: "🚗" };
   var items = GEAR_ITEMS;
 
-  function badge(text, extraClass) {
+  function badge(text, extraClass, title) {
     var span = document.createElement("span");
     span.className = "badge" + (extraClass ? " " + extraClass : "");
+    if (title) span.title = title;
     span.textContent = text;
     return span;
   }
@@ -45,12 +46,18 @@
     return raw;
   }
 
+  function seasonSuffix(item, tripKey) {
+    var byTrip = item.seasonByTrip;
+    var season = byTrip && byTrip[tripKey] !== undefined ? byTrip[tripKey] : item.season;
+    return season ? " (" + (season === "Summer" ? "☀" : "❄") + " " + season + " only)" : "";
+  }
+
   function tripLabel(item) {
     var flags = [];
-    if (item.overnight) flags.push(TRIP_EMOJI.overnight + " Overnight");
-    if (item.longTrek) flags.push(TRIP_EMOJI.longTrek + " Long trek");
-    if (item.carCamp) flags.push(TRIP_EMOJI.carCamp + " Car camp");
-    if (flags.length === 3) return "🧳 All trips";
+    if (item.overnight) flags.push(TRIP_EMOJI.overnight + " Overnight" + seasonSuffix(item, "overnight"));
+    if (item.longTrek) flags.push(TRIP_EMOJI.longTrek + " Long trek" + seasonSuffix(item, "longTrek"));
+    if (item.carCamp) flags.push(TRIP_EMOJI.carCamp + " Car camp" + seasonSuffix(item, "carCamp"));
+    if (!item.seasonByTrip && flags.length === 3) return "🧳 All trips";
     if (!flags.length) return "No trips flagged";
     return flags.join(", ");
   }
@@ -72,7 +79,7 @@
     } else if (item.quantityMax != null) {
       wrap.appendChild(badge(formatWeight(item.weightG) + " each"));
     } else if (item.weightG) {
-      wrap.appendChild(badge(formatWeight(item.weightG)));
+      wrap.appendChild(badge(formatWeight(item.weightG), null, item.weightNote));
     }
     wrap.appendChild(badge(tripLabel(item), "badge-trip"));
     wrap.appendChild(badge(seasonLabel(item), "badge-season"));

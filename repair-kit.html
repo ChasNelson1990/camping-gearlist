@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repair Kit — Camping Checklist</title>
+<meta name="description" content="Itemised gear repair kit checklist, generated from CSV data.">
+<script>(function(){try{document.documentElement.setAttribute("data-theme",localStorage.getItem("camping-theme")==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>🛠️ Repair Kit</h1>
+  <div class="topbar-actions">
+    <a class="research-link" href="index.html">← Checklist</a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
+  </div>
+</header>
+
+<div class="progress" id="progress">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <span id="progress-text">0 of 0 packed</span>
+</div>
+
+<main id="checklist"></main>
+
+<footer>
+  <p>Your selections are kept while this tab stays open - closing the tab clears everything, and nothing is ever saved between devices or browsers. Source on <a href="https://github.com/ChasNelson1990/camping-gearlist">GitHub</a>.</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="repair-kit-data.js"></script>
+<script src="repair-kit.js"></script>
+</body>
+</html>

@@ -71,6 +71,7 @@ def check_columns(fieldnames, required, label):
 # on the main checklist) instead of just being a single line with a weight.
 ITEM_DETAIL_PAGES = {
     "First aid kit": {"url": "first-aid-kit.html", "label": "🩹 open kit checklist"},
+    "Repair kit": {"url": "repair-kit.html", "label": "🛠️ open kit checklist"},
 }
 
 # Items whose listed weight is a depleting/per-trip substance rather than
@@ -145,9 +146,15 @@ ITEM_WEIGHT_OVERRIDE = {
 
 # Durable (non-consumable) items with an adjustable "how many do I bring"
 # quantity in the UI - the item's own weightG is treated as the per-unit
-# weight, multiplied by a live quantity (starts at 1, capped at max).
+# weight, multiplied by a live quantity (starts at min, default 1, capped at
+# max). min only needs setting where 0 is a valid choice (e.g. optional guy
+# lines you might not bring at all).
 ITEM_QUANTITY = {
     "Wine bladders": {"max": 2},
+    "Guy lines": {"min": 0, "max": 4},
+    "Guy lines with clips": {"min": 0, "max": 2},
+    "Triple Twister pegs": {"min": 0, "max": 11},
+    "Blizzard pegs": {"min": 0, "max": 8},
 }
 
 # Durable (non-consumable) items nested under another item in the UI purely
@@ -157,8 +164,24 @@ ITEM_QUANTITY = {
 # normal weight/quantity/current fields otherwise.
 ITEM_PARENT = {
     "Quilt compression sack": "Quilt",
-    "Raincover": "Backpack 48 l",
+    "Raincover": "Rucksack",
+    "Lid pocket": "Rucksack",
     "1l bladder for dirty water": "Water filter",
+    "Guy lines": "Tarpaulin",
+    "Guy lines with clips": "Tarpaulin",
+    "Poles": "Tent",
+    "Triple Twister pegs": "Tent",
+    "Blizzard pegs": "Tent",
+}
+
+# Per-trip season override, for the rare item whose season restriction isn't
+# uniform across every trip type it's flagged for (the plain `season` field
+# applies to all of them equally, so this is the escape hatch) - e.g. carried
+# on long treks/car camp regardless of season, but only on winter overnights.
+# Keys are the JS trip field names (overnight/longTrek/carCamp); a trip type
+# not listed here falls back to the item's own `season`.
+ITEM_SEASON_BY_TRIP = {
+    "Lid pocket": {"overnight": "Winter"},
 }
 
 # Brand + model label shown on the "view item" link when the item's
@@ -171,10 +194,16 @@ ITEM_PARENT = {
 # different products behind them.
 PACK_CURRENT_LABEL = {
     "1l bladder for dirty water": "Platypus SoftBottle 1L",
-    "Backpack 48 l": "Osprey Exos 48",
+    "Rucksack": "Osprey Exos 48",
+    "Raincover": "Osprey Ultralight Rain Cover (M)",
+    "Tarpaulin": "Nordisk Voss 5 ULW",
+    "Tent": "Nordisk Halland 2 LW",
+    "Poles": "Nordisk Halland 2 LW Spare Pole Set",
+    "Triple Twister pegs": "Nordisk Aluminium Triple Twister Peg",
+    "Blizzard pegs": "MSR Blizzard Tent Stake",
+    "Insect shield travel sheet": "Cocoon TravelSheet Insect Shield (Silk)",
     "Clothes dry sack": "Sea to Summit eVac Dry Sack",
     "Cup": "Toaks Titanium Cup 375",
-    "Footprint": "Treadlite Gear Ripstop Aluminium Footprint",
     "Gas can (100 g)": "Jetboil Jetpower Fuel",
     "Gas can (230 g)": "Jetboil Jetpower Fuel",
     "Headlamp": "BioLite HeadLamp 330",
@@ -194,10 +223,7 @@ PACK_CURRENT_LABEL = {
     "Silk sleeping bag liner": "Eurohike Silk Mummy Liner",
     "Skin So Soft": "Avon Skin So Soft Dry Oil Spray",
     "Skinner": "Marttiini Skinner Knife",
-    "Sleeping bag compression sack": "Sea to Summit eVent Compression Dry Sack",
     "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
-    "Sleeping mat, mummy, short": "Therm-a-Rest NeoAir UberLite",
-    "Sleeping mat, rectangular": "Vango Comfort 75",
     "Small drybag for food": "Exped Fold Drybag UL",
     "Smidge": "Smidge Repellent",
     "Solar panel": "PowerTraveller Extreme (solar)",
@@ -208,7 +234,6 @@ PACK_CURRENT_LABEL = {
     "Stove with stash bag": "Vango Compact Gas Stove",
     "Summer Trousers": "Fjällräven High Coast Lite Trousers",
     "Sun Hood": "Fjällräven Abisko Sun Hoodie",
-    "Tent (1.65 m^2) w/ footprint": "Nordisk Halland 2 LW",
     "Thermal bottoms": "Icebreaker Merino 200 Oasis Leggings",
     "Thermal glove liners": "Icebreaker Merino 200 Oasis Glove Liners",
     "Thermal sleeping bag liner": "Sea to Summit Thermolite Reactor Liner",
@@ -235,7 +260,7 @@ ANJO_CURRENT_LABEL = {
     "Leash": "Ruffwear Patroller Leash",
     "Raincoat": "Ruffwear Sun Shower Raincoat",
     "Sleeping bag": "Ruffwear Highlands Sleeping Bag",
-    "Sleeping mat": "Ruffwear Highlands Pad",
+    "Sleeping mat (half-length)": "Therm-a-Rest NeoAir UberLite (Small)",
     "Switchbak pack": "Ruffwear Switchbak Harness",
     "Towel": "PackTowl UltraLite",
     "XXS compression sack for blanket": "Sea to Summit Ultra-Sil eVent Compression Sack (XXS)",
@@ -247,7 +272,20 @@ ANJO_CURRENT_LABEL = {
 # of the item's `comment` field so it doesn't add a permanent visible line
 # for what's a link-specific caveat, not a general note about the item.
 PACK_CURRENT_NOTE = {
-    "Backpack 48 l": "May show a newer generation than the one actually owned",
+    "Rucksack": "May show a newer generation than the one actually owned",
+    "Raincover": "Owned version predates the current listing at this link",
+    "Thermal sleeping bag liner": "Discontinued - link is a third-party review, not a product page",
+}
+
+# Short hover tooltip on the plain weight badge, for items whose listed
+# weight bundles in something non-obvious (e.g. a stuff sack) that isn't
+# itself a separate line in the list.
+ITEM_WEIGHT_NOTE = {
+    "Tarpaulin": "Includes stuff sack",
+    "Tent": "Includes stuff sack",
+    "Poles": "Includes stuff sack",
+    "Thermal sleeping bag liner": "Includes stuff sack",
+    "Insect shield travel sheet": "Includes stuff sack",
 }
 
 # Items with a rechargeable battery that should be charged before a trip -
@@ -275,7 +313,8 @@ ITEM_EMOJI = {
     "1l bladder for dirty water": "💧",
     "Active Camera": "📹",
     "Aeropress": "☕",
-    "Backpack 48 l": "🎒",
+    "Rucksack": "🎒",
+    "Lid pocket": "👝",
     "Bamboo cloth": "🧻",
     "Beacon": "🚨",
     "Beer": "🍺",
@@ -300,17 +339,19 @@ ITEM_EMOJI = {
     "First aid kit": "🩹",
     "Food": "🥘",
     "Food UL": "🥘",
-    "Footprint": "⛺",
     "Front Range harness": "🦮",
     "Front Range pack": "🎒",
     "GPS": "🛰️",
     "Garmin charging cable": "🔌",
+    "Guy lines": "🪢",
+    "Guy lines with clips": "🪢",
     "Gas can (100 g)": "⛽",
     "Gas can (230 g)": "⛽",
     "Grinder": "☕",
     "Half Bag": "🛏️",
     "Headlamp": "🔦",
     "Hitch Hiker": "🦮",
+    "Insect shield travel sheet": "🪰",
     "Insulating Jacket": "🧥",
     "Knife": "🔪",
     "Knot-a-Hitch": "🦮",
@@ -338,11 +379,8 @@ ITEM_EMOJI = {
     "Skin So Soft": "🧴",
     "Skinner": "🔪",
     "Sleeping bag": "🛏️",
-    "Sleeping bag compression sack": "👝",
-    "Sleeping mat": "🛌",
+    "Sleeping mat (half-length)": "🛌",
     "Sleeping mat, mummy, large": "🛌",
-    "Sleeping mat, mummy, short": "🛌",
-    "Sleeping mat, rectangular": "🛌",
     "Small drybag for food": "👝",
     "Smidge": "🧴",
     "Solar panel": "☀️",
@@ -359,8 +397,10 @@ ITEM_EMOJI = {
     "Switchbak pack": "🦮",
     "Talc": "🧂",
     "Tarpaulin": "⛺",
-    "Tent (1.65 m^2) w/ footprint": "⛺",
-    "Tent (4.4 m^2)": "⛺",
+    "Tent": "⛺",
+    "Poles": "🥢",
+    "Triple Twister pegs": "📌",
+    "Blizzard pegs": "🔻",
     "Thermal bottoms": "👖",
     "Thermal glove liners": "🧤",
     "Thermal sleeping bag liner": "🛏️",
@@ -388,11 +428,12 @@ ITEM_EMOJI = {
 }
 
 
-def build_items(rows, category_const=None, research_links=None, consumable_detail=None, current_label=None, current_note=None):
+def build_items(rows, category_const=None, research_links=None, consumable_detail=None, current_label=None, current_note=None, weight_note=None):
     research_links = research_links or {}
     consumable_detail = consumable_detail or {}
     current_label = current_label or {}
     current_note = current_note or {}
+    weight_note = weight_note or {}
     items = []
     for row in rows:
         name = field(row, "name")
@@ -423,6 +464,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "category": category_const or field(row, "category") or "Miscellaneous",
             "number": number,
             "weightG": ITEM_WEIGHT_OVERRIDE.get(name, parse_num(field(row, "weight_g"))),
+            "weightNote": weight_note.get(name),
             "cost": field(row, "cost_gbp") or None,
             "comment": comment,
             "current": current_raw or None,
@@ -430,6 +472,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "currentLabel": current_label.get(name),
             "currentNote": current_note.get(name),
             "needsCharge": name in NEEDS_CHARGE,
+            "seasonByTrip": ITEM_SEASON_BY_TRIP.get(name),
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
@@ -446,6 +489,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "maxAmount": (consumable or {}).get("max"),
             "stepOverride": (consumable or {}).get("step"),
             "quantityMax": ITEM_QUANTITY.get(name, {}).get("max"),
+            "quantityMin": ITEM_QUANTITY.get(name, {}).get("min", 1),
         })
         items[-1]["season"] = items[-1]["season"] or None
     return items
@@ -463,6 +507,7 @@ def synthetic_consumable_item(name, category):
         "category": category,
         "number": 1.0,
         "weightG": None,
+        "weightNote": None,
         "cost": None,
         "comment": None,
         "current": None,
@@ -470,6 +515,7 @@ def synthetic_consumable_item(name, category):
         "currentLabel": None,
         "currentNote": None,
         "needsCharge": False,
+        "seasonByTrip": None,
         "season": None,
         "overnight": detail.get("overnight", True),
         "longTrek": detail.get("longTrek", True),
@@ -486,6 +532,7 @@ def synthetic_consumable_item(name, category):
         "maxAmount": detail.get("max"),
         "stepOverride": detail.get("step"),
         "quantityMax": None,
+        "quantityMin": 1,
     }
 
 
@@ -522,12 +569,12 @@ RESEARCH_SHEETS = [
      "Backpack options compared by weight, volume, features, and the sheet's "
      "own cost-per-(volume/weight) efficiency score.",
      dict(brand="Osprey", model="Exos 48", rank_col="Cost per (Volume per Weight)", rank_asc=True,
-          rank_label="cost-per-(volume/weight)", item="Backpack 48 l")),
+          rank_label="cost-per-(volume/weight)", item="Rucksack")),
     ("tents", "Tents", "Gear comparisons",
      "Tent options compared by weight, pack size, floor/fly fabric ratings, "
      "whether the dog fits inside, and cost-per-area-efficiency.",
      dict(brand="Nordisk", model="Halland 2 LW", rank_col="cost/(area/weight)", rank_asc=True,
-          rank_label="cost/(area/weight)", item="Tent (1.65 m^2) w/ footprint")),
+          rank_label="cost/(area/weight)", item="Tent")),
     ("insulated-jackets-2022", "Insulated jackets (2022)",
      "Gear comparisons",
      "Earlier insulated-jacket comparison by weight, insulation rating, and "
@@ -648,6 +695,27 @@ def build_first_aid_items(rows):
     return items
 
 
+# ---------------------------------------------------------------------------
+# repair-kit -> repair-kit-data.js
+# ---------------------------------------------------------------------------
+
+
+def build_repair_kit_items(rows):
+    items = []
+    for row in rows:
+        name = field(row, "name")
+        if not name:
+            continue
+        items.append({
+            "name": name,
+            "quantity": parse_num(field(row, "quantity")) or 1,
+            "weightG": parse_num(field(row, "weight_g")),
+            "comment": field(row, "comment") or None,
+            "current": field(row, "current") or None,
+        })
+    return items
+
+
 def js_literal(value):
     return json.dumps(value, ensure_ascii=False, indent=2)
 
@@ -665,6 +733,9 @@ def main():
 
     with (DATA_DIR / "first-aid-kit.csv").open(newline="", encoding="utf-8") as f:
         first_aid_rows = list(csv.DictReader(f))
+
+    with (DATA_DIR / "repair-kit.csv").open(newline="", encoding="utf-8") as f:
+        repair_kit_rows = list(csv.DictReader(f))
 
     # Research sheets are built first so their currentPick matches can be
     # turned into "see the research" links on the matching checklist item.
@@ -694,7 +765,8 @@ def main():
     pack_items = build_items(pack_rows, research_links=pack_research_links,
                               consumable_detail=PACK_CONSUMABLE,
                               current_label=PACK_CURRENT_LABEL,
-                              current_note=PACK_CURRENT_NOTE)
+                              current_note=PACK_CURRENT_NOTE,
+                              weight_note=ITEM_WEIGHT_NOTE)
     pack_items += synthetic_pack_items()
     anjo_items = build_items(anjo_rows, category_const="Anjo",
                               consumable_detail=ANJO_CONSUMABLE,
@@ -780,6 +852,20 @@ def main():
         for name in stale_needs_charge:
             print(f"  {name}")
 
+    valid_trip_keys = {"overnight", "longTrek", "carCamp"}
+    invalid_season_by_trip = []
+    for name, overrides in ITEM_SEASON_BY_TRIP.items():
+        if name not in known_names:
+            invalid_season_by_trip.append(f"{name!r} -> not a known active item (typo?)")
+            continue
+        bad_keys = sorted(set(overrides) - valid_trip_keys)
+        if bad_keys:
+            invalid_season_by_trip.append(f"{name!r} -> invalid trip key(s) {bad_keys}")
+    if invalid_season_by_trip:
+        print(f"{len(invalid_season_by_trip)} ITEM_SEASON_BY_TRIP entry(ies) invalid:")
+        for line in invalid_season_by_trip:
+            print(f"  {line}")
+
     weight_class_js = ", ".join(f"[{kg}, {json.dumps(label)}]" for kg, label in WEIGHT_CLASS_THRESHOLDS)
     nights_js = json.dumps(NIGHTS_BY_TRIP, ensure_ascii=False)
     (ROOT / "data.js").write_text(
@@ -797,8 +883,33 @@ def main():
         encoding="utf-8",
     )
 
+    repair_kit_items = build_repair_kit_items(repair_kit_rows)
+    (ROOT / "repair-kit-data.js").write_text(
+        "// Generated by scripts/extract_data.py - do not edit by hand.\n"
+        f"const REPAIR_KIT_ITEMS = {js_literal(repair_kit_items)};\n",
+        encoding="utf-8",
+    )
+
+    # Detail-page kits (First aid kit, Repair kit) each have their own
+    # itemised weight, entered by hand in pack.csv rather than computed -
+    # warn if it's drifted from the sum of the kit's own contents, so a kit
+    # edit doesn't silently leave the main checklist showing a stale total.
+    repair_kit_sum = sum((it["weightG"] or 0) * it["quantity"] for it in repair_kit_items)
+    repair_kit_listed = next((it["weightG"] for it in pack_items if it["name"] == "Repair kit"), None)
+    if repair_kit_listed is not None and abs(repair_kit_listed - repair_kit_sum) > 0.05:
+        print(f"Repair kit: pack.csv lists {repair_kit_listed} g but repair-kit.csv items sum to {repair_kit_sum} g")
+
+    first_aid_base_sum = sum(
+        it["weightG"] or 0 for it in first_aid_items
+        if it["human"] is not None or (it["human"] is None and it["dog"] is None)
+    )
+    first_aid_listed = next((it["weightG"] for it in pack_items if it["name"] == "First aid kit"), None)
+    if first_aid_listed is not None and abs(first_aid_listed - first_aid_base_sum) > 0.05:
+        print(f"First aid kit: pack.csv lists {first_aid_listed} g but first-aid-kit.csv's human-relevant items sum to {first_aid_base_sum} g")
+
     print(f"Wrote data.js ({len(gear_items)} items: {len(pack_items)} pack + {len(anjo_items)} anjo)")
     print(f"Wrote first-aid-data.js ({len(first_aid_items)} items)")
+    print(f"Wrote repair-kit-data.js ({len(repair_kit_items)} items)")
     print(f"Wrote research-data.js ({len(research)} sheets)")
     for r in research:
         cp = r["currentPick"]
