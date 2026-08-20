@@ -72,6 +72,7 @@ def check_columns(fieldnames, required, label):
 ITEM_DETAIL_PAGES = {
     "First aid kit": {"url": "first-aid-kit.html", "label": "🩹 open kit checklist"},
     "Repair kit": {"url": "repair-kit.html", "label": "🛠️ open kit checklist"},
+    "Water purification kit": {"url": "water-purification-kit.html", "label": "💧 open kit checklist"},
 }
 
 # Items whose listed weight is a depleting/per-trip substance rather than
@@ -102,9 +103,32 @@ ITEM_DETAIL_PAGES = {
 # Pack and anjo are separate dicts because a couple of names exist on both
 # sides ("Water", "Food") and need different parents/amounts on each.
 PACK_CONSUMABLE = {
-    "Gas can (100 g)": {"parent": "Stove with stash bag", "amount": 100, "unit": "g"},
-    "Coffee": {"parent": "Grinder", "amount": 14, "unit": "g"},
+    "Coffee": {"parent": None, "amount": 14, "unit": "g"},
+    # Full canister (100 g) by default, freely adjustable down to reflect
+    # how much is actually left in it.
+    "Gas can (100 g)": {"parent": "Vango burner", "amount": 100, "unit": "g", "max": 100},
     "Water": {"parent": "Reservoir", "amount": 2, "unit": "l"},
+    # Synthetic - see synthetic_pack_items(). Three alternative fuel types
+    # for the Mini firepit, shown side by side rather than as a single
+    # switchable choice (no such mechanism exists) - bring whichever one(s)
+    # you're actually using and leave the others at 0. Bring-what-you-need,
+    # not a nightly ration, hence not scaling with nights - same reasoning
+    # as Wine/Beer.
+    "Kindling wood": {
+        "parent": "Mini firepit", "amount": 12.5, "unit": "g",
+        "scalesWithNights": False,
+        "overnight": False, "longTrek": True, "carCamp": False,
+    },
+    "Wood wool": {
+        "parent": "Mini firepit", "amount": 9, "unit": "g",
+        "scalesWithNights": False,
+        "overnight": False, "longTrek": True, "carCamp": False,
+    },
+    "Pellets": {
+        "parent": "Mini firepit", "amount": 20, "unit": "g",
+        "scalesWithNights": False, "step": 10,
+        "overnight": False, "longTrek": True, "carCamp": False,
+    },
     "Food": {
         "parent": "Small drybag for food", "amount": 880, "unit": "g",
         "comment": "787 g/night if going ultralight (previously tracked as a separate \"Food UL\" line)",
@@ -121,14 +145,31 @@ PACK_CONSUMABLE = {
     "Smidge": {"parent": "Midge net", "amount": 100, "unit": "g"},
     "Toothpaste": {"parent": "Toothbrush", "amount": 5, "unit": "g"},
     "Poo bags": None,
-    "Beer": None,
+    # Beer cans is the reusable-quantity-style parent (how many empty cans'
+    # worth of weight to carry, mirroring Wine bladders); Beer itself is the
+    # liquid content, defaulting to 500 ml (one standard can) but freely
+    # adjustable - e.g. down to 330 ml for a smaller can - same as Wine, not
+    # scaled by trip length.
+    "Beer": {
+        "parent": "Beer cans", "amount": 500, "unit": "ml",
+        "scalesWithNights": False, "step": 10,
+    },
     # Synthetic - see synthetic_pack_items(). One bladder (0.75 l) by
     # default; up to 2 bladders (1.5 l) is the real-world cap, not a
     # per-night rate, so it doesn't scale with trip length.
     "Wine": {
         "parent": "Wine bladders", "amount": 0.75, "unit": "l",
         "scalesWithNights": False, "max": 1.5, "step": 0.75,
-        "overnight": True, "longTrek": False, "carCamp": True,
+    },
+    # Synthetic - see synthetic_pack_items(). Nests directly under Coffee,
+    # not under Saku coffee maker - the UI only nests items one level deep,
+    # so a grandchild of Coffee (via Saku coffee maker) would never render.
+    # Only used with the Saku setup (long treks), not the Aeropress/Grinder/
+    # Titanium filter setups on other trip types, hence the explicit trip
+    # override rather than falling back to Coffee's own all-trips CSV row.
+    "Saku filters": {
+        "parent": "Coffee", "amount": 1, "unit": "g",
+        "overnight": False, "longTrek": True, "carCamp": False,
     },
 }
 ANJO_CONSUMABLE = {
@@ -155,6 +196,7 @@ ITEM_QUANTITY = {
     "Guy lines with clips": {"min": 0, "max": 2},
     "Triple Twister pegs": {"min": 0, "max": 11},
     "Blizzard pegs": {"min": 0, "max": 8},
+    "Beer cans": {"min": 0, "max": 12},
 }
 
 # Durable (non-consumable) items nested under another item in the UI purely
@@ -166,12 +208,34 @@ ITEM_PARENT = {
     "Quilt compression sack": "Quilt",
     "Raincover": "Rucksack",
     "Lid pocket": "Rucksack",
-    "1l bladder for dirty water": "Water filter",
     "Guy lines": "Tarpaulin",
     "Guy lines with clips": "Tarpaulin",
     "Poles": "Tent",
     "Triple Twister pegs": "Tent",
     "Blizzard pegs": "Tent",
+    "Aeropress": "Coffee",
+    "Grinder": "Coffee",
+    "Titanium filter & stand": "Coffee",
+    "Saku coffee maker": "Coffee",
+    "Spare fuel bottle": "Spirit burner",
+    "Windscreen": "Spirit burner",
+    "Pot (700 ml)": "Spirit burner",
+    "Stash bag": "Spirit burner",
+    "TomShoo titanium frying pan": "Spirit burner",
+    "Matches": "Spirit burner",
+    "Fuel can stabiliser": "Vango burner",
+    "Pot (750 ml)": "Vango burner",
+    "PotPocket": "Vango burner",
+    "Matches (Vango burner)": "Vango burner",
+    "Stash sack": "Mini firepit",
+    "Stand": "Mini firepit",
+    "Pot stand": "Mini firepit",
+    "Blow pipe": "Mini firepit",
+    "Insulated cup and lid": "Cup",
+    "SnowPeak Hot Lips": "Cup",
+    "Cup stash bag": "Cup",
+    "Grandpa's Firegrill": "Mini firepit",
+    "Ti Artisan tongs": "Mini firepit",
 }
 
 # Per-trip season override, for the rare item whose season restriction isn't
@@ -193,7 +257,6 @@ ITEM_SEASON_BY_TRIP = {
 # couple of names ("Insulating Jacket", "Towel") exist on both sides with
 # different products behind them.
 PACK_CURRENT_LABEL = {
-    "1l bladder for dirty water": "Platypus SoftBottle 1L",
     "Rucksack": "Osprey Exos 48",
     "Raincover": "Osprey Ultralight Rain Cover (M)",
     "Tarpaulin": "Nordisk Voss 5 ULW",
@@ -201,19 +264,36 @@ PACK_CURRENT_LABEL = {
     "Poles": "Nordisk Halland 2 LW Spare Pole Set",
     "Triple Twister pegs": "Nordisk Aluminium Triple Twister Peg",
     "Blizzard pegs": "MSR Blizzard Tent Stake",
+    "Aeropress": "AeroPress Original Coffee Maker",
+    "Grinder": "Hario Mini Mill Slim",
+    "Titanium filter & stand": "Keith Tasse à Filtre (filter + stand only)",
+    "Saku coffee maker": "Saku Coffee Maker",
+    "Spirit burner": "Wild Side Adventures FeatherLight Spirit Burner",
+    "Pot (700 ml)": "Toaks Titanium 700ml Pot",
+    "Vango burner": "Vango Compact Gas Stove",
+    "Gas can (100 g)": "Jetboil Jetpower Fuel",
+    "Firesteel": "Casström Fire Striker (Curly Birch Handle)",
+    "Fuel can stabiliser": "Jetboil Fuel Can Stabiliser 2.0",
+    "Pot (750 ml)": "Toaks Titanium 750ml Pot",
+    "PotPocket": "Gossamer Gear PotPocket (M)",
+    "Mini firepit": "Toaks Titanium Backpacking Wood Burning Stove (Small)",
     "Insect shield travel sheet": "Cocoon TravelSheet Insect Shield (Silk)",
     "Clothes dry sack": "Sea to Summit eVac Dry Sack",
     "Cup": "Toaks Titanium Cup 375",
-    "Gas can (100 g)": "Jetboil Jetpower Fuel",
-    "Gas can (230 g)": "Jetboil Jetpower Fuel",
+    "Insulated cup and lid": "Keith Tasse à Filtre (cup + lid only)",
+    "SnowPeak Hot Lips": "Snow Peak Hotlips 2-Piece Set",
+    "Ozen table": "Snow Peak Ozen Solo Table",
+    "Thermo Pocket": "Gram Counter Gear Thermo Pocket",
+    "EATI Mag": "EATI Mag Multi-Utensil",
+    "Grandpa's Firegrill": "Light My Fire Grandpa's Firegrill",
     "Headlamp": "BioLite HeadLamp 330",
+    "Hip flask": "Ti-Flow EDC Titanium Hip Flask",
     "Insulating Jacket": "Patagonia Micro Puff Hoody",
     "Knife": "Deejo 37g Titanium",
     "Lantern": "BioLite PowerLight",
     "Midge net": "Smidge Midge-Proof Headnet",
     "Pac Tube": "P.A.C. Ocean Upcycling Multitube",
     "Pillow/Stuff Sack": "Therm-a-Rest Stuff Sack Pillow",
-    "Pot": "Toaks Titanium Pot 550ml",
     "Powerpack": "Nitecore NB20000",
     "Quilt": "Therm-a-Rest Vesper 20F/-6C",
     "Quilt compression sack": "Sea to Summit Ultra-Sil eVent Compression Sack",
@@ -222,7 +302,6 @@ PACK_CURRENT_LABEL = {
     "Reservoir": "Platypus Big Zip EVO",
     "Silk sleeping bag liner": "Eurohike Silk Mummy Liner",
     "Skin So Soft": "Avon Skin So Soft Dry Oil Spray",
-    "Skinner": "Marttiini Skinner Knife",
     "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
     "Small drybag for food": "Exped Fold Drybag UL",
     "Smidge": "Smidge Repellent",
@@ -231,7 +310,6 @@ PACK_CURRENT_LABEL = {
     "Spare top": "Fjällräven Abisko Wool Long-Sleeve",
     "Spork": "Toaks Titanium Spork",
     "Stash bag": "Toaks Stash Bag",
-    "Stove with stash bag": "Vango Compact Gas Stove",
     "Summer Trousers": "Fjällräven High Coast Lite Trousers",
     "Sun Hood": "Fjällräven Abisko Sun Hoodie",
     "Thermal bottoms": "Icebreaker Merino 200 Oasis Leggings",
@@ -242,7 +320,6 @@ PACK_CURRENT_LABEL = {
     "Top": "Fjällräven Singi Merino Henley",
     "Towel": "Sea to Summit Airlite Towel",
     "Walking Boots": "Lowa Renegade GTX Mid",
-    "Water filter": "Platypus QuickDraw 1L Filter System",
     "Wine bladders": "Platypus PlatyPreserve",
     "Winter Trousers": "Fjällräven Lappland Hybrid Trousers",
 }
@@ -286,6 +363,9 @@ ITEM_WEIGHT_NOTE = {
     "Poles": "Includes stuff sack",
     "Thermal sleeping bag liner": "Includes stuff sack",
     "Insect shield travel sheet": "Includes stuff sack",
+    "Saku coffee maker": "Includes stuff sack",
+    "Vango burner": "Includes stash sack",
+    "Ozen table": "Includes storage case",
 }
 
 # Items with a rechargeable battery that should be charged before a trip -
@@ -301,8 +381,30 @@ NEEDS_CHARGE = {
 # checklist's "No open fires" toggle (for local fire bans/high wildfire-risk
 # conditions), independent of the trip/season filters. A gas stove and its
 # fuel are deliberately NOT included here - a contained, valved burner is
-# normally still permitted under an open-fire ban, unlike a firepit.
-REQUIRES_OPEN_FIRE = {"Firepit", "Charcoal", "Firelighters"}
+# normally still permitted under an open-fire ban, unlike a firepit. The
+# Mini firepit is a genuine wood/pellet-burning stove - real embers and ash,
+# unlike the alcohol Spirit burner - so it and its solid fuels get the same
+# full-hide treatment as Firepit/Charcoal/Firelighters, not just a caution.
+REQUIRES_OPEN_FIRE = {
+    "Firepit", "Charcoal", "Firelighters",
+    "Mini firepit", "Kindling wood", "Wood wool", "Pellets",
+    "Grandpa's Firegrill",
+}
+
+# Items that carry a real but lesser fire risk than an open flame - flagged
+# with a visible warning (not hidden) when "No open fires" is on, since
+# blanket-hiding them would overstate the risk. An alcohol/spirit burner has
+# no shut-off valve, unlike a gas stove, but (unlike a firepit) leaves no
+# embers/ash and a small flame or spill is easy to extinguish - so it stays
+# usable with a caution rather than being blocked outright.
+FIRE_CAUTION = {
+    "Spirit burner": (
+        "Lower risk than an open fire - no embers or ash, and a small flame "
+        "can be blown out, doused, or smothered with a damp or thick dry "
+        "cloth. Still check local restrictions before using."
+    ),
+    "Matches": "Only for lighting the spirit burner - same lower-risk profile, but check local restrictions before using.",
+}
 
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
@@ -317,7 +419,6 @@ NIGHTS_BY_TRIP = {"all": 2, "overnight": 1, "longTrek": 4, "carCamp": 5}
 # one symbol. Items with no entry fall back to ITEM_EMOJI_DEFAULT.
 ITEM_EMOJI_DEFAULT = "📦"
 ITEM_EMOJI = {
-    "1l bladder for dirty water": "💧",
     "Active Camera": "📹",
     "Aeropress": "☕",
     "Rucksack": "🎒",
@@ -325,6 +426,7 @@ ITEM_EMOJI = {
     "Bamboo cloth": "🧻",
     "Beacon": "🚨",
     "Beer": "🍺",
+    "Beer cans": "🍺",
     "Blanket": "🛏️",
     "Bowl": "🥣",
     "Boxers": "🩲",
@@ -337,6 +439,14 @@ ITEM_EMOJI = {
     "Clothes dry sack": "👝",
     "Coffee": "☕",
     "Cup": "🥤",
+    "Insulated cup and lid": "🫖",
+    "SnowPeak Hot Lips": "👄",
+    "Cup stash bag": "👝",
+    "Ozen table": "🪑",
+    "Thermo Pocket": "🌡️",
+    "EATI Mag": "🍴",
+    "Grandpa's Firegrill": "🔥",
+    "Ti Artisan tongs": "🥢",
     "Drybag for food": "👝",
     "Drybag for poo": "👝",
     "Earphones": "🎧",
@@ -352,11 +462,10 @@ ITEM_EMOJI = {
     "Garmin charging cable": "🔌",
     "Guy lines": "🪢",
     "Guy lines with clips": "🪢",
-    "Gas can (100 g)": "⛽",
-    "Gas can (230 g)": "⛽",
     "Grinder": "☕",
     "Half Bag": "🛏️",
     "Headlamp": "🔦",
+    "Hip flask": "🥃",
     "Hitch Hiker": "🦮",
     "Insect shield travel sheet": "🪰",
     "Insulating Jacket": "🧥",
@@ -372,7 +481,6 @@ ITEM_EMOJI = {
     "Pac Tube": "🧣",
     "Pillow/Stuff Sack": "🛏️",
     "Poo bags": "💩",
-    "Pot": "🍲",
     "Powerpack": "🔋",
     "Quilt": "🛏️",
     "Quilt compression sack": "👝",
@@ -384,20 +492,40 @@ ITEM_EMOJI = {
     "Reservoir": "💧",
     "Silk sleeping bag liner": "🛏️",
     "Skin So Soft": "🧴",
-    "Skinner": "🔪",
+    "Saku coffee maker": "☕",
+    "Saku filters": "📄",
     "Sleeping bag": "🛏️",
     "Sleeping mat (half-length)": "🛌",
     "Sleeping mat, mummy, large": "🛌",
     "Small drybag for food": "👝",
     "Smidge": "🧴",
     "Solar panel": "☀️",
+    "Spare fuel bottle": "🧴",
     "Spare phone battery": "🔋",
     "Spare small drybag": "👝",
     "Spare top": "👕",
+    "Spirit burner": "🔥",
     "Spork": "🍴",
     "Stash bag": "👝",
-    "Stove with stash bag": "🔥",
     "Summer Trousers": "👖",
+    "Vango burner": "🔥",
+    "Gas can (100 g)": "⛽",
+    "Fuel can stabiliser": "🔧",
+    "Pot (750 ml)": "🍲",
+    "PotPocket": "🥤",
+    "Matches (Vango burner)": "🔥",
+    "Mini firepit": "🔥",
+    "Stash sack": "👝",
+    "Stand": "🔺",
+    "Pot stand": "🔺",
+    "Blow pipe": "💨",
+    "Kindling wood": "🪵",
+    "Wood wool": "🪵",
+    "Pellets": "⚫",
+    "TomShoo titanium frying pan": "🍳",
+    "Matches": "🔥",
+    "Pot (700 ml)": "🍲",
+    "Windscreen": "🛡️",
     "Sun Hood": "🧢",
     "Suncream": "🧴",
     "Swimming shorts": "🩳",
@@ -408,6 +536,7 @@ ITEM_EMOJI = {
     "Poles": "🥢",
     "Triple Twister pegs": "📌",
     "Blizzard pegs": "🔻",
+    "Titanium filter & stand": "🫖",
     "Thermal bottoms": "👖",
     "Thermal glove liners": "🧤",
     "Thermal sleeping bag liner": "🛏️",
@@ -424,7 +553,7 @@ ITEM_EMOJI = {
     "Walking Socks (spare)": "🧦",
     "Watch": "⌚",
     "Water": "💧",
-    "Water filter": "🚰",
+    "Water purification kit": "🚰",
     "Wet wipes": "🧻",
     "Wine": "🍷",
     "Wine bladders": "🍷",
@@ -480,6 +609,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "currentNote": current_note.get(name),
             "needsCharge": name in NEEDS_CHARGE,
             "requiresOpenFire": name in REQUIRES_OPEN_FIRE,
+            "fireCaution": FIRE_CAUTION.get(name),
             "seasonByTrip": ITEM_SEASON_BY_TRIP.get(name),
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
@@ -523,7 +653,8 @@ def synthetic_consumable_item(name, category):
         "currentLabel": None,
         "currentNote": None,
         "needsCharge": False,
-        "requiresOpenFire": False,
+        "requiresOpenFire": name in REQUIRES_OPEN_FIRE,
+        "fireCaution": FIRE_CAUTION.get(name),
         "seasonByTrip": None,
         "season": None,
         "overnight": detail.get("overnight", True),
@@ -553,6 +684,12 @@ def synthetic_pack_items():
         # Same for wine - "Wine bladders" is the reusable container; the
         # wine itself was never tracked as its own row.
         synthetic_consumable_item("Wine", "Kitchen"),
+        # Same again for the Saku coffee maker's paper filters.
+        synthetic_consumable_item("Saku filters", "Kitchen"),
+        # Same again for the Mini firepit's three alternative fuel types.
+        synthetic_consumable_item("Kindling wood", "Kitchen"),
+        synthetic_consumable_item("Wood wool", "Kitchen"),
+        synthetic_consumable_item("Pellets", "Kitchen"),
     ]
 
 
@@ -620,10 +757,13 @@ RESEARCH_SHEETS = [
     ("stoves", "Stoves", "Gear comparisons",
      "Stove options compared by fuel type, weight, boil/burn time, and the "
      "sheet's own features/weight/cost score. The row literally named "
-     "\"Current Stove\" is the one in the pack list, but it has no cost/features "
-     "recorded so it can't be ranked against the others.",
+     "\"Current Stove\" was the Vango gas stove that used to cover both "
+     "overnight and long-trek trips in the pack list - since retired in "
+     "favour of trip-specific setups (the overnight one is now the Spirit "
+     "burner group), so there's no current single pack-list match here "
+     "until the long-trek option is rebuilt.",
      dict(brand="Vango", model="Current Stove", rank_col=None, rank_asc=True,
-          rank_label=None, item="Stove with stash bag")),
+          rank_label=None, item=None)),
 ]
 
 # Ultralight/Light/Trad/Heavy thresholds from the (now-removed) "summary"
@@ -705,12 +845,17 @@ def build_first_aid_items(rows):
 
 
 # ---------------------------------------------------------------------------
-# repair-kit -> repair-kit-data.js
+# Flat kit pages (repair-kit, water-purification-kit) -> <slug>-data.js
+#
+# Both are the same shape: a small checkable parts list with a quantity and
+# a per-unit weight, no dog-specific split (unlike first-aid-kit). Shares
+# one CSV shape, one JS builder, and one page renderer (kit.js) - only the
+# CSV contents, emoji map, and page title differ per kit.
 # ---------------------------------------------------------------------------
 
-# Own namespace, not shared with ITEM_EMOJI - "Stash bag" here is the small
-# repair-kit pouch, a different physical object from the Kitchen item of
-# the same name, so it needs its own (possibly different) icon.
+# Each kit's emoji map is its own namespace, not shared with ITEM_EMOJI -
+# e.g. "Stash bag" here is a small kit pouch, a different physical object
+# from the Kitchen item of the same name, so it needs its own icon.
 REPAIR_KIT_EMOJI = {
     "Stash bag": "👝",
     "Triple Twister peg (spare)": "📌",
@@ -723,9 +868,15 @@ REPAIR_KIT_EMOJI = {
     "Glue dot": "🔘",
     "Spare guyline": "🪢",
 }
+WATER_KIT_EMOJI = {
+    "Stash bag": "👝",
+    "Water filter": "🚰",
+    "1l bladder for dirty water": "💧",
+    "Purification tablets": "💊",
+}
 
 
-def build_repair_kit_items(rows):
+def build_flat_kit_items(rows, emoji_map):
     items = []
     for row in rows:
         name = field(row, "name")
@@ -733,7 +884,7 @@ def build_repair_kit_items(rows):
             continue
         items.append({
             "name": name,
-            "emoji": REPAIR_KIT_EMOJI.get(name, ITEM_EMOJI_DEFAULT),
+            "emoji": emoji_map.get(name, ITEM_EMOJI_DEFAULT),
             "quantity": parse_num(field(row, "quantity")) or 1,
             "weightG": parse_num(field(row, "weight_g")),
             "comment": field(row, "comment") or None,
@@ -762,6 +913,9 @@ def main():
 
     with (DATA_DIR / "repair-kit.csv").open(newline="", encoding="utf-8") as f:
         repair_kit_rows = list(csv.DictReader(f))
+
+    with (DATA_DIR / "water-purification-kit.csv").open(newline="", encoding="utf-8") as f:
+        water_kit_rows = list(csv.DictReader(f))
 
     # Research sheets are built first so their currentPick matches can be
     # turned into "see the research" links on the matching checklist item.
@@ -884,6 +1038,12 @@ def main():
         for name in stale_open_fire:
             print(f"  {name}")
 
+    stale_fire_caution = sorted(set(FIRE_CAUTION) - known_names)
+    if stale_fire_caution:
+        print(f"FIRE_CAUTION has {len(stale_fire_caution)} name(s) that don't match any item (typo?):")
+        for name in stale_fire_caution:
+            print(f"  {name}")
+
     valid_trip_keys = {"overnight", "longTrek", "carCamp"}
     invalid_season_by_trip = []
     for name, overrides in ITEM_SEASON_BY_TRIP.items():
@@ -915,27 +1075,35 @@ def main():
         encoding="utf-8",
     )
 
-    repair_kit_items = build_repair_kit_items(repair_kit_rows)
-    unmapped_repair_kit = sorted({it["name"] for it in repair_kit_items if it["name"] not in REPAIR_KIT_EMOJI})
-    if unmapped_repair_kit:
-        print(f"No REPAIR_KIT_EMOJI entry for {len(unmapped_repair_kit)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
-        for name in unmapped_repair_kit:
-            print(f"  {name}")
+    # (pack.csv item name, csv rows, emoji map, output filename)
+    FLAT_KITS = [
+        ("Repair kit", repair_kit_rows, REPAIR_KIT_EMOJI, "repair-kit-data.js"),
+        ("Water purification kit", water_kit_rows, WATER_KIT_EMOJI, "water-purification-kit-data.js"),
+    ]
+    flat_kit_items = {}
+    for kit_name, rows, emoji_map, filename in FLAT_KITS:
+        kit_items = build_flat_kit_items(rows, emoji_map)
+        flat_kit_items[kit_name] = kit_items
+        unmapped = sorted({it["name"] for it in kit_items if it["name"] not in emoji_map})
+        if unmapped:
+            print(f"{kit_name}: no emoji entry for {len(unmapped)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
+            for name in unmapped:
+                print(f"  {name}")
+        (ROOT / filename).write_text(
+            "// Generated by scripts/extract_data.py - do not edit by hand.\n"
+            f"const KIT_ITEMS = {js_literal(kit_items)};\n",
+            encoding="utf-8",
+        )
 
-    (ROOT / "repair-kit-data.js").write_text(
-        "// Generated by scripts/extract_data.py - do not edit by hand.\n"
-        f"const REPAIR_KIT_ITEMS = {js_literal(repair_kit_items)};\n",
-        encoding="utf-8",
-    )
-
-    # Detail-page kits (First aid kit, Repair kit) each have their own
-    # itemised weight, entered by hand in pack.csv rather than computed -
-    # warn if it's drifted from the sum of the kit's own contents, so a kit
-    # edit doesn't silently leave the main checklist showing a stale total.
-    repair_kit_sum = sum((it["weightG"] or 0) * it["quantity"] for it in repair_kit_items)
-    repair_kit_listed = next((it["weightG"] for it in pack_items if it["name"] == "Repair kit"), None)
-    if repair_kit_listed is not None and abs(repair_kit_listed - repair_kit_sum) > 0.05:
-        print(f"Repair kit: pack.csv lists {repair_kit_listed} g but repair-kit.csv items sum to {repair_kit_sum} g")
+    # Detail-page kits each have their own itemised weight, entered by hand
+    # in pack.csv rather than computed - warn if it's drifted from the sum
+    # of the kit's own contents, so a kit edit doesn't silently leave the
+    # main checklist showing a stale total.
+    for kit_name, kit_items in flat_kit_items.items():
+        kit_sum = sum((it["weightG"] or 0) * it["quantity"] for it in kit_items)
+        listed = next((it["weightG"] for it in pack_items if it["name"] == kit_name), None)
+        if listed is not None and abs(listed - kit_sum) > 0.05:
+            print(f"{kit_name}: pack.csv lists {listed} g but its kit CSV items sum to {kit_sum} g")
 
     first_aid_base_sum = sum(
         it["weightG"] or 0 for it in first_aid_items
@@ -947,7 +1115,8 @@ def main():
 
     print(f"Wrote data.js ({len(gear_items)} items: {len(pack_items)} pack + {len(anjo_items)} anjo)")
     print(f"Wrote first-aid-data.js ({len(first_aid_items)} items)")
-    print(f"Wrote repair-kit-data.js ({len(repair_kit_items)} items)")
+    for kit_name, rows, emoji_map, filename in FLAT_KITS:
+        print(f"Wrote {filename} ({len(flat_kit_items[kit_name])} items)")
     print(f"Wrote research-data.js ({len(research)} sheets)")
     for r in research:
         cp = r["currentPick"]

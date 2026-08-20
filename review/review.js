@@ -87,6 +87,7 @@
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.needsCharge) wrap.appendChild(badge("🔋 needs charging"));
     if (item.requiresOpenFire) wrap.appendChild(badge("🚫🔥 requires open fire"));
+    if (item.fireCaution) wrap.appendChild(badge("⚠️ fire caution", "badge-fire-caution", item.fireCaution));
     if (item.current) {
       if (item.currentIsUrl) {
         wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true, item.currentNote));

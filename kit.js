@@ -1,13 +1,16 @@
 (function () {
   "use strict";
 
-  var items = REPAIR_KIT_ITEMS.map(function (item, i) {
+  var items = KIT_ITEMS.map(function (item, i) {
     item._id = i;
     return item;
   });
 
   var checked = new Set();
-  var STORAGE_KEY = "camping-repair-kit-session-v1";
+  // Keyed by pathname so each kit page (repair-kit.html,
+  // water-purification-kit.html, ...) gets its own independent session
+  // state despite sharing this one script.
+  var STORAGE_KEY = "camping-kit-session-v1-" + location.pathname;
 
   function saveState() {
     try {

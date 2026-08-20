@@ -454,6 +454,12 @@ ul.items {
   border-color: var(--accent);
 }
 
+.badge-fire-caution {
+  color: var(--danger);
+  border-color: var(--danger);
+  border-style: dashed;
+}
+
 .paw {
   font-size: 1.4em;
   line-height: 1;

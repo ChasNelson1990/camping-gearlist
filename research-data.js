@@ -5111,7 +5111,7 @@ const RESEARCH_SHEETS = [
     "slug": "stoves",
     "title": "Stoves",
     "group": "Gear comparisons",
-    "description": "Stove options compared by fuel type, weight, boil/burn time, and the sheet's own features/weight/cost score. The row literally named \"Current Stove\" is the one in the pack list, but it has no cost/features recorded so it can't be ranked against the others.",
+    "description": "Stove options compared by fuel type, weight, boil/burn time, and the sheet's own features/weight/cost score. The row literally named \"Current Stove\" was the Vango gas stove that used to cover both overnight and long-trek trips in the pack list - since retired in favour of trip-specific setups (the overnight one is now the Spirit burner group), so there's no current single pack-list match here until the long-trek option is rebuilt.",
     "columns": [
       "Brand",
       "Name",

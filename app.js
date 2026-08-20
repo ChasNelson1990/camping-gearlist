@@ -287,6 +287,9 @@
       wrap.appendChild(badge(formatWeight(item.weightG), null, item.weightNote));
     }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
+    if (item.fireCaution && state.noOpenFires) {
+      wrap.appendChild(badge("⚠️ usable with care", "badge-fire-caution", item.fireCaution));
+    }
     if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
