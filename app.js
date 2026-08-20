@@ -24,6 +24,7 @@
     trip: "all",
     season: "all",
     nights: NIGHTS_BY_TRIP.all,
+    noOpenFires: false,
     categories: new Set(CATEGORY_ORDER.filter(function (c) {
       return items.some(function (it) { return it.category === c; });
     })),
@@ -78,6 +79,7 @@
         trip: state.trip,
         season: state.season,
         nights: state.nights,
+        noOpenFires: state.noOpenFires,
         categories: Array.from(state.categories),
         checked: Array.from(checked),
         charged: Array.from(charged),
@@ -97,6 +99,7 @@
       if (saved.trip) state.trip = saved.trip;
       if (saved.season) state.season = saved.season;
       if (typeof saved.nights === "number") state.nights = saved.nights;
+      if (typeof saved.noOpenFires === "boolean") state.noOpenFires = saved.noOpenFires;
       if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
       if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
       if (Array.isArray(saved.charged)) charged = new Set(saved.charged);
@@ -135,9 +138,13 @@
     });
   }
 
+  function fireOk(item) {
+    return !item.requiresOpenFire || !state.noOpenFires;
+  }
+
   function visibleActiveItems() {
     return items.filter(function (it) {
-      return state.categories.has(it.category) && tripOk(it) && seasonOk(it);
+      return state.categories.has(it.category) && tripOk(it) && seasonOk(it) && fireOk(it);
     });
   }
 
@@ -571,15 +578,16 @@
   }
 
   function renderUnusedGear() {
-    // Active gear that just doesn't match the current trip/season filters -
-    // distinct from the old "archive" concept (which no longer exists: gear
-    // that's actually unowned/retired is dropped from the data entirely by
-    // extract_data.py, not shown here). Category toggles still apply, so
-    // hiding a whole category also hides its items from this list. Cards are
-    // built with the same renderCategorySection() as the main checklist, so
-    // these items are just as checkable/interactive as any other category.
+    // Active gear that just doesn't match the current trip/season/fire-safety
+    // filters - distinct from the old "archive" concept (which no longer
+    // exists: gear that's actually unowned/retired is dropped from the data
+    // entirely by extract_data.py, not shown here). Category toggles still
+    // apply, so hiding a whole category also hides its items from this list.
+    // Cards are built with the same renderCategorySection() as the main
+    // checklist, so these items are just as checkable/interactive as any
+    // other category.
     var unused = items.filter(function (it) {
-      return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it));
+      return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it) && fireOk(it));
     });
     document.getElementById("unused-gear-count").textContent = "(" + unused.length + ")";
     var wrap = document.getElementById("unused-gear-content");
@@ -604,6 +612,18 @@
   });
   wireSegmented("season-filter", "season");
 
+  var fireToggle = document.getElementById("fire-toggle");
+  fireToggle.addEventListener("click", function () {
+    state.noOpenFires = !state.noOpenFires;
+    syncFireToggle();
+    renderChecklist();
+  });
+
+  function syncFireToggle() {
+    fireToggle.classList.toggle("active", state.noOpenFires);
+    fireToggle.setAttribute("aria-pressed", state.noOpenFires);
+  }
+
   document.getElementById("nights-minus").addEventListener("click", function () {
     state.nights = Math.max(1, state.nights - 1);
     renderNightsControl();
@@ -617,6 +637,7 @@
 
   syncSegmentedUI("trip-filter", state.trip);
   syncSegmentedUI("season-filter", state.season);
+  syncFireToggle();
   renderCategoryChips();
   renderNightsControl();
   renderChecklist();

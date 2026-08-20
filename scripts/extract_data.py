@@ -297,6 +297,13 @@ NEEDS_CHARGE = {
     "Watch", "eReader", "GPS", "Beacon",
 }
 
+# Items that only make sense with an actual open flame going - hidden by the
+# checklist's "No open fires" toggle (for local fire bans/high wildfire-risk
+# conditions), independent of the trip/season filters. A gas stove and its
+# fuel are deliberately NOT included here - a contained, valved burner is
+# normally still permitted under an open-fire ban, unlike a firepit.
+REQUIRES_OPEN_FIRE = {"Firepit", "Charcoal", "Firelighters"}
+
 # Nights defaults per trip type, matching the day-counts the old spreadsheet
 # used for each (overnight/trek/car camp) - exported to data.js so the
 # checklist's nights stepper can default sensibly when you switch trip type.
@@ -472,6 +479,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "currentLabel": current_label.get(name),
             "currentNote": current_note.get(name),
             "needsCharge": name in NEEDS_CHARGE,
+            "requiresOpenFire": name in REQUIRES_OPEN_FIRE,
             "seasonByTrip": ITEM_SEASON_BY_TRIP.get(name),
             "season": field(row, "season") if "season" in row else "",
             "overnight": (consumable or {}).get("overnight", is_true(field(row, "overnight"))),
@@ -515,6 +523,7 @@ def synthetic_consumable_item(name, category):
         "currentLabel": None,
         "currentNote": None,
         "needsCharge": False,
+        "requiresOpenFire": False,
         "seasonByTrip": None,
         "season": None,
         "overnight": detail.get("overnight", True),
@@ -867,6 +876,12 @@ def main():
     if stale_needs_charge:
         print(f"NEEDS_CHARGE has {len(stale_needs_charge)} name(s) that don't match any item (typo?):")
         for name in stale_needs_charge:
+            print(f"  {name}")
+
+    stale_open_fire = sorted(REQUIRES_OPEN_FIRE - known_names)
+    if stale_open_fire:
+        print(f"REQUIRES_OPEN_FIRE has {len(stale_open_fire)} name(s) that don't match any item (typo?):")
+        for name in stale_open_fire:
             print(f"  {name}")
 
     valid_trip_keys = {"overnight", "longTrek", "carCamp"}
