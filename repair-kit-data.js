@@ -2,6 +2,7 @@
 const REPAIR_KIT_ITEMS = [
   {
     "name": "Stash bag",
+    "emoji": "👝",
     "quantity": 1.0,
     "weightG": 11.0,
     "comment": null,
@@ -9,6 +10,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Triple Twister peg (spare)",
+    "emoji": "📌",
     "quantity": 1.0,
     "weightG": 9.0,
     "comment": null,
@@ -16,6 +18,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Pole repair tube",
+    "emoji": "🥢",
     "quantity": 1.0,
     "weightG": 9.0,
     "comment": null,
@@ -23,6 +26,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Inner-to-fly clip (spare)",
+    "emoji": "🔗",
     "quantity": 3.0,
     "weightG": 2.0,
     "comment": null,
@@ -30,6 +34,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Ripstop tuff tape",
+    "emoji": "🧵",
     "quantity": 1.0,
     "weightG": 3.0,
     "comment": null,
@@ -37,6 +42,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Alcohol wipe",
+    "emoji": "🧻",
     "quantity": 1.0,
     "weightG": 2.0,
     "comment": null,
@@ -44,6 +50,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Waterproof patch",
+    "emoji": "🩹",
     "quantity": 2.0,
     "weightG": 0.5,
     "comment": null,
@@ -51,6 +58,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Tenacious Tape silnylon patch",
+    "emoji": "🧵",
     "quantity": 1.0,
     "weightG": 2.5,
     "comment": null,
@@ -58,6 +66,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Glue dot",
+    "emoji": "🔘",
     "quantity": 2.0,
     "weightG": 0.7,
     "comment": null,
@@ -65,6 +74,7 @@ const REPAIR_KIT_ITEMS = [
   },
   {
     "name": "Spare guyline",
+    "emoji": "🪢",
     "quantity": 4.0,
     "weightG": 6.0,
     "comment": null,

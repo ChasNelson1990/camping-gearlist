@@ -83,7 +83,13 @@
     body.className = "item-body";
     var name = document.createElement("div");
     name.className = "item-name";
-    name.textContent = item.name;
+    if (item.emoji) {
+      var icon = document.createElement("span");
+      icon.className = "item-emoji";
+      icon.textContent = item.emoji;
+      name.appendChild(icon);
+    }
+    name.appendChild(document.createTextNode(item.name));
     body.appendChild(name);
     body.appendChild(buildMeta(item));
     if (item.comment) {
