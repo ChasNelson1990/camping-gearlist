@@ -4038,7 +4038,7 @@ const RESEARCH_SHEETS = [
       ]
     ],
     "currentPick": {
-      "rowIndex": 33,
+      "rowIndex": 46,
       "rankLabel": null,
       "rank": null,
       "outOf": 59

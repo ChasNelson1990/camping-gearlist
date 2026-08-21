@@ -52,7 +52,7 @@ PACK_REQUIRED_COLUMNS = {
     "archived",
 }
 ANJO_REQUIRED_COLUMNS = {
-    "name", "number", "weight_g", "cost_gbp", "comment", "current",
+    "name", "number", "weight_g", "cost_gbp", "comment", "current", "season",
     "overnight", "long_trek", "car_camp", "on_body",
 }
 
@@ -257,6 +257,13 @@ ITEM_SEASON_BY_TRIP = {
 # couple of names ("Insulating Jacket", "Towel") exist on both sides with
 # different products behind them.
 PACK_CURRENT_LABEL = {
+    "Belt": "Fjällräven Keb Trekking Belt",
+    "Boxers": "Icebreaker 125 Anatomica Boxers (Cool-Lite)",
+    "Boxers (spare)": "Icebreaker 125 Anatomica Boxers (Cool-Lite)",
+    "Liner Socks": "Bridgedale Coolmax Liner",
+    "Liner Socks (spare)": "Bridgedale Coolmax Liner",
+    "Summer Walking Socks": "Bridgedale Hike Lightweight Merino Comfort Boot",
+    "Winter Walking Socks": "Bridgedale Hike Midweight Merino Performance Boot",
     "Rucksack": "Osprey Exos 48",
     "Raincover": "Osprey Ultralight Rain Cover (M)",
     "Tarpaulin": "Nordisk Voss 5 ULW",
@@ -278,8 +285,9 @@ PACK_CURRENT_LABEL = {
     "PotPocket": "Gossamer Gear PotPocket (M)",
     "Mini firepit": "Toaks Titanium Backpacking Wood Burning Stove (Small)",
     "Insect shield travel sheet": "Cocoon TravelSheet Insect Shield (Silk)",
-    "Clothes dry sack": "Sea to Summit eVac Dry Sack",
+    "Clothes dry sack": "Sea to Summit eVent Compression Dry Sack (S)",
     "Cup": "Toaks Titanium Cup 375",
+    "Down insulated jacket": "Rab Microlight Alpine",
     "Insulated cup and lid": "Keith Tasse à Filtre (cup + lid only)",
     "SnowPeak Hot Lips": "Snow Peak Hotlips 2-Piece Set",
     "Ozen table": "Snow Peak Ozen Solo Table",
@@ -288,17 +296,17 @@ PACK_CURRENT_LABEL = {
     "Grandpa's Firegrill": "Light My Fire Grandpa's Firegrill",
     "Headlamp": "BioLite HeadLamp 330",
     "Hip flask": "Ti-Flow EDC Titanium Hip Flask",
-    "Insulating Jacket": "Patagonia Micro Puff Hoody",
+    "Synthetic Insulating Jacket": "Patagonia Micro Puff Hoody",
     "Knife": "Deejo 37g Titanium",
     "Lantern": "BioLite PowerLight",
     "Midge net": "Smidge Midge-Proof Headnet",
-    "Pac Tube": "P.A.C. Ocean Upcycling Multitube",
-    "Pillow/Stuff Sack": "Therm-a-Rest Stuff Sack Pillow",
+    "Multitube": "P.A.C. Ocean Upcycling Multitube",
     "Powerpack": "Nitecore NB20000",
     "Quilt": "Therm-a-Rest Vesper 20F/-6C",
     "Quilt compression sack": "Sea to Summit Ultra-Sil eVent Compression Sack",
-    "Rain Jacket": "Patagonia Torrentshell 3L",
-    "Rain Pants": "Patagonia Torrentshell 3L Pants",
+    "Winter Rain Jacket": "Patagonia Torrentshell 3L",
+    "Summer Rain Jacket": "Rab Downpour Eco Jacket",
+    "Rain Pants": "Rab Downpour Eco Pants",
     "Reservoir": "Platypus Big Zip EVO",
     "Silk sleeping bag liner": "Eurohike Silk Mummy Liner",
     "Skin So Soft": "Avon Skin So Soft Dry Oil Spray",
@@ -352,6 +360,9 @@ PACK_CURRENT_NOTE = {
     "Rucksack": "May show a newer generation than the one actually owned",
     "Raincover": "Owned version predates the current listing at this link",
     "Thermal sleeping bag liner": "Discontinued - link is a third-party review, not a product page",
+    "Clothes dry sack": "Sea to Summit has since rebranded this line to 'Evac' - link is a marketplace listing for the original eVent-branded product",
+    "Belt": "Link is the women's listing (80 g) - doesn't match the owned 110 g figure, possibly a different size/version",
+    "Summer Rain Jacket": "Link is a third-party review, not a product page - its quoted 284 g is for a women's size 8, not the owned 364 g",
 }
 
 # Short hover tooltip on the plain weight badge, for items whose listed
@@ -366,6 +377,7 @@ ITEM_WEIGHT_NOTE = {
     "Saku coffee maker": "Includes stuff sack",
     "Vango burner": "Includes stash sack",
     "Ozen table": "Includes storage case",
+    "Rain Pants": "Includes stuff sack",
 }
 
 # Items with a rechargeable battery that should be charged before a trip -
@@ -432,7 +444,7 @@ ITEM_EMOJI = {
     "Boxers": "🩲",
     "Boxers (spare)": "🩲",
     "Camera mount": "📷",
-    "Camp socks": "🧦",
+    "Base camp socks": "🧦",
     "Chair": "🪑",
     "Charcoal": "⚫",
     "Charger": "🔌",
@@ -469,6 +481,7 @@ ITEM_EMOJI = {
     "Hitch Hiker": "🦮",
     "Insect shield travel sheet": "🪰",
     "Insulating Jacket": "🧥",
+    "Synthetic Insulating Jacket": "🧥",
     "Knife": "🔪",
     "Knot-a-Hitch": "🦮",
     "Lantern": "🏮",
@@ -478,13 +491,15 @@ ITEM_EMOJI = {
     "Merino neck tube": "🧣",
     "Midge net": "🦟",
     "Mobile Phone": "📱",
-    "Pac Tube": "🧣",
-    "Pillow/Stuff Sack": "🛏️",
+    "Multitube": "🧣",
+    "Down insulated jacket": "🧥",
+    "Cap": "🧢",
     "Poo bags": "💩",
     "Powerpack": "🔋",
     "Quilt": "🛏️",
     "Quilt compression sack": "👝",
-    "Rain Jacket": "☔",
+    "Winter Rain Jacket": "☔",
+    "Summer Rain Jacket": "☔",
     "Rain Pants": "☔",
     "Raincoat": "☔",
     "Raincover": "☔",
@@ -549,8 +564,8 @@ ITEM_EMOJI = {
     "USB-C Charging Cable": "🔌",
     "Vaseline": "🧴",
     "Walking Boots": "🥾",
-    "Walking Socks": "🧦",
-    "Walking Socks (spare)": "🧦",
+    "Summer Walking Socks": "🧦",
+    "Winter Walking Socks": "🧦",
     "Watch": "⌚",
     "Water": "💧",
     "Water purification kit": "🚰",
@@ -705,7 +720,7 @@ RESEARCH_SHEETS = [
      "and the sheet's own HH*B/weight performance score and price-per-ratio "
      "cost-efficiency score.",
      dict(brand="Patagonia", model="Torrentshell 3L", rank_col="Price per ratio", rank_asc=True,
-          rank_label="price-per-ratio", item="Rain Jacket")),
+          rank_label="price-per-ratio", item="Winter Rain Jacket")),
     ("flasks", "Insulated flasks", "Gear comparisons",
      "Insulated bottle/flask options compared by hot/cold retention time, "
      "volume, weight, and cost - open research, nothing in the current pack "
@@ -726,14 +741,14 @@ RESEARCH_SHEETS = [
      "Earlier insulated-jacket comparison by weight, insulation rating, and "
      "price-per-normalised-insulation.",
      dict(brand="Patagonia", model="Micro Puff", rank_col="price per", rank_asc=True,
-          rank_label="price per", item="Insulating Jacket")),
+          rank_label="price per", item="Synthetic Insulating Jacket")),
     ("insulated-jackets-2024", "Insulated jackets (2024)",
      "Gear comparisons",
      "A later, larger insulated-jacket comparison using CLO/g/m² (warmth "
      "per weight) instead of the 2022 sheet's insulation rating - no single "
      "combined ratio column here, so rows aren't ranked, just listed.",
-     dict(brand="Patagonia", model="Micro Puff Hoody", rank_col=None, rank_asc=True,
-          rank_label=None, item="Insulating Jacket",
+     dict(brand="Rab", model="Microlight Alpine", rank_col=None, rank_asc=True,
+          rank_label=None, item="Down insulated jacket",
           note="Down jackets here are rated by fill power (FP); synthetics don't have one, "
                "so this sheet assigns them an equivalent FP for comparison. Both directions "
                "use the same formula, fitted from the sheet's own FP/CLO reference points "
