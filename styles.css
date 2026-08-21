@@ -63,6 +63,13 @@ body {
   body { max-width: 1240px; }
 }
 
+@media (min-width: 1500px) {
+  /* Widens further so the .multi column-width layout below (320px per
+     column) can fit more columns on very wide screens instead of being
+     capped at ~3 - 1760px comfortably fits 5. */
+  body { max-width: 1760px; }
+}
+
 a { color: var(--primary); }
 
 .topbar {
