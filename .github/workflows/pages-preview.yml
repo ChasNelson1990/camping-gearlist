@@ -61,6 +61,10 @@ jobs:
       - uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
         with:
           source-dir: .
+          # action:auto only deploys on opened/synchronize (not reopened) -
+          # this job's own `if:` above already excludes closed, so every
+          # event that reaches this step should deploy.
+          action: deploy
 
   clear-preview:
     # Same same-repo guard as deploy-preview above - a fork PR's preview was
