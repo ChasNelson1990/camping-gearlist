@@ -194,6 +194,8 @@ ITEM_QUANTITY = {
     "Triple Twister pegs": {"min": 0, "max": 11},
     "Blizzard pegs": {"min": 0, "max": 8},
     "Beer cans": {"min": 0, "max": 12},
+    "Walking poles": {"min": 0, "max": 2},
+    "Perudo": {"min": 0, "max": 5},
 }
 
 # Durable (non-consumable) items nested under another item in the UI purely
@@ -256,6 +258,8 @@ ITEM_SEASON_BY_TRIP = {
 PACK_CURRENT_LABEL = {
     "Belt": "Fjällräven Keb Trekking Belt",
     "Boxers": "Icebreaker 125 Anatomica Boxers (Cool-Lite)",
+    "Chair": "Helinox Sunset Home",
+    "Walking poles": "Black Diamond Alpine FLZ",
     "Boxers (spare)": "Icebreaker 125 Anatomica Boxers (Cool-Lite)",
     "Liner Socks": "Bridgedale Coolmax Liner",
     "Liner Socks (spare)": "Bridgedale Coolmax Liner",
@@ -314,7 +318,6 @@ PACK_CURRENT_LABEL = {
     "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
     "Small drybag for food": "Exped Fold Drybag UL",
     "Smidge": "Smidge Repellent",
-    "Spare small drybag": "Exped Fold Drybag UL",
     "Spare top": "Fjällräven Abisko Wool Long-Sleeve",
     "Spork": "Toaks Titanium Spork",
     "Stash bag": "Toaks Stash Bag",
@@ -367,6 +370,8 @@ PACK_CURRENT_NOTE = {
     "eReader": "Link is a Wikipedia reference page, not a retailer - the Kobo Glo is an older, discontinued model",
     "Pillow": "Product page lists 150 g (size unclear) - doesn't match the owned 104 g figure, possibly an older/smaller version",
     "Towel": "Product page lists 47 g for this variant - doesn't match the owned 34 g (inc. stuff sack) figure",
+    "Chair": "Manufacturer lists 1.7 kg (1512 g assembled) - notably heavier than the tracked 1168 g figure",
+    "Walking poles": "Link is an old third-party review, not a product page",
 }
 
 # Short hover tooltip on the plain weight badge, for items whose listed
@@ -383,6 +388,7 @@ ITEM_WEIGHT_NOTE = {
     "Ozen table": "Includes storage case",
     "Pillow": "Includes stuff sack",
     "Towel": "Includes stuff sack",
+    "Chair": "Includes custom stuff sack",
     "Rain Pants": "Includes stuff sack",
 }
 
@@ -442,6 +448,7 @@ ITEM_EMOJI = {
     "Lid pocket": "👝",
     "Bamboo cloth": "🧻",
     "Beacon": "🚨",
+    "Binoculars": "🔭",
     "Beer": "🍺",
     "Beer cans": "🍺",
     "Blanket": "🛏️",
@@ -499,6 +506,7 @@ ITEM_EMOJI = {
     "Down insulated jacket": "🧥",
     "Cap": "🧢",
     "Pillow": "🛏️",
+    "Perudo": "🎲",
     "Poo bags": "💩",
     "Powerpack": "🔋",
     "Quilt": "🛏️",
@@ -513,6 +521,7 @@ ITEM_EMOJI = {
     "Silk sleeping bag liner": "🛏️",
     "Saku coffee maker": "☕",
     "Saku filters": "📄",
+    "Seat pad": "🪑",
     "Sleeping bag": "🛏️",
     "Sleeping mat (half-length)": "🛌",
     "Sleeping mat, mummy, large": "🛌",
@@ -565,6 +574,7 @@ ITEM_EMOJI = {
     "USB-C Charging Cable": "🔌",
     "Vaseline": "🧴",
     "Walking Boots": "🥾",
+    "Walking poles": "🥢",
     "Summer Walking Socks": "🧦",
     "Winter Walking Socks": "🧦",
     "Watch": "⌚",
