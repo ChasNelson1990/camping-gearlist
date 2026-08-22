@@ -515,15 +515,23 @@ a:hover { color: var(--maroon); }
   inset: 0 auto 0 0;
   background: var(--teal);
 }
+/* Over budget: the same two proportional zones as the under-budget bar
+   (teal still-to-pack behind, maroon packed on top, packed growing
+   left-to-right as items are checked off) - just striped instead of solid,
+   as the "you're over" cue. Total is clamped to 100% width by the JS (it
+   would otherwise be >100%), so this necessarily covers the whole track -
+   there's no budget-remaining hairline left to show once you're over. */
 .budget-track.over .budget-fill-total {
-  background: repeating-linear-gradient(45deg, var(--maroon) 0 5px, var(--card) 5px 10px);
-  width: 100% !important;
+  background: repeating-linear-gradient(45deg, var(--teal) 0 5px, var(--card) 5px 10px);
 }
 
 .budget-fill-packed {
   position: absolute;
   inset: 0 auto 0 0;
   background: var(--maroon);
+}
+.budget-track.over .budget-fill-packed {
+  background: repeating-linear-gradient(45deg, var(--maroon) 0 5px, var(--card) 5px 10px);
 }
 
 .budget-legend {
