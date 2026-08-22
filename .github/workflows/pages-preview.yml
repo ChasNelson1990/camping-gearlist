@@ -1,0 +1,44 @@
+name: Pages deploy + PR previews
+
+# Production (push to main) and PR previews both publish to the same
+# gh-pages branch: main's content lives at the root, each open PR gets its
+# own subfolder at pr-preview/pr-<number>/ (and a comment on the PR linking
+# to it), removed again when the PR closes. GitHub Pages itself is
+# configured (Settings > Pages) to serve straight from gh-pages / - so nothing
+# else needs to run to make either deployment live.
+#
+# No build step: this is a plain static site with all generated files
+# (data.js, research-data.js, ...) already committed - deploying is just
+# copying the repo tree, which is exactly what pr-preview-action does.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+concurrency: preview-${{ github.ref }}
+
+jobs:
+  deploy:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./
+
+  clear-preview:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          action: remove
