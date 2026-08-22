@@ -160,5 +160,19 @@ const FIRST_AID_ITEMS = [
     "dog": null,
     "weightG": 1.45,
     "comment": null
+  },
+  {
+    "name": "Talc",
+    "human": 1.0,
+    "dog": null,
+    "weightG": 9.4,
+    "comment": "Values TBC - moved from the main pack list"
+  },
+  {
+    "name": "Towel",
+    "human": 1.0,
+    "dog": null,
+    "weightG": 10.0,
+    "comment": "Values TBC - moved from the main pack list"
   }
 ];

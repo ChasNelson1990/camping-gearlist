@@ -138,13 +138,10 @@ PACK_CONSUMABLE = {
         # all - this restores the union of both rows' original coverage.
         "longTrek": True,
     },
-    "Suncream": {"parent": None, "amount": 50, "unit": "g"},
-    "Talc": {"parent": None, "amount": 9.4, "unit": "g"},
-    "Wet wipes": {"parent": None, "amount": 20, "unit": "g"},
-    "Vaseline": {"parent": None, "amount": 43.25, "unit": "g"},
-    "Smidge": {"parent": "Midge net", "amount": 100, "unit": "g"},
-    "Toothpaste": {"parent": "Toothbrush", "amount": 5, "unit": "g"},
-    "Poo bags": None,
+    "Suncream": {"parent": None, "amount": 150, "unit": "g"},
+    "Wet wipes": {"parent": None, "amount": 100, "unit": "g"},
+    "Smidge": {"parent": "Midge net", "amount": 83, "unit": "g", "max": 83},
+    "Toothpaste": {"parent": "Toothbrush", "amount": 30, "unit": "g"},
     # Beer cans is the reusable-quantity-style parent (how many empty cans'
     # worth of weight to carry, mirroring Wine bladders); Beer itself is the
     # liquid content, defaulting to 500 ml (one standard can) but freely
@@ -266,6 +263,7 @@ PACK_CURRENT_LABEL = {
     "Winter Walking Socks": "Bridgedale Hike Midweight Merino Performance Boot",
     "Rucksack": "Osprey Exos 48",
     "Raincover": "Osprey Ultralight Rain Cover (M)",
+    "Pillow": "Sea to Summit Aeros Premium Pillow",
     "Tarpaulin": "Nordisk Voss 5 ULW",
     "Tent": "Nordisk Halland 2 LW",
     "Poles": "Nordisk Halland 2 LW Spare Pole Set",
@@ -313,7 +311,6 @@ PACK_CURRENT_LABEL = {
     "Rain Pants": "Rab Downpour Eco Pants",
     "Reservoir": "Platypus Big Zip EVO",
     "Silk sleeping bag liner": "Eurohike Silk Mummy Liner",
-    "Skin So Soft": "Avon Skin So Soft Dry Oil Spray",
     "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
     "Small drybag for food": "Exped Fold Drybag UL",
     "Smidge": "Smidge Repellent",
@@ -368,6 +365,8 @@ PACK_CURRENT_NOTE = {
     "Summer Rain Jacket": "Link is a third-party review, not a product page - its quoted 284 g is for a women's size 8, not the owned 364 g",
     "Headlamp": "Manufacturer lists 113 g with battery / 53 g without - neither matches the owned 73 g figure",
     "eReader": "Link is a Wikipedia reference page, not a retailer - the Kobo Glo is an older, discontinued model",
+    "Pillow": "Product page lists 150 g (size unclear) - doesn't match the owned 104 g figure, possibly an older/smaller version",
+    "Towel": "Product page lists 47 g for this variant - doesn't match the owned 34 g (inc. stuff sack) figure",
 }
 
 # Short hover tooltip on the plain weight badge, for items whose listed
@@ -382,6 +381,8 @@ ITEM_WEIGHT_NOTE = {
     "Saku coffee maker": "Includes stuff sack",
     "Vango burner": "Includes stash sack",
     "Ozen table": "Includes storage case",
+    "Pillow": "Includes stuff sack",
+    "Towel": "Includes stuff sack",
     "Rain Pants": "Includes stuff sack",
 }
 
@@ -497,6 +498,7 @@ ITEM_EMOJI = {
     "Multitube": "🧣",
     "Down insulated jacket": "🧥",
     "Cap": "🧢",
+    "Pillow": "🛏️",
     "Poo bags": "💩",
     "Powerpack": "🔋",
     "Quilt": "🛏️",
@@ -509,7 +511,6 @@ ITEM_EMOJI = {
     "Repair kit": "🛠️",
     "Reservoir": "💧",
     "Silk sleeping bag liner": "🛏️",
-    "Skin So Soft": "🧴",
     "Saku coffee maker": "☕",
     "Saku filters": "📄",
     "Sleeping bag": "🛏️",
@@ -546,7 +547,6 @@ ITEM_EMOJI = {
     "Suncream": "🧴",
     "Swimming shorts": "🩳",
     "Switchbak pack": "🦮",
-    "Talc": "🧂",
     "Tarpaulin": "⛺",
     "Tent": "⛺",
     "Poles": "🥢",
