@@ -6,16 +6,31 @@
 <title>Gear Review — Camping Checklist</title>
 <meta name="description" content="Every gear item grouped by category, showing which trips and seasons each is flagged for - a maintenance/review helper, not linked from anywhere else on the site.">
 <script>(function(){try{document.documentElement.setAttribute("data-theme",localStorage.getItem("camping-theme")==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 <header class="topbar">
-  <h1 style="font-size:1.15rem;margin:0;">🔍 Gear Review</h1>
+  <div class="topbar-links">
+    <a class="topbar-link" href="../index.html">← The checklist</a>
+  </div>
+  <div class="brand">
+    <span class="brand-diamond"></span>
+    <span>Anjo &amp; Co.</span>
+    <span class="brand-diamond"></span>
+  </div>
   <div class="topbar-actions">
-    <a class="research-link" href="../index.html">Checklist →</a>
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">Daylight</button>
   </div>
 </header>
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow">Internal maintenance helper</div>
+    <div class="title-line title-line-bold">Gear Review</div>
+    <div class="masthead-rule"><span></span><span>Every item, every flag, no checkboxes</span><span></span></div>
+  </div>
+</div>
 <main id="review" class="multi"></main>
 <script src="../theme.js"></script>
 <script src="../data.js"></script>
