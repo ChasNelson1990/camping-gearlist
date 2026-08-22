@@ -42,7 +42,12 @@ jobs:
           source-dir: ./
 
   clear-preview:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    # Same same-repo guard as deploy above - a fork PR's preview was never
+    # deployed in the first place, so there's nothing for this job to (or
+    # permission to) remove.
+    if: >
+      github.event_name == 'pull_request' && github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: write
