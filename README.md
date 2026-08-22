@@ -14,6 +14,21 @@ A mobile-friendly camping packing checklist, generated from CSV data files.
 
 It's plain HTML/CSS/JS with no build step, no framework, and no backend, so it deploys straight from the repo via GitHub Pages.
 
+## Deployment / PR previews
+
+`.github/workflows/pages-preview.yml` publishes to the `gh-pages` branch,
+which is what GitHub Pages actually serves from (Settings → Pages):
+
+- A push to `main` republishes the live site at the root
+  (`https://chasnelson1990.github.io/camping-gearlist/`).
+- Every pull request gets its own preview at
+  `https://chasnelson1990.github.io/camping-gearlist/pr-preview/pr-<number>/`,
+  with the link posted as a comment on the PR and kept up to date as you
+  push more commits. It's removed automatically when the PR closes.
+
+No build step is involved - it publishes the repo tree as-is, same as a
+manual deploy would.
+
 ## Updating the data
 
 Edit the relevant CSV file under `data/` (`data/pack.csv`, `data/anjo.csv`,
