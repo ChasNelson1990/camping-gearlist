@@ -37,8 +37,21 @@
     collapsedCategories: new Set(),
     // Same idea, one level down: which parent items' sub-item lists are
     // collapsed, keyed by the parent's own _id (category::name, so it's
-    // independent from collapsedCategories' plain-name keys).
-    collapsedItemGroups: new Set(),
+    // independent from collapsedCategories' plain-name keys). Pre-populated
+    // with the bulkier gear-with-accessories items so a fresh session opens
+    // with them folded - loadState() below overwrites this with whatever
+    // the user already had open/closed if this tab has a saved session.
+    collapsedItemGroups: new Set([
+      "Kitchen::Spirit burner",
+      "Kitchen::Vango burner",
+      "Kitchen::Mini firepit",
+      "Kitchen::Firepit",
+      "Kitchen::Coffee",
+      "Kitchen::Wine bladders",
+      "Kitchen::Beer cans",
+      "Kitchen::Hip flask",
+      "Kitchen::Cup",
+    ]),
   };
 
   var checked = new Set();
@@ -456,6 +469,11 @@
         // parent never touches the child, and unchecking a sub-item never
         // unchecks its parent either.
         if (item.parentName) checked.add(item.category + "::" + item.parentName);
+        // Checking an item that itself has sub-items expands them, so
+        // packing the parent naturally surfaces its accessories to pack too.
+        if (items.some(function (it) { return it.category === item.category && it.parentName === item.name; })) {
+          state.collapsedItemGroups.delete(item._id);
+        }
       } else {
         checked.delete(item._id);
       }

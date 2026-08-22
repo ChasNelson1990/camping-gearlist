@@ -168,6 +168,12 @@ PACK_CONSUMABLE = {
         "parent": "Coffee", "amount": 1, "unit": "g",
         "overnight": False, "longTrek": True, "carCamp": False,
     },
+    # Synthetic - see synthetic_pack_items(). Defaults to a full flask
+    # (150 ml, the flask's own capacity), not scaled by trip length.
+    "Spirits": {
+        "parent": "Hip flask", "amount": 150, "unit": "ml",
+        "scalesWithNights": False, "max": 150,
+    },
 }
 ANJO_CONSUMABLE = {
     "Water": {"parent": None, "amount": 0.85, "unit": "l"},
@@ -235,6 +241,8 @@ ITEM_PARENT = {
     "Cup stash bag": "Cup",
     "Grandpa's Firegrill": "Mini firepit",
     "Ti Artisan tongs": "Mini firepit",
+    "Charcoal": "Firepit",
+    "Firelighters": "Firepit",
 }
 
 # Per-trip season override, for the rare item whose season restriction isn't
@@ -489,6 +497,7 @@ ITEM_EMOJI = {
     "Half Bag": "🛏️",
     "Headlamp": "🔦",
     "Hip flask": "🥃",
+    "Spirits": "🍶",
     "Hitch Hiker": "🦮",
     "Insect shield travel sheet": "🪰",
     "Insulating Jacket": "🧥",
@@ -716,6 +725,8 @@ def synthetic_pack_items():
         synthetic_consumable_item("Kindling wood", "Kitchen"),
         synthetic_consumable_item("Wood wool", "Kitchen"),
         synthetic_consumable_item("Pellets", "Kitchen"),
+        # Same again for the Hip flask's contents.
+        synthetic_consumable_item("Spirits", "Kitchen"),
     ]
 
 
