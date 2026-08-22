@@ -21,7 +21,14 @@ concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    # Fork PRs never have write access to gh-pages (GitHub itself enforces
+    # a read-only GITHUB_TOKEN for pull_request-triggered runs from a fork),
+    # so without this guard the job would just run and fail noisily on
+    # every fork PR instead of being skipped.
+    if: >
+      github.event_name == 'push' ||
+      (github.event.action != 'closed' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     permissions:
       contents: write
