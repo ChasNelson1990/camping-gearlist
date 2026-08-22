@@ -294,11 +294,15 @@ PACK_CURRENT_LABEL = {
     "Thermo Pocket": "Gram Counter Gear Thermo Pocket",
     "EATI Mag": "EATI Mag Multi-Utensil",
     "Grandpa's Firegrill": "Light My Fire Grandpa's Firegrill",
-    "Headlamp": "BioLite HeadLamp 330",
+    "Headlamp": "Silva MR400",
+    "Earphones": "Nothing Ear (3)",
+    "Watch": "Garmin Fenix 6 Solar",
+    "eReader": "Kobo Glo",
+    "Mini pump": "Aerogogo GIGA PUMP Air",
+    "Satellite communicator": "Garmin inReach Mini 2",
     "Hip flask": "Ti-Flow EDC Titanium Hip Flask",
     "Synthetic Insulating Jacket": "Patagonia Micro Puff Hoody",
     "Knife": "Deejo 37g Titanium",
-    "Lantern": "BioLite PowerLight",
     "Midge net": "Smidge Midge-Proof Headnet",
     "Multitube": "P.A.C. Ocean Upcycling Multitube",
     "Powerpack": "Nitecore NB20000",
@@ -313,7 +317,6 @@ PACK_CURRENT_LABEL = {
     "Sleeping mat, mummy, large": "Therm-a-Rest NeoAir XTherm",
     "Small drybag for food": "Exped Fold Drybag UL",
     "Smidge": "Smidge Repellent",
-    "Solar panel": "PowerTraveller Extreme (solar)",
     "Spare small drybag": "Exped Fold Drybag UL",
     "Spare top": "Fjällräven Abisko Wool Long-Sleeve",
     "Spork": "Toaks Titanium Spork",
@@ -363,6 +366,8 @@ PACK_CURRENT_NOTE = {
     "Clothes dry sack": "Sea to Summit has since rebranded this line to 'Evac' - link is a marketplace listing for the original eVent-branded product",
     "Belt": "Link is the women's listing (80 g) - doesn't match the owned 110 g figure, possibly a different size/version",
     "Summer Rain Jacket": "Link is a third-party review, not a product page - its quoted 284 g is for a women's size 8, not the owned 364 g",
+    "Headlamp": "Manufacturer lists 113 g with battery / 53 g without - neither matches the owned 73 g figure",
+    "eReader": "Link is a Wikipedia reference page, not a retailer - the Kobo Glo is an older, discontinued model",
 }
 
 # Short hover tooltip on the plain weight badge, for items whose listed
@@ -385,8 +390,8 @@ ITEM_WEIGHT_NOTE = {
 # one. Not split pack/anjo like PACK_CONSUMABLE - none of these names
 # collide between the two sides, so one flat set covers both.
 NEEDS_CHARGE = {
-    "Headlamp", "Powerpack", "Lantern", "Mobile Phone", "Earphones",
-    "Watch", "eReader", "GPS", "Beacon",
+    "Headlamp", "Powerpack", "Mobile Phone", "Earphones",
+    "Watch", "eReader", "Satellite communicator", "Beacon",
 }
 
 # Items that only make sense with an actual open flame going - hidden by the
@@ -431,7 +436,6 @@ NIGHTS_BY_TRIP = {"all": 2, "overnight": 1, "longTrek": 4, "carCamp": 5}
 # one symbol. Items with no entry fall back to ITEM_EMOJI_DEFAULT.
 ITEM_EMOJI_DEFAULT = "📦"
 ITEM_EMOJI = {
-    "Active Camera": "📹",
     "Aeropress": "☕",
     "Rucksack": "🎒",
     "Lid pocket": "👝",
@@ -443,7 +447,6 @@ ITEM_EMOJI = {
     "Bowl": "🥣",
     "Boxers": "🩲",
     "Boxers (spare)": "🩲",
-    "Camera mount": "📷",
     "Base camp socks": "🧦",
     "Chair": "🪑",
     "Charcoal": "⚫",
@@ -470,7 +473,7 @@ ITEM_EMOJI = {
     "Food UL": "🥘",
     "Front Range harness": "🦮",
     "Front Range pack": "🎒",
-    "GPS": "🛰️",
+    "Satellite communicator": "🛰️",
     "Garmin charging cable": "🔌",
     "Guy lines": "🪢",
     "Guy lines with clips": "🪢",
@@ -484,12 +487,12 @@ ITEM_EMOJI = {
     "Synthetic Insulating Jacket": "🧥",
     "Knife": "🔪",
     "Knot-a-Hitch": "🦮",
-    "Lantern": "🏮",
     "Leash": "🦮",
     "Liner Socks": "🧦",
     "Liner Socks (spare)": "🧦",
     "Merino neck tube": "🧣",
     "Midge net": "🦟",
+    "Mini pump": "💨",
     "Mobile Phone": "📱",
     "Multitube": "🧣",
     "Down insulated jacket": "🧥",
@@ -514,9 +517,7 @@ ITEM_EMOJI = {
     "Sleeping mat, mummy, large": "🛌",
     "Small drybag for food": "👝",
     "Smidge": "🧴",
-    "Solar panel": "☀️",
     "Spare fuel bottle": "🧴",
-    "Spare phone battery": "🔋",
     "Spare small drybag": "👝",
     "Spare top": "👕",
     "Spirit burner": "🔥",
