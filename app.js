@@ -28,6 +28,13 @@
     categories: new Set(CATEGORY_ORDER.filter(function (c) {
       return items.some(function (it) { return it.category === c; });
     })),
+    // Which category sections are collapsed - keyed by category name, shared
+    // between the main checklist and Unused gear (both render sections via
+    // renderCategorySection). Every checkbox toggle rebuilds the whole list
+    // via renderChecklist(), which would otherwise reset native <details>
+    // open/closed state on every click - tracking it here and re-applying
+    // it on each render keeps a collapsed section collapsed.
+    collapsedCategories: new Set(),
   };
 
   var checked = new Set();
@@ -81,6 +88,7 @@
         nights: state.nights,
         noOpenFires: state.noOpenFires,
         categories: Array.from(state.categories),
+        collapsedCategories: Array.from(state.collapsedCategories),
         checked: Array.from(checked),
         charged: Array.from(charged),
         consumableAmounts: Array.from(consumableAmounts.entries()),
@@ -101,6 +109,7 @@
       if (typeof saved.nights === "number") state.nights = saved.nights;
       if (typeof saved.noOpenFires === "boolean") state.noOpenFires = saved.noOpenFires;
       if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
+      if (Array.isArray(saved.collapsedCategories)) state.collapsedCategories = new Set(saved.collapsedCategories);
       if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
       if (Array.isArray(saved.charged)) charged = new Set(saved.charged);
       if (Array.isArray(saved.consumableAmounts)) consumableAmounts = new Map(saved.consumableAmounts);
@@ -392,14 +401,20 @@
   }
 
   function renderCategorySection(cat, catItems) {
-    var section = document.createElement("section");
-    section.className = "category";
+    var details = document.createElement("details");
+    details.className = "category";
+    details.open = !state.collapsedCategories.has(cat);
+    details.addEventListener("toggle", function () {
+      if (details.open) state.collapsedCategories.delete(cat);
+      else state.collapsedCategories.add(cat);
+      saveState();
+    });
 
-    var h2 = document.createElement("h2");
+    var summary = document.createElement("summary");
     var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
     var catLabel = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
-    h2.innerHTML = "<span>" + catLabel + "</span><span>" + checkedCount + "/" + catItems.length + "</span>";
-    section.appendChild(h2);
+    summary.innerHTML = "<span>" + catLabel + "</span><span>" + checkedCount + "/" + catItems.length + "</span>";
+    details.appendChild(summary);
 
     var ul = document.createElement("ul");
     ul.className = "items";
@@ -409,8 +424,8 @@
       catItems.filter(function (it) { return it.parentName === item.name; })
         .forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
     });
-    section.appendChild(ul);
-    return section;
+    details.appendChild(ul);
+    return details;
   }
 
   function renderItem(item, extraClass) {

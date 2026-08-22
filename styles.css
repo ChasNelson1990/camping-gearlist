@@ -344,7 +344,7 @@ main#review {
    a fragment, so margin-bottom keeps all columns aligned. */
 .category { margin-bottom: 1.1rem; }
 
-.category h2 {
+.category > summary {
   font-size: .95rem;
   text-transform: uppercase;
   letter-spacing: .04em;
@@ -352,6 +352,20 @@ main#review {
   margin: 0 0 .35rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.category > summary::-webkit-details-marker { display: none; }
+
+/* The arrow lives on the label span (not summary itself) so it sits next
+   to the category name instead of being pulled to the far left by
+   summary's own justify-content: space-between. */
+.category > summary > span:first-child::before {
+  content: "▾ ";
+}
+.category:not([open]) > summary > span:first-child::before {
+  content: "▸ ";
 }
 
 ul.items {
