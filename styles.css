@@ -425,6 +425,17 @@ ul.items {
   text-decoration: none;
 }
 
+.item-group-toggle {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-right: .3em;
+  font: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .item-meta {
   display: flex;
   flex-wrap: wrap;

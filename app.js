@@ -35,6 +35,10 @@
     // open/closed state on every click - tracking it here and re-applying
     // it on each render keeps a collapsed section collapsed.
     collapsedCategories: new Set(),
+    // Same idea, one level down: which parent items' sub-item lists are
+    // collapsed, keyed by the parent's own _id (category::name, so it's
+    // independent from collapsedCategories' plain-name keys).
+    collapsedItemGroups: new Set(),
   };
 
   var checked = new Set();
@@ -89,6 +93,7 @@
         noOpenFires: state.noOpenFires,
         categories: Array.from(state.categories),
         collapsedCategories: Array.from(state.collapsedCategories),
+        collapsedItemGroups: Array.from(state.collapsedItemGroups),
         checked: Array.from(checked),
         charged: Array.from(charged),
         consumableAmounts: Array.from(consumableAmounts.entries()),
@@ -110,6 +115,7 @@
       if (typeof saved.noOpenFires === "boolean") state.noOpenFires = saved.noOpenFires;
       if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
       if (Array.isArray(saved.collapsedCategories)) state.collapsedCategories = new Set(saved.collapsedCategories);
+      if (Array.isArray(saved.collapsedItemGroups)) state.collapsedItemGroups = new Set(saved.collapsedItemGroups);
       if (Array.isArray(saved.checked)) checked = new Set(saved.checked);
       if (Array.isArray(saved.charged)) charged = new Set(saved.charged);
       if (Array.isArray(saved.consumableAmounts)) consumableAmounts = new Map(saved.consumableAmounts);
@@ -420,9 +426,16 @@
     ul.className = "items";
     var topLevel = catItems.filter(function (it) { return !it.parentName; });
     topLevel.forEach(function (item) {
-      ul.appendChild(renderItem(item));
-      catItems.filter(function (it) { return it.parentName === item.name; })
-        .forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
+      var children = catItems.filter(function (it) { return it.parentName === item.name; });
+      var row = renderItem(item);
+      if (children.length) {
+        var collapsed = state.collapsedItemGroups.has(item._id);
+        row.querySelector(".item-name").insertBefore(buildGroupToggle(item, collapsed), row.querySelector(".item-name").firstChild);
+      }
+      ul.appendChild(row);
+      if (children.length && !state.collapsedItemGroups.has(item._id)) {
+        children.forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
+      }
     });
     details.appendChild(ul);
     return details;
@@ -475,6 +488,26 @@
     }
     name.appendChild(document.createTextNode(item.name + (suffix || "")));
     return name;
+  }
+
+  // Small disclosure arrow prepended to a parent item's name, for items with
+  // sub-items - stopPropagation keeps its click from also toggling the
+  // outer row's packed checkbox (the same technique buildChargeToggle uses
+  // for its own nested checkbox).
+  function buildGroupToggle(item, collapsed) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "item-group-toggle";
+    btn.textContent = collapsed ? "▸" : "▾";
+    btn.setAttribute("aria-label", (collapsed ? "Expand" : "Collapse") + " " + item.name + " sub-items");
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (collapsed) state.collapsedItemGroups.delete(item._id);
+      else state.collapsedItemGroups.add(item._id);
+      saveState();
+      renderChecklist();
+    });
+    return btn;
   }
 
   function effectiveWeight(item) {
