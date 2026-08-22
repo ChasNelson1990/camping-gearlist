@@ -6,26 +6,16 @@
 <title>Insulated jackets (2022) — Camping Gear Research</title>
 <meta name="description" content="Earlier insulated-jacket comparison by weight, insulation rating, and price-per-normalised-insulation.">
 <script>(function(){try{document.documentElement.setAttribute("data-theme",localStorage.getItem("camping-theme")==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="research.css">
 </head>
 <body>
-<header class="topbar">
-  <a class="research-link" href="index.html">← All research</a>
-  <div class="topbar-actions">
-    <a class="research-link" href="../index.html">Checklist</a>
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
-  </div>
-</header>
-<main class="research-main">
-  <h1 id="title"></h1>
-  <p id="description" class="description"></p>
-  <div id="callout"></div>
-  <div class="table-wrap"><table id="table"></table></div>
-</main>
-<script src="../theme.js"></script>
+<div id="app"></div>
 <script src="../research-data.js"></script>
 <script src="research.js"></script>
 <script>renderSheet("insulated-jackets-2022");</script>
+<script src="../theme.js"></script>
 </body>
 </html>
