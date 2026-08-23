@@ -21,9 +21,10 @@
     <span class="brand-diamond"></span>
   </div>
   <div class="topbar-actions">
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">Daylight</button>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme"></button>
   </div>
 </header>
+<script>document.getElementById("theme-toggle").textContent = document.documentElement.getAttribute("data-theme") === "light" ? "Daylight" : "Nightfall";</script>
 <div class="masthead">
   <div class="masthead-inner">
     <div class="eyebrow">Internal maintenance helper</div>
