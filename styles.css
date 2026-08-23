@@ -448,6 +448,83 @@ a:hover { color: var(--maroon); }
 }
 
 /* ---------------------------------------------------------------------
+   Weather panel
+   --------------------------------------------------------------------- */
+
+.weather-days {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border-top: 1px solid var(--rule);
+  margin-top: .3rem;
+}
+
+.weather-status {
+  grid-column: 1 / -1;
+  background: var(--card);
+  color: var(--soft);
+  font-size: .85rem;
+  text-align: center;
+  margin: 0;
+  padding: 1.3rem 0;
+}
+
+.weather-day {
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  padding: .9rem .4rem 1rem;
+  text-align: center;
+}
+
+.weather-day-label {
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.weather-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  margin: .15rem 0;
+}
+
+.weather-temps {
+  font: 400 .92rem/1 'Courier Prime', monospace;
+}
+
+.weather-rain {
+  font: 400 .72rem/1 'Courier Prime', monospace;
+  color: var(--teal);
+}
+
+.weather-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem 1rem;
+  padding: .5rem 1.1rem .8rem;
+}
+
+.weather-attribution {
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.weather-attribution a { border-bottom: 1px solid var(--rule); }
+.weather-attribution a:hover { border-bottom-color: var(--maroon); }
+
+@media (max-width: 420px) {
+  .weather-days { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---------------------------------------------------------------------
    Weight budget panel
    --------------------------------------------------------------------- */
 
