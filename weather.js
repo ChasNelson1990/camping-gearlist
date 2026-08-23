@@ -114,16 +114,24 @@
   // Without a timeout, a stalled connection (as opposed to a clean
   // rejection) leaves the widget stuck on "Loading forecast..." forever -
   // .catch() only runs when the fetch actually rejects, which a hang never
-  // does on its own.
-  var controller = new AbortController();
-  var timeoutId = setTimeout(function () { controller.abort(); }, 10000);
+  // does on its own. AbortController and Promise.prototype.finally are both
+  // younger than fetch() itself, so a browser with the latter but not the
+  // former isn't far-fetched - feature-detected and avoided respectively,
+  // so such a browser just runs without the timeout instead of crashing
+  // before the request even starts.
+  var hasAbort = typeof AbortController !== "undefined";
+  var controller = hasAbort ? new AbortController() : null;
+  var timeoutId = hasAbort ? setTimeout(function () { controller.abort(); }, 10000) : null;
 
-  fetch(url, { signal: controller.signal })
+  fetch(url, hasAbort ? { signal: controller.signal } : undefined)
     .then(function (res) {
+      if (timeoutId != null) clearTimeout(timeoutId);
       if (!res.ok) throw new Error("Open-Meteo request failed: " + res.status);
       return res.json();
     })
     .then(function (data) { renderDays(data.daily); })
-    .catch(function () { setStatus("Couldn't load the forecast - try again later."); })
-    .finally(function () { clearTimeout(timeoutId); });
+    .catch(function () {
+      if (timeoutId != null) clearTimeout(timeoutId);
+      setStatus("Couldn't load the forecast - try again later.");
+    });
 })();
