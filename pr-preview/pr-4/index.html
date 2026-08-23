@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camping Checklist</title>
+<meta name="description" content="A mobile-friendly camping gear checklist, filterable by trip type and season.">
+<script>(function(){try{document.documentElement.setAttribute("data-theme",localStorage.getItem("camping-theme")==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>🏕️ Camping Checklist</h1>
+  <div class="topbar-actions">
+    <a class="research-link" href="research/index.html">Gear research →</a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="trip-row">
+    <div class="filter-group" role="radiogroup" aria-label="Trip type" id="trip-filter">
+      <button type="button" data-value="all" class="chip active">🧳 All trips</button>
+      <button type="button" data-value="overnight" class="chip">🌙 Overnight</button>
+      <button type="button" data-value="longTrek" class="chip">🥾 Long trek</button>
+      <button type="button" data-value="carCamp" class="chip">🚗 Car camp</button>
+    </div>
+    <div class="nights-control" id="nights-control">
+      <span class="nights-label">Nights:</span>
+      <button type="button" id="nights-minus" class="stepper-btn" aria-label="Decrease nights">−</button>
+      <span id="nights-value" class="nights-value">2</span>
+      <button type="button" id="nights-plus" class="stepper-btn" aria-label="Increase nights">+</button>
+    </div>
+  </div>
+  <div class="filter-group" role="radiogroup" aria-label="Season" id="season-filter">
+    <button type="button" data-value="all" class="chip active">🌦 All seasons</button>
+    <button type="button" data-value="Summer" class="chip">☀ Summer</button>
+    <button type="button" data-value="Winter" class="chip">❄ Winter</button>
+  </div>
+  <div class="filter-group" id="fire-toggle-group" aria-label="Fire safety">
+    <button type="button" id="fire-toggle" class="chip" aria-pressed="false">🚫🔥 No open fires</button>
+  </div>
+  <div class="filter-group" id="category-chips" aria-label="Categories"></div>
+</div>
+
+<section class="weather" id="weather" aria-label="Weather forecast">
+  <div class="weather-header">
+    <span class="weather-title">🌦 Glasgow forecast</span>
+    <a class="weather-attribution" href="https://open-meteo.com/" target="_blank" rel="noopener">via Open-Meteo</a>
+  </div>
+  <div class="weather-days" id="weather-days">
+    <p class="weather-status">Loading forecast…</p>
+  </div>
+</section>
+
+<div class="progress" id="progress">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <span id="progress-text" class="progress-text">0 of 0 packed</span>
+</div>
+<p class="weight-summary" id="weight-summary"></p>
+
+<div class="progress progress-secondary" id="anjo-progress">
+  <div class="progress-bar"><div class="progress-fill" id="anjo-progress-fill"></div></div>
+  <span id="anjo-progress-text" class="progress-text">🐾 0 of 0 on Anjo</span>
+</div>
+<p class="weight-summary" id="anjo-weight-summary"></p>
+
+<div class="progress progress-tertiary" id="consumables-progress">
+  <div class="progress-bar"><div class="progress-fill" id="consumables-progress-fill"></div></div>
+  <span id="consumables-progress-text" class="progress-text">0 of 0 consumables packed</span>
+</div>
+<p class="weight-summary" id="consumables-weight-summary"></p>
+
+<main id="checklist" class="multi"></main>
+
+<details id="unused-gear">
+  <summary>Unused gear <span id="unused-gear-count"></span></summary>
+  <p class="unused-note">Gear you own that doesn't match the current trip type or season filters - switch filters above to bring it back into the main list.</p>
+  <div id="unused-gear-content" class="multi"></div>
+</details>
+
+<footer>
+  <p>Your selections are kept while this tab stays open - closing the tab (or opening in a new one) clears everything, and nothing is ever saved between devices or browsers. Source on <a href="https://github.com/ChasNelson1990/camping-gearlist">GitHub</a>.</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="weather.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

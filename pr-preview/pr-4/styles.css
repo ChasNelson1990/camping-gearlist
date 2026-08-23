@@ -1,0 +1,664 @@
+:root {
+  /* Dark is the default look (set explicitly by theme.js, with this bare
+     block as the no-JS fallback) - light lives behind [data-theme="light"]. */
+  --bg: #12181a;
+  --surface: #1b2622;
+  --text: #e9f1ea;
+  --text-muted: #9db2a2;
+  --border: #2c3a33;
+  --primary: #6fbf95;
+  --primary-contrast: #0d1a12;
+  --accent: #e6a95c;
+  --danger: #e17a63;
+  --radius: 12px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #12181a;
+  --surface: #1b2622;
+  --text: #e9f1ea;
+  --text-muted: #9db2a2;
+  --border: #2c3a33;
+  --primary: #6fbf95;
+  --primary-contrast: #0d1a12;
+  --accent: #e6a95c;
+  --danger: #e17a63;
+}
+
+:root[data-theme="light"] {
+  --bg: #f6f4ee;
+  --surface: #ffffff;
+  --text: #1f2a20;
+  --text-muted: #5c6b5e;
+  --border: #e0dbc9;
+  --primary: #2f6a4f;
+  --primary-contrast: #ffffff;
+  --accent: #c97b2e;
+  --danger: #a8432f;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 720px) {
+  body { max-width: 900px; }
+}
+
+@media (min-width: 1100px) {
+  body { max-width: 1240px; }
+}
+
+@media (min-width: 1500px) {
+  /* Widens further so the .multi column-width layout below (320px per
+     column) can fit more columns on very wide screens instead of being
+     capped at ~3 - 1760px comfortably fits 5. */
+  body { max-width: 1760px; }
+}
+
+a { color: var(--primary); }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .85rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.research-link {
+  font-size: .85rem;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.research-link:hover { text-decoration: underline; }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex: 0 0 auto;
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { background: var(--bg); }
+
+.controls {
+  position: sticky;
+  top: 53px;
+  z-index: 9;
+  background: var(--bg);
+  padding: .6rem 1rem 0;
+  border-bottom: 1px solid transparent;
+}
+
+.filter-group {
+  display: flex;
+  gap: .4rem;
+  overflow-x: auto;
+  padding-bottom: .6rem;
+  scrollbar-width: none;
+}
+.filter-group::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: .82rem;
+  padding: .4rem .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+.chip.category.off {
+  opacity: .45;
+}
+
+.trip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.trip-row .filter-group {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.trip-row .nights-control {
+  flex: 0 0 auto;
+}
+
+@media (min-width: 720px) {
+  .trip-row .nights-control {
+    margin-left: auto;
+  }
+}
+
+.nights-control {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding-bottom: .6rem;
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+.nights-value {
+  font-weight: 600;
+  color: var(--text);
+  min-width: 1.4em;
+  text-align: center;
+}
+
+.stepper-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-size: .9rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.stepper-btn:hover { background: var(--bg); }
+
+.weather {
+  margin: 0 1rem 1rem;
+  padding: .8rem 1rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.weather-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+  margin-bottom: .6rem;
+}
+
+.weather-title {
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.weather-attribution {
+  font-size: .72rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.weather-attribution:hover { text-decoration: underline; }
+
+.weather-days {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .5rem;
+}
+
+.weather-status {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: .85rem;
+  text-align: center;
+  margin: .5rem 0;
+}
+
+.weather-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  padding: .5rem .3rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * .6);
+  text-align: center;
+}
+
+.weather-day-label {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+.weather-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.weather-temps {
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.weather-rain {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 400px) {
+  .weather-days { grid-template-columns: repeat(2, 1fr); }
+}
+
+.progress {
+  padding: .1rem 1rem .8rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width .2s ease;
+}
+
+.progress-text {
+  font-size: .8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.progress-secondary {
+  padding-top: 0;
+  opacity: .85;
+}
+
+.progress-secondary .progress-bar {
+  height: 4px;
+}
+
+.progress-secondary .progress-fill {
+  background: var(--primary);
+}
+
+.progress-tertiary {
+  padding-top: 0;
+  opacity: .85;
+}
+
+.progress-tertiary .progress-bar {
+  height: 4px;
+}
+
+.progress-tertiary .progress-fill {
+  background: var(--text-muted);
+}
+
+.weight-summary {
+  margin: -.4rem 1rem .6rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .3rem;
+}
+
+.weight-class {
+  font-weight: 600;
+}
+
+.weight-class-ultralight { color: var(--primary); border-color: var(--primary); }
+.weight-class-light { color: color-mix(in srgb, var(--primary) 50%, var(--accent)); border-color: color-mix(in srgb, var(--primary) 50%, var(--accent)); }
+.weight-class-trad { color: var(--accent); border-color: var(--accent); }
+.weight-class-heavy { color: var(--danger); border-color: var(--danger); }
+
+main#checklist,
+main#review {
+  flex: 1;
+  padding: 1.1rem 1rem 1rem;
+}
+
+@media (min-width: 720px) {
+  /* column-width lets the browser create as many columns as the viewport
+     fits, regardless of how much content there is - fine when there are
+     several uneven-height categories (avoids grid's row-locked gaps below
+     short ones), but it can leave a phantom empty column when there are
+     only one or two. Only used where that's actually the case. */
+  main#checklist.multi,
+  main#review.multi,
+  #unused-gear-content.multi {
+    column-width: 320px;
+    column-gap: 1.5rem;
+  }
+  main#checklist.multi .category,
+  main#review.multi .category,
+  #unused-gear-content.multi .category {
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+  }
+
+  /* A single wide card (e.g. the first-aid kit) flows its own items into
+     columns instead of leaving one long list in all that width. Unlike
+     .multi above, there's always enough items to fill every column, so a
+     plain column-count is safe here. */
+  ul.items.flow {
+    column-count: 2;
+    column-gap: 1.25rem;
+  }
+  ul.items.flow .item {
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+  }
+}
+
+@media (min-width: 1100px) {
+  ul.items.flow {
+    column-count: 3;
+  }
+}
+
+/* margin-bottom, not margin-top: in the multi-column layout below, a
+   category pushed to the top of a new column (2nd, 3rd...) has its
+   margin-top stripped by the browser's column-fragmentation rules - only
+   the very first column keeps it, leaving the others visibly higher.
+   Trailing margins are dropped consistently at both the top and bottom of
+   a fragment, so margin-bottom keeps all columns aligned. */
+.category { margin-bottom: 1.1rem; }
+
+.category > summary {
+  font-size: .95rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  margin: 0 0 .35rem;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.category > summary::-webkit-details-marker { display: none; }
+
+/* The arrow lives on the label span (not summary itself) so it sits next
+   to the category name instead of being pulled to the far left by
+   summary's own justify-content: space-between. */
+.category > summary > span:first-child::before {
+  content: "▾ ";
+}
+.category:not([open]) > summary > span:first-child::before {
+  content: "▸ ";
+}
+
+ul.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  padding: .7rem .8rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.item:last-child { border-bottom: none; }
+
+.item.item-sub {
+  padding-left: 2.3rem;
+  background: color-mix(in srgb, var(--bg) 45%, var(--surface));
+}
+
+.item.item-sub .item-name {
+  font-size: .9rem;
+}
+
+.item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  margin-top: .1rem;
+  accent-color: var(--primary);
+}
+
+.item-body { flex: 1; min-width: 0; }
+
+.item-name {
+  font-size: .98rem;
+  line-height: 1.3;
+}
+
+.item.checked .item-name {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.item-emoji {
+  display: inline-block;
+  font-size: 1.15em;
+  margin-right: .35em;
+  text-decoration: none;
+}
+
+.item-group-toggle {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-right: .3em;
+  font: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .3rem;
+}
+
+.badge {
+  font-size: .72rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .1rem .4rem;
+  white-space: nowrap;
+}
+
+.badge-consumable {
+  border-style: dashed;
+  font-style: italic;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.stepper-value {
+  font-size: .72rem;
+  color: var(--text-muted);
+  min-width: 3.2em;
+  text-align: center;
+}
+
+.badge-anjo {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge-trip {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.badge-season {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge-fire-caution {
+  color: var(--danger);
+  border-color: var(--danger);
+  border-style: dashed;
+}
+
+.paw {
+  font-size: 1.4em;
+  line-height: 1;
+  vertical-align: -0.15em;
+  margin-right: .05em;
+}
+
+.item-comment {
+  font-size: .78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: .25rem;
+}
+
+.charge-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .72rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: auto;
+}
+
+.charge-toggle input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  accent-color: var(--accent);
+}
+
+.item-link {
+  font-size: .78rem;
+  text-decoration: none;
+}
+.item-link:hover { text-decoration: underline; }
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: .9rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+details#unused-gear {
+  margin: 1.5rem 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 0;
+}
+
+details#unused-gear summary {
+  cursor: pointer;
+  padding: .8rem 1rem;
+  font-weight: 600;
+  font-size: .9rem;
+  list-style: none;
+}
+details#unused-gear summary::-webkit-details-marker { display: none; }
+details#unused-gear summary::before {
+  content: "▸ ";
+  color: var(--text-muted);
+}
+details#unused-gear[open] summary::before {
+  content: "▾ ";
+}
+
+#unused-gear-count {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.unused-note {
+  font-size: .8rem;
+  color: var(--text-muted);
+  margin: 0 1rem 1rem;
+}
+
+#unused-gear-content { padding: 1.1rem 1rem 1rem; }
+
+footer {
+  padding: 1.2rem 1rem 2rem;
+  text-align: center;
+  font-size: .75rem;
+  color: var(--text-muted);
+}
