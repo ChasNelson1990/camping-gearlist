@@ -539,7 +539,21 @@
     body.className = "item-body";
     body.appendChild(itemNameEl(item));
     var meta = buildMeta(item);
-    meta.appendChild(badge((open ? "− close" : "+ manifest"), "badge-disclosure"));
+    // A real <button>, not the plain badge() span the other meta pieces
+    // use - the row's own click-anywhere-to-open/close behaviour (below)
+    // isn't reachable by keyboard on a plain <li>, so this is the only way
+    // a keyboard user can expand/collapse the manifest. No separate click
+    // handler needed: a real button's click (mouse or synthesized by
+    // Enter/Space) bubbles up to the row's own listener just like any
+    // other click, and e.target there is the button, not the checkbox, so
+    // it isn't caught by that listener's "was it the checkbox" guard.
+    var disclosure = document.createElement("button");
+    disclosure.type = "button";
+    disclosure.className = "badge badge-disclosure";
+    disclosure.textContent = open ? "− close" : "+ manifest";
+    disclosure.setAttribute("aria-expanded", open);
+    disclosure.setAttribute("aria-label", (open ? "Collapse" : "Expand") + " " + item.name + " contents");
+    meta.appendChild(disclosure);
     body.appendChild(meta);
     if (item.comment) {
       var comment = document.createElement("div");
