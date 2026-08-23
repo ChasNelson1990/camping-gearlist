@@ -1,62 +1,96 @@
+/* Jost/Courier Prime are loaded via a <link rel="stylesheet"> in each
+   page's <head>, not an @import here - @import can't be discovered by the
+   browser's preload scanner until this whole file has downloaded and been
+   parsed, adding a fully sequential extra round-trip that the <link> tags
+   (alongside the preconnect hints already there) avoid. */
+
 :root {
   /* Dark is the default look (set explicitly by theme.js, with this bare
-     block as the no-JS fallback) - light lives behind [data-theme="light"]. */
-  --bg: #12181a;
-  --surface: #1b2622;
-  --text: #e9f1ea;
-  --text-muted: #9db2a2;
-  --border: #2c3a33;
-  --primary: #6fbf95;
-  --primary-contrast: #0d1a12;
-  --accent: #e6a95c;
-  --danger: #e17a63;
-  --radius: 12px;
+     block as the no-JS fallback) - light lives behind [data-theme="light"].
+     Palette names match the "vintage travel ledger" design: paper/card are
+     the two background tones, ink/soft are the two text tones, rule/
+     hairline are the two border weights, ochre/teal/maroon/rose are accent
+     roles. Legacy names below alias onto these so every file that already
+     used them (research.css, review.js's output) picks up the new palette
+     for free. */
+  --paper: #1A211F;
+  --card: #232B28;
+  --ink: #EFE3CB;
+  --soft: #98A598;
+  --rule: #3E4A46;
+  --hairline: #2C3531;
+  --ochre: #D9A046;
+  --rose: #C98585;
+  --teal: #84B6B0;
+  --maroon: #C4685A;
+  --hover: #2C3531;
 }
 
 :root[data-theme="dark"] {
-  --bg: #12181a;
-  --surface: #1b2622;
-  --text: #e9f1ea;
-  --text-muted: #9db2a2;
-  --border: #2c3a33;
-  --primary: #6fbf95;
-  --primary-contrast: #0d1a12;
-  --accent: #e6a95c;
-  --danger: #e17a63;
+  --paper: #1A211F;
+  --card: #232B28;
+  --ink: #EFE3CB;
+  --soft: #98A598;
+  --rule: #3E4A46;
+  --hairline: #2C3531;
+  --ochre: #D9A046;
+  --rose: #C98585;
+  --teal: #84B6B0;
+  --maroon: #C4685A;
+  --hover: #2C3531;
 }
 
 :root[data-theme="light"] {
-  --bg: #f6f4ee;
-  --surface: #ffffff;
-  --text: #1f2a20;
-  --text-muted: #5c6b5e;
-  --border: #e0dbc9;
-  --primary: #2f6a4f;
-  --primary-contrast: #ffffff;
-  --accent: #c97b2e;
-  --danger: #a8432f;
+  --paper: #F2E8D5;
+  --card: #FBF4E4;
+  --ink: #2E2A25;
+  --soft: #8A7A63;
+  --rule: #C9B896;
+  --hairline: #EBDFC4;
+  --ochre: #E0A33E;
+  --rose: #D98C8C;
+  --teal: #6E9E9A;
+  --maroon: #9E4B3F;
+  --hover: #F0E4C9;
+}
+
+:root {
+  /* Legacy aliases - kept so research.css and review.js's generated
+     markup (both untouched by this redesign beyond their own small
+     tweaks) inherit the new palette without a full rename. */
+  --bg: var(--paper);
+  --surface: var(--card);
+  --text: var(--ink);
+  --text-muted: var(--soft);
+  --border: var(--rule);
+  --primary: var(--maroon);
+  --primary-contrast: var(--card);
+  --accent: var(--ochre);
+  --danger: var(--rose);
+  --radius: 0px;
 }
 
 * { box-sizing: border-box; }
 
 html, body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Jost', Futura, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  max-width: 640px;
+  max-width: 940px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 0 0 2rem;
 }
 
 @media (min-width: 720px) {
-  body { max-width: 900px; }
+  body { max-width: 940px; }
 }
 
 @media (min-width: 1100px) {
@@ -70,231 +104,465 @@ body {
   body { max-width: 1760px; }
 }
 
-a { color: var(--primary); }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--maroon); }
+
+.mono { font-family: 'Courier Prime', monospace; }
+
+/* ---------------------------------------------------------------------
+   Topbar / brand
+   --------------------------------------------------------------------- */
 
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-  padding: .85rem 1rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  justify-content: center;
+  gap: .6rem 1rem;
+  padding: 1.4rem 1rem .5rem;
 }
 
-.topbar h1 {
-  font-size: 1.15rem;
-  margin: 0;
-}
-
-.research-link {
-  font-size: .85rem;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.research-link:hover { text-decoration: underline; }
-
+.topbar-links,
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: .6rem;
+  gap: .6rem 1rem;
   flex: 0 0 auto;
+}
+
+.topbar-links { order: 0; }
+.topbar-actions { order: 2; }
+
+.topbar-link {
+  font: 400 .7rem/1 'Courier Prime', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: .2rem;
+  white-space: nowrap;
+}
+
+.brand {
+  order: 1;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  font: 500 .7rem/1 Jost, sans-serif;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.brand-diamond {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  background: var(--maroon);
+  transform: rotate(45deg);
 }
 
 .theme-toggle {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  width: 32px;
-  height: 32px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  font-size: 1rem;
-  line-height: 1;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  color: var(--ink);
+  padding: .35rem .7rem;
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  -webkit-tap-highlight-color: transparent;
-}
-.theme-toggle:hover { background: var(--bg); }
-
-.controls {
-  position: sticky;
-  top: 53px;
-  z-index: 9;
-  background: var(--bg);
-  padding: .6rem 1rem 0;
-  border-bottom: 1px solid transparent;
-}
-
-.filter-group {
-  display: flex;
-  gap: .4rem;
-  overflow-x: auto;
-  padding-bottom: .6rem;
-  scrollbar-width: none;
-}
-.filter-group::-webkit-scrollbar { display: none; }
-
-.chip {
-  flex: 0 0 auto;
-  font: inherit;
-  font-size: .82rem;
-  padding: .4rem .85rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-  white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.chip.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary-contrast);
-}
-
-.chip.category.off {
-  opacity: .45;
-}
-
-.trip-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.trip-row .filter-group {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.trip-row .nights-control {
-  flex: 0 0 auto;
-}
-
-@media (min-width: 720px) {
-  .trip-row .nights-control {
-    margin-left: auto;
-  }
-}
-
-.nights-control {
-  display: flex;
-  align-items: center;
   gap: .5rem;
-  padding-bottom: .6rem;
-  font-size: .85rem;
-  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ochre);
+  flex: 0 0 auto;
+}
+.theme-toggle:hover { border-color: var(--maroon); }
+
+/* ---------------------------------------------------------------------
+   Masthead
+   --------------------------------------------------------------------- */
+
+.masthead {
+  margin: 0 1rem 1.4rem;
+  border: 2px solid var(--ink);
+  padding: 7px;
+  background: var(--card);
 }
 
-.nights-value {
-  font-weight: 600;
-  color: var(--text);
-  min-width: 1.4em;
+.masthead-inner {
+  border: 1px solid var(--rule);
+  padding: 1.6rem 1.2rem 1.4rem;
   text-align: center;
 }
 
+.eyebrow {
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.title-line {
+  font-weight: 300;
+  font-size: clamp(28px, 8vw, 44px);
+  line-height: 1.05;
+  font-family: Jost, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.title-line.title-line-bold { font-weight: 500; }
+.title-line:first-of-type { margin-top: .8rem; }
+
+.masthead-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  margin-top: 1rem;
+}
+.masthead-rule span:first-child,
+.masthead-rule span:last-child {
+  width: 40px;
+  height: 1px;
+  background: var(--rule);
+}
+.masthead-rule span:nth-child(2) {
+  font-size: .62rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------
+   Panels (Expedition filters / budget)
+   --------------------------------------------------------------------- */
+
+.panel {
+  margin: 0 1rem 1.1rem;
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
+
+.panel-eyebrow {
+  text-align: center;
+  padding: .8rem 0 .2rem;
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.panel-rule { height: 1px; background: var(--rule); }
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .3rem .8rem .8rem;
+}
+
+.tab {
+  flex: 1 1 88px;
+  min-width: 70px;
+  font: 500 .72rem/1.2 Jost, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: .6rem .3rem 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab::after {
+  content: "";
+  display: block;
+  height: 4px;
+  margin-top: .55rem;
+  background: var(--rule);
+}
+
+.tab.active::after { background: var(--maroon); }
+.tabs-teal .tab.active::after { background: var(--teal); }
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.panel-cell { padding: .8rem .9rem .9rem; }
+
+.panel-cell-label {
+  text-align: center;
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: .2rem;
+}
+
+.panel-cell-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.control-block { text-align: center; }
+
+.stepper-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  margin-top: .5rem;
+}
+
 .stepper-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  font-size: .9rem;
-  line-height: 1;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--ink);
+  background: none;
+  color: var(--ink);
+  font: 400 .9rem/1 'Courier Prime', monospace;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
 }
-.stepper-btn:hover { background: var(--bg); }
+.stepper-btn:hover { background: var(--hover); }
 
-.progress {
-  padding: .1rem 1rem .8rem;
-  display: flex;
+.stepper-btn-sm { width: 18px; height: 18px; font-size: .68rem; }
+
+.stepper-value-big {
+  font: 400 1.4rem/1 'Courier Prime', monospace;
+  min-width: 1.6em;
+  text-align: center;
+}
+
+.fire-toggle {
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
+  gap: .55rem;
+  margin-top: .55rem;
+  padding: .3rem .7rem;
+  border: 1px solid var(--rule);
+  font: 500 .72rem/1 Jost, sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+.fire-toggle:hover { border-color: var(--maroon); }
+
+.fire-toggle-box {
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.fire-toggle-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--maroon);
+  display: none;
+}
+.fire-toggle[aria-pressed="true"] .fire-toggle-dot { display: block; }
+
+/* ---------------------------------------------------------------------
+   Category chips (on/off) - no equivalent in the source design; styled
+   as a wrapping row of the same underline-tab language, dimmed when off.
+   --------------------------------------------------------------------- */
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+  padding: .3rem 0 .2rem;
+}
+
+.chip {
+  font: 500 .68rem/1 Jost, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .35rem .7rem;
+  border: 1px solid var(--rule);
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip.active { border-color: var(--maroon); color: var(--maroon); }
+.chip.off { opacity: .45; }
+
+/* ---------------------------------------------------------------------
+   Tally strip
+   --------------------------------------------------------------------- */
+
+.tally-strip {
+  margin: 0 1rem 1.1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
+
+.tally-cell {
+  padding: 1.1rem .6rem;
+  text-align: center;
+  border-left: 1px solid var(--rule);
+}
+.tally-cell:first-child { border-left: none; }
+
+.tally-num {
+  font: 400 1.6rem/1 'Courier Prime', monospace;
+}
+.tally-of { color: var(--soft); }
+
+.tally-label {
+  margin-top: .5rem;
+  font: 500 .62rem/1 Jost, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+/* ---------------------------------------------------------------------
+   Weight budget panel
+   --------------------------------------------------------------------- */
+
+.budget-panel { padding: 0 1.1rem 1.1rem; }
+
+.budget-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .4rem 1rem;
+  padding-top: .2rem;
+}
+
+.budget-header .panel-eyebrow { padding: .8rem 0 .2rem; text-align: left; flex: 1 1 auto; }
+
+.budget-caps {
+  font-size: .72rem;
+  color: var(--soft);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem;
+}
+
+.budget-cap {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.budget-row { margin-bottom: .9rem; }
+
+.budget-row-head {
+  display: flex;
+  align-items: baseline;
   gap: .6rem;
+  margin-bottom: .4rem;
 }
 
-.progress-bar {
+.budget-row-label {
   flex: 1;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--border);
-  overflow: hidden;
+  font: 500 .68rem/1 Jost, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
 }
 
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--accent);
-  transition: width .2s ease;
-}
+.budget-row-value { font-size: .78rem; }
+.budget-row-note { font-size: .72rem; color: var(--soft); }
+.budget-row-note.heavy { color: var(--rose); }
 
-.progress-text {
-  font-size: .8rem;
-  color: var(--text-muted);
+.budget-row-pct {
+  font-size: .72rem;
+  color: var(--soft);
+  width: 3.6em;
+  text-align: right;
   white-space: nowrap;
 }
+.budget-row-pct.over { color: var(--maroon); font-weight: 700; }
 
-.progress-secondary {
-  padding-top: 0;
-  opacity: .85;
+.budget-track {
+  position: relative;
+  height: 12px;
+  background: var(--hairline);
+  border: 1px solid var(--rule);
 }
 
-.progress-secondary .progress-bar {
-  height: 4px;
+.budget-fill-total {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--teal);
+}
+/* Over budget: the same two proportional zones as the under-budget bar
+   (teal still-to-pack behind, maroon packed on top, packed growing
+   left-to-right as items are checked off) - just striped instead of solid,
+   as the "you're over" cue. Total is clamped to 100% width by the JS (it
+   would otherwise be >100%), so this necessarily covers the whole track -
+   there's no budget-remaining hairline left to show once you're over. */
+.budget-track.over .budget-fill-total {
+  background: repeating-linear-gradient(45deg, var(--teal) 0 5px, var(--card) 5px 10px);
 }
 
-.progress-secondary .progress-fill {
-  background: var(--primary);
+.budget-fill-packed {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--maroon);
+}
+.budget-track.over .budget-fill-packed {
+  background: repeating-linear-gradient(45deg, var(--maroon) 0 5px, var(--card) 5px 10px);
 }
 
-.progress-tertiary {
-  padding-top: 0;
-  opacity: .85;
-}
-
-.progress-tertiary .progress-bar {
-  height: 4px;
-}
-
-.progress-tertiary .progress-fill {
-  background: var(--text-muted);
-}
-
-.weight-summary {
-  margin: -.4rem 1rem .6rem;
-  font-size: .8rem;
-  color: var(--text-muted);
+.budget-legend {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: .3rem;
+  gap: .5rem 1.2rem;
+  margin-top: .6rem;
+  font: 400 .62rem/1 'Courier Prime', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--soft);
 }
+.legend-item { display: flex; align-items: center; gap: .4rem; }
+.legend-swatch { width: 10px; height: 10px; flex: 0 0 auto; }
+.legend-packed { background: var(--maroon); }
+.legend-remaining { background: var(--teal); }
+.legend-headroom { background: var(--hairline); border: 1px solid var(--rule); }
+.legend-over { background: repeating-linear-gradient(45deg, var(--maroon) 0 3px, var(--card) 3px 6px); }
 
-.weight-class {
-  font-weight: 600;
-}
-
-.weight-class-ultralight { color: var(--primary); border-color: var(--primary); }
-.weight-class-light { color: color-mix(in srgb, var(--primary) 50%, var(--accent)); border-color: color-mix(in srgb, var(--primary) 50%, var(--accent)); }
-.weight-class-trad { color: var(--accent); border-color: var(--accent); }
-.weight-class-heavy { color: var(--danger); border-color: var(--danger); }
+/* ---------------------------------------------------------------------
+   Category cards / item rows
+   --------------------------------------------------------------------- */
 
 main#checklist,
 main#review {
   flex: 1;
-  padding: 1.1rem 1rem 1rem;
+  padding: 0 1rem 1rem;
 }
 
 @media (min-width: 720px) {
@@ -342,120 +610,182 @@ main#review {
    the very first column keeps it, leaving the others visibly higher.
    Trailing margins are dropped consistently at both the top and bottom of
    a fragment, so margin-bottom keeps all columns aligned. */
-.category { margin-bottom: 1.1rem; }
+.category {
+  margin-bottom: 1.1rem;
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
 
 .category > summary {
-  font-size: .95rem;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--text-muted);
-  margin: 0 0 .35rem;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: .8rem;
+  padding: .7rem .9rem;
+  border-bottom: 1px solid var(--rule);
   cursor: pointer;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
 }
 .category > summary::-webkit-details-marker { display: none; }
+.category:not([open]) > summary { border-bottom: none; }
 
-/* The arrow lives on the label span (not summary itself) so it sits next
-   to the category name instead of being pulled to the far left by
-   summary's own justify-content: space-between. */
-.category > summary > span:first-child::before {
-  content: "▾ ";
+.category-numeral {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 .68rem/1 'Courier Prime', monospace;
 }
-.category:not([open]) > summary > span:first-child::before {
-  content: "▸ ";
+
+.category-name {
+  flex: 1;
+  min-width: 0;
+  font: 500 .88rem/1.2 Jost, sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.category-name::before {
+  content: "▾ ";
+  color: var(--soft);
+  font-size: .7em;
+}
+.category:not([open]) .category-name::before { content: "▸ "; }
+
+.category-count {
+  font: 400 .68rem/1 'Courier Prime', monospace;
+  color: var(--soft);
+  flex: 0 0 auto;
+}
+
+.category-weight {
+  font: 400 .7rem/1 'Courier Prime', monospace;
+  color: var(--soft);
+  flex: 0 0 auto;
 }
 
 ul.items {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
 }
 
 .item {
   display: flex;
   align-items: flex-start;
-  gap: .65rem;
-  padding: .7rem .8rem;
-  border-bottom: 1px solid var(--border);
+  gap: .7rem;
+  padding: .75rem .9rem;
+  border-bottom: 1px solid var(--hairline);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.item:last-child { border-bottom: none; }
+/* Not scoped to a tag name: a leaf row is a <label> (renderItem), a group
+   row is an <li> (renderGroupRow) - both carry the .item class, so this
+   needs to match either. */
+.item:last-child,
+.item-manifest:last-child { border-bottom: none; }
 
 .item.item-sub {
-  padding-left: 2.3rem;
-  background: color-mix(in srgb, var(--bg) 45%, var(--surface));
+  padding: .55rem .9rem .55rem 1.6rem;
+  cursor: default;
 }
 
-.item.item-sub .item-name {
-  font-size: .9rem;
-}
+.item.item-sub .item-name { font-size: .84rem; }
 
+/* Custom checkbox: hides the native control's own rendering but keeps it
+   focusable/keyboard-toggleable (space bar) - the visual box+dot/ring is
+   drawn entirely from :checked/:indeterminate below. */
 .item input[type="checkbox"] {
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
-  margin-top: .1rem;
-  accent-color: var(--primary);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  margin: .1rem 0 0;
+  border: 1.5px solid var(--ink);
+  background: none;
+  position: relative;
+  cursor: pointer;
 }
+/* appearance:none above also strips the browser's own focus ring, since
+   that's normally drawn as part of the native control - restore a visible
+   one explicitly so keyboard navigation isn't silently invisible. */
+.item input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+.item input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.item input[type="checkbox"]:checked::after { background: var(--maroon); }
+.item input[type="checkbox"]:indeterminate::after { border: 2px solid var(--maroon); }
+.item.item-sub input[type="checkbox"] { width: 15px; height: 15px; flex-basis: 15px; }
+.item.item-sub input[type="checkbox"]::after { width: 7px; height: 7px; }
 
 .item-body { flex: 1; min-width: 0; }
 
 .item-name {
-  font-size: .98rem;
+  font-size: .95rem;
   line-height: 1.3;
+  display: flex;
+  align-items: baseline;
+  gap: .4em;
 }
 
-.item.checked .item-name {
+.item.checked .item-name,
+.item.item-group.checked > .item-body .item-name {
   text-decoration: line-through;
-  color: var(--text-muted);
+  color: var(--soft);
 }
 
 .item-emoji {
   display: inline-block;
-  font-size: 1.15em;
-  margin-right: .35em;
+  font-size: 1.1em;
   text-decoration: none;
 }
 
-.item-group-toggle {
-  border: none;
-  background: none;
-  padding: 0;
-  margin-right: .3em;
-  font: inherit;
-  color: var(--text-muted);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+.item-numeral {
+  flex: 0 0 auto;
+  font: 400 .68rem/1 'Courier Prime', monospace;
+  color: var(--soft);
+  min-width: 1.4em;
 }
 
 .item-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: .4rem;
-  margin-top: .3rem;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .35rem;
 }
 
 .badge {
-  font-size: .72rem;
-  color: var(--text-muted);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: .1rem .4rem;
-  white-space: nowrap;
+  font: 400 .68rem/1.3 'Courier Prime', monospace;
+  color: var(--soft);
+  border: 1px solid var(--rule);
+  padding: .12rem .4rem;
+  white-space: normal;
+  max-width: 100%;
+  word-break: break-word;
 }
 
-.badge-consumable {
-  border-style: dashed;
-  font-style: italic;
+.badge-consumable { border-style: dashed; }
+
+.badge-disclosure {
+  color: var(--teal);
+  border-color: var(--teal);
+  margin-left: auto;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .stepper {
@@ -464,119 +794,185 @@ ul.items {
   gap: .3rem;
 }
 
+.stepper .stepper-btn {
+  width: 22px;
+  height: 22px;
+  font-size: .78rem;
+}
+
 .stepper-value {
-  font-size: .72rem;
-  color: var(--text-muted);
+  font: 400 .68rem/1 'Courier Prime', monospace;
+  color: var(--soft);
   min-width: 3.2em;
   text-align: center;
 }
 
-.badge-anjo {
-  color: var(--accent);
-  border-color: var(--accent);
-}
+.badge-anjo { color: var(--ochre); border-color: var(--ochre); }
+.badge-trip { color: var(--teal); border-color: var(--teal); }
+.badge-season { color: var(--ochre); border-color: var(--ochre); }
 
-.badge-trip {
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
-.badge-season {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-.badge-fire-caution {
-  color: var(--danger);
-  border-color: var(--danger);
-  border-style: dashed;
-}
+.badge-fire-caution { color: var(--rose); border-color: var(--rose); border-style: dashed; }
 
 .paw {
-  font-size: 1.4em;
+  font-size: 1.3em;
   line-height: 1;
-  vertical-align: -0.15em;
+  vertical-align: -.15em;
   margin-right: .05em;
 }
 
 .item-comment {
-  font-size: .78rem;
-  color: var(--text-muted);
+  font-size: .76rem;
+  color: var(--soft);
   font-style: italic;
-  margin-top: .25rem;
+  margin-top: .3rem;
 }
 
 .charge-toggle {
   display: inline-flex;
   align-items: center;
   gap: .3rem;
-  font-size: .72rem;
-  color: var(--text-muted);
+  font: 400 .68rem/1 'Courier Prime', monospace;
+  color: var(--soft);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  margin-left: auto;
 }
 
 .charge-toggle input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
-  accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
 }
+.charge-toggle input[type="checkbox"]::after { width: 6px; height: 6px; }
 
-.item-link {
-  font-size: .78rem;
-  text-decoration: none;
-}
-.item-link:hover { text-decoration: underline; }
+.item-link { font-size: .72rem; text-decoration: underline; text-decoration-color: var(--rule); }
+.item-link:hover { text-decoration-color: var(--maroon); }
 
 .empty-state {
-  color: var(--text-muted);
-  font-size: .9rem;
+  color: var(--soft);
+  font-size: .88rem;
   padding: 1.5rem 0;
   text-align: center;
 }
 
+/* Group-parent row (item with children) - a plain li, not a label, so a
+   click elsewhere on the row can open/close the manifest below instead of
+   toggling the checkbox (see app.js's renderGroupRow). */
+.item.item-group { align-items: flex-start; }
+
+.item-manifest {
+  padding: .3rem .9rem .8rem 1.6rem;
+  border-bottom: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--paper) 35%, var(--card) 65%);
+}
+
+.manifest-divider {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .4rem 0 .6rem;
+}
+
+.manifest-divider-label {
+  font: 400 .6rem/1 'Courier Prime', monospace;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+.manifest-divider-rule { flex: 1; height: 1px; background: var(--rule); }
+
+.item-manifest .item.item-sub {
+  padding-left: 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+.item-manifest .item.item-sub:last-of-type { border-bottom: none; }
+
+.manifest-total {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  padding-top: .6rem;
+  margin-top: .3rem;
+  border-top: 1px solid var(--rule);
+}
+.manifest-total-label {
+  flex: 1;
+  font: 500 .66rem/1 Jost, sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.manifest-total > span:last-child { font: 400 .72rem/1 'Courier Prime', monospace; }
+
+/* ---------------------------------------------------------------------
+   Unused gear
+   --------------------------------------------------------------------- */
+
 details#unused-gear {
   margin: 1.5rem 1rem 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--card);
 }
 
 details#unused-gear summary {
   cursor: pointer;
-  padding: .8rem 1rem;
-  font-weight: 600;
-  font-size: .9rem;
+  padding: .9rem 1rem;
+  font: 500 .8rem/1 Jost, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--soft);
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
 }
 details#unused-gear summary::-webkit-details-marker { display: none; }
-details#unused-gear summary::before {
-  content: "▸ ";
-  color: var(--text-muted);
-}
-details#unused-gear[open] summary::before {
-  content: "▾ ";
+details#unused-gear summary::before { content: "▸"; }
+details#unused-gear[open] summary::before { content: "▾"; }
+details#unused-gear summary::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
 }
 
 #unused-gear-count {
-  font-weight: 400;
-  color: var(--text-muted);
+  font: 400 .72rem/1 'Courier Prime', monospace;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .unused-note {
   font-size: .8rem;
-  color: var(--text-muted);
+  color: var(--soft);
   margin: 0 1rem 1rem;
+  max-width: 56ch;
 }
 
 #unused-gear-content { padding: 1.1rem 1rem 1rem; }
 
-footer {
-  padding: 1.2rem 1rem 2rem;
-  text-align: center;
-  font-size: .75rem;
-  color: var(--text-muted);
+/* ---------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------- */
+
+.page-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin: 1.6rem 1rem 0;
 }
+.page-divider span:first-child,
+.page-divider span:last-child { width: 44px; height: 1px; background: var(--rule); }
+.page-divider-diamond { width: 7px; height: 7px; background: var(--ochre); transform: rotate(45deg); }
+
+footer {
+  padding: 1rem 1rem 1.4rem;
+  text-align: center;
+  font: 400 .72rem/1.8 'Courier Prime', monospace;
+  color: var(--soft);
+  max-width: 60ch;
+  margin: 0 auto;
+}
+footer a { border-bottom: 1px solid var(--rule); }
+footer a:hover { border-bottom-color: var(--maroon); }

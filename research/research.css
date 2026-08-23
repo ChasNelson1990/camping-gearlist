@@ -1,131 +1,98 @@
-.research-main {
-  padding: 1rem 1rem 3rem;
-}
-
-.research-main h1 {
-  font-size: 1.3rem;
-  margin: .2rem 0 .3rem;
+.research-panel {
+  padding: 1.2rem 1.1rem 1.4rem;
 }
 
 .description {
-  color: var(--text-muted);
+  color: var(--soft);
   font-size: .88rem;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0 0 1rem;
 }
 
 .callout {
-  background: var(--surface);
-  border: 1px solid var(--primary);
-  border-left: 4px solid var(--primary);
-  border-radius: 8px;
+  border: 1px solid var(--maroon);
+  border-left: 4px solid var(--maroon);
   padding: .6rem .85rem;
   font-size: .85rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  font-family: 'Courier Prime', monospace;
 }
 
-.callout strong { color: var(--primary); }
-
 .callout.note {
-  border-color: var(--border);
-  border-left-color: var(--text-muted);
-  color: var(--text-muted);
+  border-color: var(--rule);
+  border-left-color: var(--soft);
+  color: var(--soft);
 }
 
 .table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--rule);
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: .82rem;
+  font: .8rem/1.4 'Courier Prime', monospace;
   white-space: nowrap;
 }
 
 th, td {
-  padding: .5rem .65rem;
+  padding: .55rem .7rem;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--hairline);
 }
 
 thead th {
   position: sticky;
   top: 0;
-  background: var(--bg);
-  color: var(--text-muted);
-  font-weight: 600;
+  background: var(--paper);
+  color: var(--soft);
+  font-weight: 700;
   text-transform: uppercase;
-  font-size: .68rem;
-  letter-spacing: .03em;
-  border-bottom: 1px solid var(--border);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  border-bottom: 1px solid var(--rule);
 }
 
 tbody tr:last-child td { border-bottom: none; }
 
-tbody tr:nth-child(odd) { background: color-mix(in srgb, var(--surface) 96%, var(--text) 4%); }
-
 tbody tr.pick {
-  background: color-mix(in srgb, var(--primary) 14%, var(--surface) 86%);
+  background: color-mix(in srgb, var(--maroon) 14%, var(--card) 86%);
 }
 
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
-td.bool-true { text-align: center; color: var(--primary); }
-td.bool-false { text-align: center; color: var(--text-muted); }
-td.empty { color: var(--text-muted); }
+td.bool-true { text-align: center; color: var(--teal); }
+td.bool-false { text-align: center; color: var(--soft); }
+td.empty { color: var(--soft); }
 
-td a { color: var(--primary); font-size: .8rem; }
+td a { color: var(--maroon); font-size: .78rem; text-decoration: underline; text-decoration-color: var(--rule); }
 
-.pick-star { color: var(--accent); margin-right: .3rem; }
-
-.groups {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.groups h2 {
-  font-size: .9rem;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--text-muted);
-  margin: 0 0 .5rem;
-}
+.pick-star { color: var(--ochre); margin-right: .3rem; }
 
 ul.sheet-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+  border: 1px solid var(--rule);
 }
 
-ul.sheet-list li {
-  border-bottom: 1px solid var(--border);
-}
+ul.sheet-list li { border-bottom: 1px solid var(--rule); }
 ul.sheet-list li:last-child { border-bottom: none; }
 
 ul.sheet-list a {
   display: block;
-  padding: .75rem .9rem;
-  text-decoration: none;
-  color: var(--text);
+  padding: .85rem 1rem;
 }
 
-ul.sheet-list a:hover { background: var(--bg); }
+ul.sheet-list a:hover { background: var(--hover); }
 
-ul.sheet-list .sheet-title { font-size: .95rem; }
+ul.sheet-list .sheet-title {
+  font: 500 .92rem/1.2 Jost, sans-serif;
+  letter-spacing: .04em;
+}
 ul.sheet-list .sheet-desc {
   font-size: .78rem;
-  color: var(--text-muted);
-  margin-top: .15rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: var(--soft);
+  margin-top: .3rem;
+  line-height: 1.5;
 }
