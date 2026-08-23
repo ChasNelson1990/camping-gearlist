@@ -47,8 +47,19 @@
   function dayLabel(dateStr, index) {
     if (index === 0) return "Today";
     if (index === 1) return "Tomorrow";
-    var d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString("en-GB", { weekday: "short" });
+    // dateStr is a calendar date in the Europe/London timezone (the
+    // request below is pinned to it). Parsing/formatting it without saying
+    // so uses the viewer's own timezone on both ends instead - in practice
+    // that round-trips back to the same weekday regardless of viewer TZ
+    // (verified against Pacific/Kiritimati, UTC+14, the most extreme
+    // offset there is), since parse-local then format-local cancels out.
+    // Still worth being explicit rather than relying on that cancellation:
+    // noon UTC is always still the same calendar date in London (its UTC
+    // offset never exceeds +1h), so it's an unambiguous instant to format
+    // from, and the explicit timeZone is what actually pins the output to
+    // London rather than leaning on an implicit invariant.
+    var d = new Date(dateStr + "T12:00:00Z");
+    return d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Europe/London" });
   }
 
   function setStatus(text) {
@@ -110,6 +121,16 @@
     "?latitude=" + LATITUDE + "&longitude=" + LONGITUDE +
     "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
     "&timezone=Europe%2FLondon&forecast_days=4";
+
+  // This script is loaded before data.js/app.js (see index.html), so an
+  // uncaught throw here should still degrade to just a broken weather
+  // widget, never anything that could plausibly stop later scripts from
+  // running - fetch is feature-detected for exactly that reason, on top of
+  // being the right way to handle a genuinely fetch-less browser anyway.
+  if (typeof fetch !== "function") {
+    setStatus("Couldn't load the forecast - try again later.");
+    return;
+  }
 
   // Without a timeout, a stalled connection (as opposed to a clean
   // rejection) leaves the widget stuck on "Loading forecast..." forever -
