@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate data.js, research-data.js and first-aid-data.js from the CSV
-files under data/.
+"""Regenerate data.js and research-data.js from the CSV files under data/.
 
 Run this after editing any of the CSVs:
 
@@ -67,13 +66,22 @@ def check_columns(fieldnames, required, label):
         )
 
 
-# Items that get their own dedicated checklist page (linked from their entry
-# on the main checklist) instead of just being a single line with a weight.
-ITEM_DETAIL_PAGES = {
-    "First aid kit": {"url": "first-aid-kit.html", "label": "🩹 open kit checklist"},
-    "Repair kit": {"url": "repair-kit.html", "label": "🛠️ open kit checklist"},
-    "Water purification kit": {"url": "water-purification-kit.html", "label": "💧 open kit checklist"},
-}
+# Items whose itemised contents come from their own CSV (data/first-aid-kit.csv,
+# data/repair-kit.csv, data/water-purification-kit.csv) rather than a row in
+# pack.csv per part - the parent row above still carries the kit's own
+# headline weight/trip flags, and build_kit_child_items()/
+# build_first_aid_child_items() synthesize the contents as ordinary
+# parentName children of it (rendered inline in the same "kit manifest" as
+# any other grouped item, e.g. Firepit's Charcoal/Firelighters). Previously
+# these were separate standalone pages (first-aid-kit.html etc.) - folded
+# into the main list so nothing requires leaving the checklist to see.
+#
+# Just names here, not category/trip flags too - those are read straight off
+# the parent's own already-built pack_items entry in main() instead, so
+# pack.csv stays the only place that data lives. Duplicating them here would
+# let a kit's contents silently drift out of sync with its own parent row
+# (different category/trips) if pack.csv changed without a matching edit here.
+KIT_PARENT_NAMES = {"First aid kit", "Repair kit", "Water purification kit"}
 
 # Items whose listed weight is a depleting/per-trip substance rather than
 # durable gear - excluded from the weight-class calculation (which is meant
@@ -623,7 +631,6 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             continue
         current_raw = field(row, "current")
         onbody_raw = field(row, "on_body")
-        detail_page = ITEM_DETAIL_PAGES.get(name)
         consumable = consumable_detail.get(name) if name in consumable_detail else None
         is_consumable = name in consumable_detail
         comment = field(row, "comment") or None
@@ -651,10 +658,18 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "longTrek": (consumable or {}).get("longTrek", is_true(field(row, "long_trek"))),
             "carCamp": (consumable or {}).get("carCamp", is_true(field(row, "car_camp"))),
             "onBody": onbody_raw or None,
-            "detailUrl": detail_page["url"] if detail_page else None,
-            "detailLabel": detail_page["label"] if detail_page else None,
             "researchLinks": research_links.get(name, []),
             "consumable": is_consumable,
+            # True only for the 3 kit-parent rows (KIT_PARENT_NAMES) - their own
+            # weightG is a hand-entered headline figure that's meant to
+            # equal the sum of their now-inlined children (see the
+            # kit-drift warning in main()), not an amount carried in
+            # addition to them. Weight-summing code (app.js's
+            # effectiveWeight) skips a flagged item's own weightG so a kit
+            # isn't counted twice - once as its own line, once via its
+            # children - while its badge still shows the real headline
+            # number for comparison against the manifest's own "Kit total".
+            "weightIncludesChildren": name in KIT_PARENT_NAMES,
             "parentName": consumable["parent"] if consumable else ITEM_PARENT.get(name),
             "perNightAmount": consumable["amount"] if consumable else None,
             "perNightUnit": consumable["unit"] if consumable else None,
@@ -696,10 +711,9 @@ def synthetic_consumable_item(name, category):
         "longTrek": detail.get("longTrek", True),
         "carCamp": detail.get("carCamp", True),
         "onBody": None,
-        "detailUrl": None,
-        "detailLabel": None,
         "researchLinks": [],
         "consumable": True,
+        "weightIncludesChildren": False,
         "parentName": detail["parent"],
         "perNightAmount": detail["amount"],
         "perNightUnit": detail["unit"],
@@ -728,6 +742,140 @@ def synthetic_pack_items():
         # Same again for the Hip flask's contents.
         synthetic_consumable_item("Spirits", "Kitchen"),
     ]
+
+
+def fmt_qty(n):
+    return str(int(n)) if n == int(n) else str(n)
+
+
+def format_weight_g(g):
+    if g >= 1000:
+        kg = g / 1000
+        return f"{kg:.0f} kg" if g % 1000 == 0 else f"{kg:.1f} kg"
+    return f"{g:.0f} g" if g % 1 == 0 else f"{g:.1f} g"
+
+
+def make_synthetic_item(name, category, parent_name, weight_g=None, weight_note=None,
+                         comment=None, current=None, current_label=None,
+                         trips=(True, True, True)):
+    """Build a plain (non-consumable) synthetic child item - same shape as
+    build_items()' output, minus anything that only ever applies to a real
+    pack.csv/anjo.csv row. Used for kit contents synthesized from their own
+    CSV (see KIT_PARENT_NAMES) rather than a row of the main sheet."""
+    overnight, long_trek, car_camp = trips
+    return {
+        "name": name,
+        "emoji": None,
+        "category": category,
+        "number": 1.0,
+        "weightG": weight_g,
+        "weightNote": weight_note,
+        "cost": None,
+        "comment": comment,
+        "current": current,
+        "currentIsUrl": bool(current) and current.startswith("http"),
+        "currentLabel": current_label,
+        "currentNote": None,
+        "needsCharge": False,
+        "requiresOpenFire": False,
+        "fireCaution": None,
+        "seasonByTrip": None,
+        "season": None,
+        "overnight": overnight,
+        "longTrek": long_trek,
+        "carCamp": car_camp,
+        "onBody": None,
+        "researchLinks": [],
+        "consumable": False,
+        "weightIncludesChildren": False,
+        "parentName": parent_name,
+        "perNightAmount": None,
+        "perNightUnit": None,
+        "scalesWithNights": True,
+        "maxAmount": None,
+        "stepOverride": None,
+        "quantityMax": None,
+        "quantityMin": 1,
+    }
+
+
+# A couple of kit-part names collide with an unrelated item of the same name
+# elsewhere in pack.csv once folded into the parent's own category (see
+# scripts/extract_data.py's duplicate_keys check, which requires
+# category::name to stay unique) - renamed here, at synthesis time, rather
+# than in the CSV itself, since the CSV's own "name" column is still an
+# accurate plain-English description of the physical part.
+KIT_CHILD_NAME_OVERRIDE = {
+    # Health::Towel already exists (the real, 34 g main-pack towel) -
+    # first-aid-kit.csv's own 10 g towel is a smaller, different item.
+    "First aid kit": {"Towel": "Small towel"},
+    # Kitchen::Stash bag already exists (the Spirit burner's Toaks stash
+    # bag) - name the water kit's own pouch after its parent, matching the
+    # "Cup stash bag" convention used elsewhere in ITEM_PARENT.
+    "Water purification kit": {"Stash bag": "Water kit stash bag"},
+    "Repair kit": {"Stash bag": "Repair kit stash bag"},
+}
+
+
+def build_kit_child_items(rows, parent_name, category, trips):
+    """Repair kit / water purification kit -> child items. Both CSVs share
+    one shape: name, quantity, weight_g (per unit), comment, current."""
+    name_override = KIT_CHILD_NAME_OVERRIDE.get(parent_name, {})
+    items = []
+    for row in rows:
+        raw_name = field(row, "name")
+        if not raw_name:
+            continue
+        # `or 1` would also catch an explicit 0 (falsy) and silently turn it
+        # into 1 - only fall back to 1 when the cell was blank/unparseable.
+        raw_quantity = parse_num(field(row, "quantity"))
+        quantity = 1 if raw_quantity is None else raw_quantity
+        weight_each = parse_num(field(row, "weight_g"))
+        weight_total = weight_each * quantity if weight_each is not None else None
+        name = name_override.get(raw_name, raw_name)
+        if quantity != 1:
+            name = f"{name} ×{fmt_qty(quantity)}"
+        weight_note = (
+            f"{fmt_qty(quantity)} × {format_weight_g(weight_each)} each" if quantity != 1 and weight_each is not None else None
+        )
+        current = field(row, "current") or None
+        items.append(make_synthetic_item(
+            name=name, category=category, parent_name=parent_name,
+            weight_g=weight_total, weight_note=weight_note,
+            comment=field(row, "comment") or None,
+            current=current, current_label="view item" if current else None,
+            trips=trips,
+        ))
+    return items
+
+
+def build_first_aid_child_items(rows, parent_name, category, trips):
+    """first-aid-kit.csv -> child items. Each row may be relevant to the
+    human kit, the dog's kit, or both (for_human/for_dog columns, a count of
+    that item carried for that purpose) - folded into a "×N" / "🐾 +N"
+    comment note rather than a separate UI, since every other kit here has
+    no such split."""
+    name_override = KIT_CHILD_NAME_OVERRIDE.get(parent_name, {})
+    items = []
+    for row in rows:
+        raw_name = field(row, "name")
+        if not raw_name:
+            continue
+        human = parse_num(field(row, "for_human"))
+        dog = parse_num(field(row, "for_dog"))
+        qty_bits = []
+        if human is not None:
+            qty_bits.append("×" + fmt_qty(human))
+        if dog is not None:
+            qty_bits.append(("🐾 +" if human is not None else "🐾 ×") + fmt_qty(dog))
+        raw_comment = field(row, "comment") or None
+        comment = " · ".join(bit for bit in (", ".join(qty_bits) or None, raw_comment) if bit)
+        items.append(make_synthetic_item(
+            name=name_override.get(raw_name, raw_name), category=category, parent_name=parent_name,
+            weight_g=parse_num(field(row, "weight_g")), comment=comment or None,
+            trips=trips,
+        ))
+    return items
 
 
 # ---------------------------------------------------------------------------
@@ -860,75 +1008,6 @@ def build_research_sheet(slug, title, group, description, match, header, data_ro
     }
 
 
-# ---------------------------------------------------------------------------
-# first-aid-kit -> first-aid-data.js
-# ---------------------------------------------------------------------------
-
-
-def build_first_aid_items(rows):
-    items = []
-    for row in rows:
-        name = field(row, "name")
-        if not name:
-            continue
-        items.append({
-            "name": name,
-            "human": parse_num(field(row, "for_human")),
-            "dog": parse_num(field(row, "for_dog")),
-            "weightG": parse_num(field(row, "weight_g")),
-            "comment": field(row, "comment") or None,
-        })
-    return items
-
-
-# ---------------------------------------------------------------------------
-# Flat kit pages (repair-kit, water-purification-kit) -> <slug>-data.js
-#
-# Both are the same shape: a small checkable parts list with a quantity and
-# a per-unit weight, no dog-specific split (unlike first-aid-kit). Shares
-# one CSV shape, one JS builder, and one page renderer (kit.js) - only the
-# CSV contents, emoji map, and page title differ per kit.
-# ---------------------------------------------------------------------------
-
-# Each kit's emoji map is its own namespace, not shared with ITEM_EMOJI -
-# e.g. "Stash bag" here is a small kit pouch, a different physical object
-# from the Kitchen item of the same name, so it needs its own icon.
-REPAIR_KIT_EMOJI = {
-    "Stash bag": "👝",
-    "Triple Twister peg (spare)": "📌",
-    "Pole repair tube": "🥢",
-    "Inner-to-fly clip (spare)": "🔗",
-    "Ripstop tuff tape": "🧵",
-    "Alcohol wipe": "🧻",
-    "Waterproof patch": "🩹",
-    "Tenacious Tape silnylon patch": "🧵",
-    "Glue dot": "🔘",
-    "Spare guyline": "🪢",
-}
-WATER_KIT_EMOJI = {
-    "Stash bag": "👝",
-    "Water filter": "🚰",
-    "1l bladder for dirty water": "💧",
-    "Purification tablets": "💊",
-}
-
-
-def build_flat_kit_items(rows, emoji_map):
-    items = []
-    for row in rows:
-        name = field(row, "name")
-        if not name:
-            continue
-        items.append({
-            "name": name,
-            "emoji": emoji_map.get(name, ITEM_EMOJI_DEFAULT),
-            "quantity": parse_num(field(row, "quantity")) or 1,
-            "weightG": parse_num(field(row, "weight_g")),
-            "comment": field(row, "comment") or None,
-            "current": field(row, "current") or None,
-        })
-    return items
-
 
 def js_literal(value):
     return json.dumps(value, ensure_ascii=False, indent=2)
@@ -985,12 +1064,35 @@ def main():
                               current_note=PACK_CURRENT_NOTE,
                               weight_note=ITEM_WEIGHT_NOTE)
     pack_items += synthetic_pack_items()
+
+    # Kit contents (first aid / repair / water purification) - synthesized
+    # as ordinary parentName children of their kit's own pack.csv row, so
+    # they render inline in the same "kit manifest" as any other grouped
+    # item instead of needing their own standalone page (see KIT_PARENT_NAMES).
+    # Category and trip flags are read straight from each parent's own
+    # already-built pack_items entry (not hand-duplicated) so pack.csv stays
+    # the only place that data lives - see KIT_PARENT_NAMES's own comment.
+    kit_children = []
+    for parent_name, rows, builder in (
+        ("First aid kit", first_aid_rows, build_first_aid_child_items),
+        ("Repair kit", repair_kit_rows, build_kit_child_items),
+        ("Water purification kit", water_kit_rows, build_kit_child_items),
+    ):
+        parent = next((it for it in pack_items if it["name"] == parent_name), None)
+        if parent is None:
+            raise SystemExit(f"{parent_name!r} (KIT_PARENT_NAMES) has no matching row in pack.csv")
+        trips = (parent["overnight"], parent["longTrek"], parent["carCamp"])
+        kit_children += builder(rows, parent_name, parent["category"], trips)
+    pack_items += kit_children
+
     anjo_items = build_items(anjo_rows, category_const="Anjo",
                               consumable_detail=ANJO_CONSUMABLE,
                               current_label=ANJO_CURRENT_LABEL)
     gear_items = pack_items + anjo_items
 
-    unmapped = sorted({it["name"] for it in gear_items if it["name"] not in ITEM_EMOJI})
+    # Sub-items (anything with a parentName) render with a roman numeral in
+    # the UI instead of an emoji, so they don't need an ITEM_EMOJI entry.
+    unmapped = sorted({it["name"] for it in gear_items if not it["parentName"] and it["name"] not in ITEM_EMOJI})
     if unmapped:
         print(f"No ITEM_EMOJI entry for {len(unmapped)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
         for name in unmapped:
@@ -1105,55 +1207,20 @@ def main():
         encoding="utf-8",
     )
 
-    first_aid_items = build_first_aid_items(first_aid_rows)
-    (ROOT / "first-aid-data.js").write_text(
-        "// Generated by scripts/extract_data.py - do not edit by hand.\n"
-        f"const FIRST_AID_ITEMS = {js_literal(first_aid_items)};\n",
-        encoding="utf-8",
-    )
-
-    # (pack.csv item name, csv rows, emoji map, output filename)
-    FLAT_KITS = [
-        ("Repair kit", repair_kit_rows, REPAIR_KIT_EMOJI, "repair-kit-data.js"),
-        ("Water purification kit", water_kit_rows, WATER_KIT_EMOJI, "water-purification-kit-data.js"),
-    ]
-    flat_kit_items = {}
-    for kit_name, rows, emoji_map, filename in FLAT_KITS:
-        kit_items = build_flat_kit_items(rows, emoji_map)
-        flat_kit_items[kit_name] = kit_items
-        unmapped = sorted({it["name"] for it in kit_items if it["name"] not in emoji_map})
-        if unmapped:
-            print(f"{kit_name}: no emoji entry for {len(unmapped)} item(s), using default {ITEM_EMOJI_DEFAULT!r}:")
-            for name in unmapped:
-                print(f"  {name}")
-        (ROOT / filename).write_text(
-            "// Generated by scripts/extract_data.py - do not edit by hand.\n"
-            f"const KIT_ITEMS = {js_literal(kit_items)};\n",
-            encoding="utf-8",
-        )
-
-    # Detail-page kits each have their own itemised weight, entered by hand
-    # in pack.csv rather than computed - warn if it's drifted from the sum
-    # of the kit's own contents, so a kit edit doesn't silently leave the
-    # main checklist showing a stale total.
-    for kit_name, kit_items in flat_kit_items.items():
-        kit_sum = sum((it["weightG"] or 0) * it["quantity"] for it in kit_items)
+    # Each kit's own pack.csv row still carries a hand-entered headline
+    # weight - warn if it's drifted from the sum of its now-inlined
+    # children, so an edit to a kit CSV doesn't silently leave the parent
+    # row's badge showing a stale total (the UI itself also surfaces this:
+    # the parent's own badge vs. the manifest's "Kit total" when expanded).
+    for kit_name in KIT_PARENT_NAMES:
+        children = [it for it in kit_children if it["parentName"] == kit_name]
+        kit_sum = sum(it["weightG"] or 0 for it in children)
         listed = next((it["weightG"] for it in pack_items if it["name"] == kit_name), None)
         if listed is not None and abs(listed - kit_sum) > 0.05:
             print(f"{kit_name}: pack.csv lists {listed} g but its kit CSV items sum to {kit_sum} g")
 
-    first_aid_base_sum = sum(
-        it["weightG"] or 0 for it in first_aid_items
-        if it["human"] is not None or (it["human"] is None and it["dog"] is None)
-    )
-    first_aid_listed = next((it["weightG"] for it in pack_items if it["name"] == "First aid kit"), None)
-    if first_aid_listed is not None and abs(first_aid_listed - first_aid_base_sum) > 0.05:
-        print(f"First aid kit: pack.csv lists {first_aid_listed} g but first-aid-kit.csv's human-relevant items sum to {first_aid_base_sum} g")
-
-    print(f"Wrote data.js ({len(gear_items)} items: {len(pack_items)} pack + {len(anjo_items)} anjo)")
-    print(f"Wrote first-aid-data.js ({len(first_aid_items)} items)")
-    for kit_name, rows, emoji_map, filename in FLAT_KITS:
-        print(f"Wrote {filename} ({len(flat_kit_items[kit_name])} items)")
+    print(f"Wrote data.js ({len(gear_items)} items: {len(pack_items)} pack + {len(anjo_items)} anjo, "
+          f"{len(kit_children)} of which are inlined kit contents)")
     print(f"Wrote research-data.js ({len(research)} sheets)")
     for r in research:
         cp = r["currentPick"]
