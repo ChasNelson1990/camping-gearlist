@@ -539,7 +539,7 @@
   // - Kit parents (weightIncludesChildren - First aid kit, Repair kit,
   //   Water purification kit) don't represent anything beyond their own
   //   children (their own weightG already equals the children's sum - see
-  //   extract_data.py's KIT_PARENTS), so there's no meaningful separate
+  //   extract_data.py's KIT_PARENT_NAMES), so there's no meaningful separate
   //   "pack the kit bag itself" action. Their checked status is always
   //   fully derived from their children and kept in sync here.
   // - Every other group (Cup, Coffee, Firepit, Rucksack, ...) carries its
