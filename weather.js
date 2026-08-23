@@ -122,6 +122,16 @@
     "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
     "&timezone=Europe%2FLondon&forecast_days=4";
 
+  // This script is loaded before data.js/app.js (see index.html), so an
+  // uncaught throw here should still degrade to just a broken weather
+  // widget, never anything that could plausibly stop later scripts from
+  // running - fetch is feature-detected for exactly that reason, on top of
+  // being the right way to handle a genuinely fetch-less browser anyway.
+  if (typeof fetch !== "function") {
+    setStatus("Couldn't load the forecast - try again later.");
+    return;
+  }
+
   // Without a timeout, a stalled connection (as opposed to a clean
   // rejection) leaves the widget stuck on "Loading forecast..." forever -
   // .catch() only runs when the fetch actually rejects, which a hang never
