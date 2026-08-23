@@ -41,6 +41,13 @@
     toggle.id = "theme-toggle";
     toggle.className = "theme-toggle";
     toggle.setAttribute("aria-label", "Toggle light/dark theme");
+    // Set from data-theme (already applied by the inline <head> script)
+    // rather than left blank for theme.js to fill in - otherwise there's a
+    // brief flash of an unlabelled button before theme.js's script tag
+    // finishes loading, and a permanently blank one if it fails to load at
+    // all. index.html/review's static topbar markup hardcodes this same
+    // fallback for the same reason.
+    toggle.textContent = document.documentElement.getAttribute("data-theme") === "light" ? "Daylight" : "Nightfall";
     right.appendChild(toggle);
     header.appendChild(right);
 
