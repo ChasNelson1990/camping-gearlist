@@ -950,6 +950,7 @@
   wireSegmented("season-filter", "season");
 
   var fireToggle = document.getElementById("fire-toggle");
+  var fireToggleLabel = document.getElementById("fire-toggle-label");
   fireToggle.addEventListener("click", function () {
     state.noOpenFires = !state.noOpenFires;
     syncFireToggle();
@@ -958,6 +959,7 @@
 
   function syncFireToggle() {
     fireToggle.setAttribute("aria-pressed", state.noOpenFires);
+    fireToggleLabel.textContent = state.noOpenFires ? "Forbidden" : "Allowed";
   }
 
   document.getElementById("nights-minus").addEventListener("click", function () {
