@@ -39,7 +39,7 @@ files:
 
 This overwrites `data.js` and `research-data.js` (the first-aid/repair/water
 kit CSVs are folded into `data.js` as ordinary child items - see
-`KIT_PARENTS` in `scripts/extract_data.py`). Commit both the CSV change and
+`KIT_PARENT_NAMES` in `scripts/extract_data.py`). Commit both the CSV change and
 the regenerated `.js` files together.
 
 ## Local preview
