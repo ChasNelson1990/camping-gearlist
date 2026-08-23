@@ -111,11 +111,19 @@
     "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
     "&timezone=Europe%2FLondon&forecast_days=4";
 
-  fetch(url)
+  // Without a timeout, a stalled connection (as opposed to a clean
+  // rejection) leaves the widget stuck on "Loading forecast..." forever -
+  // .catch() only runs when the fetch actually rejects, which a hang never
+  // does on its own.
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 10000);
+
+  fetch(url, { signal: controller.signal })
     .then(function (res) {
       if (!res.ok) throw new Error("Open-Meteo request failed: " + res.status);
       return res.json();
     })
     .then(function (data) { renderDays(data.daily); })
-    .catch(function () { setStatus("Couldn't load the forecast - try again later."); });
+    .catch(function () { setStatus("Couldn't load the forecast - try again later."); })
+    .finally(function () { clearTimeout(timeoutId); });
 })();
