@@ -399,22 +399,49 @@
     });
   }
 
+  // Trip/season filters are marked up as an ARIA radiogroup (index.html),
+  // which means the individual .tab buttons need role="radio"/aria-checked
+  // (also set statically in the HTML, kept in sync here) plus the standard
+  // native-radio keyboard pattern: only the checked option is a tab stop
+  // (roving tabindex) and arrow keys move focus AND selection together,
+  // without needing Enter/Space.
   function wireSegmented(id, stateKey, onChange) {
     var group = document.getElementById(id);
-    group.querySelectorAll(".tab").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        state[stateKey] = btn.dataset.value;
-        group.querySelectorAll(".tab").forEach(function (b) { b.classList.toggle("active", b === btn); });
-        if (onChange) onChange(btn.dataset.value);
-        renderChecklist();
-      });
+    var tabs = Array.prototype.slice.call(group.querySelectorAll(".tab"));
+
+    function select(btn) {
+      state[stateKey] = btn.dataset.value;
+      syncSegmentedUI(id, btn.dataset.value);
+      if (onChange) onChange(btn.dataset.value);
+      renderChecklist();
+    }
+
+    tabs.forEach(function (btn) {
+      btn.addEventListener("click", function () { select(btn); });
+    });
+
+    group.addEventListener("keydown", function (e) {
+      if (["ArrowRight", "ArrowLeft", "Home", "End"].indexOf(e.key) === -1) return;
+      e.preventDefault();
+      var current = tabs.indexOf(document.activeElement);
+      if (current === -1) current = 0;
+      var next;
+      if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else next = tabs.length - 1;
+      tabs[next].focus();
+      select(tabs[next]);
     });
   }
 
   function syncSegmentedUI(id, value) {
     var group = document.getElementById(id);
     group.querySelectorAll(".tab").forEach(function (b) {
-      b.classList.toggle("active", b.dataset.value === value);
+      var isActive = b.dataset.value === value;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-checked", isActive);
+      b.tabIndex = isActive ? 0 : -1;
     });
   }
 
