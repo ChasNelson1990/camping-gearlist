@@ -56,6 +56,11 @@
     wrap.innerHTML = "";
     var p = document.createElement("p");
     p.className = "weather-status";
+    // Announces the text to screen readers when it's set/changed (e.g.
+    // "Loading forecast..." then later replaced by an error message) -
+    // without this, a dynamically-inserted paragraph is silent to
+    // assistive tech unless the user happens to have focus inside it.
+    p.setAttribute("role", "status");
     p.textContent = text;
     wrap.appendChild(p);
   }
@@ -78,6 +83,12 @@
       icon.className = "weather-icon";
       icon.textContent = info[0];
       icon.title = info[1];
+      // title alone is an unreliable accessible name - not announced
+      // consistently across screen readers, and unreachable at all on
+      // touch devices (no hover). role="img" + aria-label makes the
+      // condition ("Overcast", etc) the icon's actual accessible name.
+      icon.setAttribute("role", "img");
+      icon.setAttribute("aria-label", info[1]);
       card.appendChild(icon);
 
       var temps = document.createElement("div");
