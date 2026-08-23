@@ -504,7 +504,7 @@ a:hover { color: var(--maroon); }
 
 .weather-attribution {
   text-align: right;
-  padding: .5rem 1.1rem 0;
+  padding: .5rem 1.1rem .8rem;
   font: 400 .62rem/1 'Courier Prime', monospace;
   letter-spacing: .1em;
   text-transform: uppercase;
