@@ -746,7 +746,7 @@ def fmt_qty(n):
     return str(int(n)) if n == int(n) else str(n)
 
 
-def formatWeightG(g):
+def format_weight_g(g):
     if g >= 1000:
         kg = g / 1000
         return f"{kg:.0f} kg" if g % 1000 == 0 else f"{kg:.1f} kg"
@@ -834,7 +834,7 @@ def build_kit_child_items(rows, parent_name, category, trips):
         if quantity != 1:
             name = f"{name} ×{fmt_qty(quantity)}"
         weight_note = (
-            f"{fmt_qty(quantity)} × {formatWeightG(weight_each)} each" if quantity != 1 and weight_each is not None else None
+            f"{fmt_qty(quantity)} × {format_weight_g(weight_each)} each" if quantity != 1 and weight_each is not None else None
         )
         current = field(row, "current") or None
         items.append(make_synthetic_item(
