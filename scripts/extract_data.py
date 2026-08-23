@@ -658,6 +658,16 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "onBody": onbody_raw or None,
             "researchLinks": research_links.get(name, []),
             "consumable": is_consumable,
+            # True only for the 3 kit-parent rows (KIT_PARENTS) - their own
+            # weightG is a hand-entered headline figure that's meant to
+            # equal the sum of their now-inlined children (see the
+            # kit-drift warning in main()), not an amount carried in
+            # addition to them. Weight-summing code (app.js's
+            # effectiveWeight) skips a flagged item's own weightG so a kit
+            # isn't counted twice - once as its own line, once via its
+            # children - while its badge still shows the real headline
+            # number for comparison against the manifest's own "Kit total".
+            "weightIncludesChildren": name in KIT_PARENTS,
             "parentName": consumable["parent"] if consumable else ITEM_PARENT.get(name),
             "perNightAmount": consumable["amount"] if consumable else None,
             "perNightUnit": consumable["unit"] if consumable else None,
@@ -701,6 +711,7 @@ def synthetic_consumable_item(name, category):
         "onBody": None,
         "researchLinks": [],
         "consumable": True,
+        "weightIncludesChildren": False,
         "parentName": detail["parent"],
         "perNightAmount": detail["amount"],
         "perNightUnit": detail["unit"],
@@ -774,6 +785,7 @@ def make_synthetic_item(name, category, parent_name, weight_g=None, weight_note=
         "onBody": None,
         "researchLinks": [],
         "consumable": False,
+        "weightIncludesChildren": False,
         "parentName": parent_name,
         "perNightAmount": None,
         "perNightUnit": None,

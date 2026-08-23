@@ -646,6 +646,14 @@
   }
 
   function effectiveWeight(item) {
+    // Kit-parent items (First aid kit, Repair kit, Water purification kit)
+    // carry a headline weightG that's meant to equal the sum of their own
+    // inlined children, not an amount on top of them - counting both would
+    // double the kit's real weight in every total/budget/category sum.
+    // buildMeta() still shows the parent's own weightG badge directly (not
+    // via this function), so the headline figure stays visible for
+    // comparison against the manifest's "Kit total".
+    if (item.weightIncludesChildren) return 0;
     if (item.perNightAmount != null) {
       var amount = getAmount(item);
       var grams = item.perNightUnit === "l" ? amount * 1000 : amount;
