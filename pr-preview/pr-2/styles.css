@@ -702,6 +702,13 @@ li.item:last-child,
   position: relative;
   cursor: pointer;
 }
+/* appearance:none above also strips the browser's own focus ring, since
+   that's normally drawn as part of the native control - restore a visible
+   one explicitly so keyboard navigation isn't silently invisible. */
+.item input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
 .item input[type="checkbox"]::after {
   content: "";
   position: absolute;

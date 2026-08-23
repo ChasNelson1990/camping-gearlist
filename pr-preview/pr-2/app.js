@@ -764,7 +764,12 @@
     });
   }
 
-  function budgetCapStepper(label, valueG, onChange) {
+  function budgetCapStepper(label, valueG, onChange, ariaLabel) {
+    // ariaLabel lets a caller give the buttons a distinguishable name (e.g.
+    // "Anjo budget") without also duplicating that word in the visible
+    // label - the Anjo stepper's visible label is "" because " · Anjo "
+    // already precedes it as plain text.
+    ariaLabel = ariaLabel || label;
     var wrap = document.createElement("span");
     wrap.className = "budget-cap";
     wrap.appendChild(document.createTextNode(label + " "));
@@ -773,7 +778,7 @@
     minus.type = "button";
     minus.className = "stepper-btn stepper-btn-sm";
     minus.textContent = "−";
-    minus.setAttribute("aria-label", "Decrease " + label);
+    minus.setAttribute("aria-label", "Decrease " + ariaLabel);
     minus.addEventListener("click", function () { onChange(Math.max(1000, valueG - 500)); });
 
     var val = document.createElement("span");
@@ -783,7 +788,7 @@
     plus.type = "button";
     plus.className = "stepper-btn stepper-btn-sm";
     plus.textContent = "+";
-    plus.setAttribute("aria-label", "Increase " + label);
+    plus.setAttribute("aria-label", "Increase " + ariaLabel);
     plus.addEventListener("click", function () { onChange(Math.min(50000, valueG + 500)); });
 
     wrap.appendChild(minus);
@@ -866,7 +871,7 @@
       state.dogBudgetG = next;
       saveState();
       renderChecklist();
-    }));
+    }, "Anjo budget"));
     header.appendChild(caps);
     wrap.appendChild(header);
 
