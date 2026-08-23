@@ -6,8 +6,14 @@
     document.documentElement.setAttribute("data-theme", theme);
     var btn = document.getElementById("theme-toggle");
     if (btn) {
-      btn.textContent = theme === "dark" ? "Nightfall" : "Daylight";
-      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+      var label = theme === "dark" ? "Nightfall" : "Daylight";
+      var next = theme === "dark" ? "Daylight" : "Nightfall";
+      btn.textContent = label;
+      // Include the visible label itself, not just the action - an
+      // aria-label of only "Switch to X mode" leaves the accessible name
+      // with no overlap with what's on screen (WCAG 2.5.3 Label in Name),
+      // which breaks voice-control users saying the visible word.
+      btn.setAttribute("aria-label", label + " - switch to " + next + " theme");
     }
   }
 
