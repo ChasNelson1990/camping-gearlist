@@ -47,8 +47,19 @@
   function dayLabel(dateStr, index) {
     if (index === 0) return "Today";
     if (index === 1) return "Tomorrow";
-    var d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString("en-GB", { weekday: "short" });
+    // dateStr is a calendar date in the Europe/London timezone (the
+    // request below is pinned to it). Parsing/formatting it without saying
+    // so uses the viewer's own timezone on both ends instead - in practice
+    // that round-trips back to the same weekday regardless of viewer TZ
+    // (verified against Pacific/Kiritimati, UTC+14, the most extreme
+    // offset there is), since parse-local then format-local cancels out.
+    // Still worth being explicit rather than relying on that cancellation:
+    // noon UTC is always still the same calendar date in London (its UTC
+    // offset never exceeds +1h), so it's an unambiguous instant to format
+    // from, and the explicit timeZone is what actually pins the output to
+    // London rather than leaning on an implicit invariant.
+    var d = new Date(dateStr + "T12:00:00Z");
+    return d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Europe/London" });
   }
 
   function setStatus(text) {
