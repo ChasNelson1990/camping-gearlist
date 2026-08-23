@@ -458,7 +458,6 @@
     });
 
     var summary = document.createElement("summary");
-    var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
 
     var numeral = document.createElement("span");
     numeral.className = "category-numeral";
@@ -470,9 +469,12 @@
     nameEl.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
     summary.appendChild(nameEl);
 
+    // Text set after the topLevel.forEach loop below, not here - groupState()
+    // can still sync a kit parent's checked status to match its children
+    // during that loop, so counting before it ran could show a stale,
+    // off-by-one figure for this render.
     var countEl = document.createElement("span");
     countEl.className = "category-count";
-    countEl.textContent = checkedCount + "/" + catItems.length;
     summary.appendChild(countEl);
 
     var weightEl = document.createElement("span");
@@ -497,6 +499,10 @@
       }
     });
     details.appendChild(ul);
+
+    var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
+    countEl.textContent = checkedCount + "/" + catItems.length;
+
     return details;
   }
 
