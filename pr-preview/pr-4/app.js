@@ -8,6 +8,23 @@
   };
   var TRIP_KEYS = { overnight: "overnight", longTrek: "longTrek", carCamp: "carCamp" };
 
+  var ROMAN_NUMERALS = [
+    [1000, "m"], [900, "cm"], [500, "d"], [400, "cd"], [100, "c"], [90, "xc"],
+    [50, "l"], [40, "xl"], [10, "x"], [9, "ix"], [5, "v"], [4, "iv"], [1, "i"],
+  ];
+  function toRoman(n) {
+    var out = "";
+    ROMAN_NUMERALS.forEach(function (pair) {
+      while (n >= pair[0]) { out += pair[1]; n -= pair[0]; }
+    });
+    return out;
+  }
+
+  // Fixed, independent of which categories are currently visible/toggled
+  // on - so a category's numeral doesn't jump around as filters change.
+  var CATEGORY_NUMERAL = {};
+  CATEGORY_ORDER.forEach(function (cat, i) { CATEGORY_NUMERAL[cat] = toRoman(i + 1).toUpperCase(); });
+
   // Stable per item, not a positional array index: sessionStorage persists
   // across page loads (and across a deploy, if the tab was already open),
   // but GEAR_ITEMS' order/length can change between regenerations (items
@@ -25,6 +42,13 @@
     season: "all",
     nights: NIGHTS_BY_TRIP.all,
     noOpenFires: false,
+    // Weight caps used by the budget panel's bars - "on your back" and
+    // "consumables" share one cap (they're both things you carry), Anjo
+    // gets his own. Defaults: 14 kg is WEIGHT_CLASS_THRESHOLDS' own
+    // "Heavy" threshold (so a full budget bar lines up with crossing into
+    // Heavy), 3 kg is a reasonable dog-carry guess - both freely editable.
+    budgetG: 14000,
+    dogBudgetG: 3000,
     categories: new Set(CATEGORY_ORDER.filter(function (c) {
       return items.some(function (it) { return it.category === c; });
     })),
@@ -35,7 +59,7 @@
     // open/closed state on every click - tracking it here and re-applying
     // it on each render keeps a collapsed section collapsed.
     collapsedCategories: new Set(),
-    // Same idea, one level down: which parent items' sub-item lists are
+    // Same idea, one level down: which parent items' sub-item manifests are
     // collapsed, keyed by the parent's own _id (category::name, so it's
     // independent from collapsedCategories' plain-name keys). Pre-populated
     // with the bulkier gear-with-accessories items so a fresh session opens
@@ -51,6 +75,9 @@
       "Kitchen::Beer cans",
       "Kitchen::Hip flask",
       "Kitchen::Cup",
+      "Health::First aid kit",
+      "Basics::Repair kit",
+      "Kitchen::Water purification kit",
     ]),
   };
 
@@ -104,6 +131,8 @@
         season: state.season,
         nights: state.nights,
         noOpenFires: state.noOpenFires,
+        budgetG: state.budgetG,
+        dogBudgetG: state.dogBudgetG,
         categories: Array.from(state.categories),
         collapsedCategories: Array.from(state.collapsedCategories),
         collapsedItemGroups: Array.from(state.collapsedItemGroups),
@@ -126,6 +155,8 @@
       if (saved.season) state.season = saved.season;
       if (typeof saved.nights === "number") state.nights = saved.nights;
       if (typeof saved.noOpenFires === "boolean") state.noOpenFires = saved.noOpenFires;
+      if (typeof saved.budgetG === "number") state.budgetG = saved.budgetG;
+      if (typeof saved.dogBudgetG === "number") state.dogBudgetG = saved.dogBudgetG;
       if (Array.isArray(saved.categories)) state.categories = new Set(saved.categories);
       if (Array.isArray(saved.collapsedCategories)) state.collapsedCategories = new Set(saved.collapsedCategories);
       if (Array.isArray(saved.collapsedItemGroups)) state.collapsedItemGroups = new Set(saved.collapsedItemGroups);
@@ -318,7 +349,7 @@
     if (item.fireCaution && state.noOpenFires) {
       wrap.appendChild(badge("⚠️ usable with care", "badge-fire-caution", item.fireCaution));
     }
-    if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season));
+    if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season, "badge-season"));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
       if (item.currentIsUrl) {
@@ -326,9 +357,6 @@
       } else {
         wrap.appendChild(badge(item.current));
       }
-    }
-    if (item.detailUrl) {
-      wrap.appendChild(linkBadge(item.detailUrl, item.detailLabel || "↗ details", false));
     }
     if (item.researchLinks) {
       item.researchLinks.forEach(function (link) {
@@ -371,22 +399,49 @@
     });
   }
 
+  // Trip/season filters are marked up as an ARIA radiogroup (index.html),
+  // which means the individual .tab buttons need role="radio"/aria-checked
+  // (also set statically in the HTML, kept in sync here) plus the standard
+  // native-radio keyboard pattern: only the checked option is a tab stop
+  // (roving tabindex) and arrow keys move focus AND selection together,
+  // without needing Enter/Space.
   function wireSegmented(id, stateKey, onChange) {
     var group = document.getElementById(id);
-    group.querySelectorAll(".chip").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        state[stateKey] = btn.dataset.value;
-        group.querySelectorAll(".chip").forEach(function (b) { b.classList.toggle("active", b === btn); });
-        if (onChange) onChange(btn.dataset.value);
-        renderChecklist();
-      });
+    var tabs = Array.prototype.slice.call(group.querySelectorAll(".tab"));
+
+    function select(btn) {
+      state[stateKey] = btn.dataset.value;
+      syncSegmentedUI(id, btn.dataset.value);
+      if (onChange) onChange(btn.dataset.value);
+      renderChecklist();
+    }
+
+    tabs.forEach(function (btn) {
+      btn.addEventListener("click", function () { select(btn); });
+    });
+
+    group.addEventListener("keydown", function (e) {
+      if (["ArrowRight", "ArrowLeft", "Home", "End"].indexOf(e.key) === -1) return;
+      e.preventDefault();
+      var current = tabs.indexOf(document.activeElement);
+      if (current === -1) current = 0;
+      var next;
+      if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else next = tabs.length - 1;
+      tabs[next].focus();
+      select(tabs[next]);
     });
   }
 
   function syncSegmentedUI(id, value) {
     var group = document.getElementById(id);
-    group.querySelectorAll(".chip").forEach(function (b) {
-      b.classList.toggle("active", b.dataset.value === value);
+    group.querySelectorAll(".tab").forEach(function (b) {
+      var isActive = b.dataset.value === value;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-checked", isActive);
+      b.tabIndex = isActive ? 0 : -1;
     });
   }
 
@@ -412,9 +467,9 @@
       });
     }
 
-    updateProgress(visible);
-    updateAnjoProgress();
-    updateConsumablesProgress();
+    var tallies = computeTallies(visible);
+    renderTallyStrip(tallies);
+    renderBudgetPanel(tallies);
     renderUnusedGear();
     saveState();
   }
@@ -430,9 +485,30 @@
     });
 
     var summary = document.createElement("summary");
-    var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
-    var catLabel = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
-    summary.innerHTML = "<span>" + catLabel + "</span><span>" + checkedCount + "/" + catItems.length + "</span>";
+
+    var numeral = document.createElement("span");
+    numeral.className = "category-numeral";
+    numeral.textContent = CATEGORY_NUMERAL[cat] || "";
+    summary.appendChild(numeral);
+
+    var nameEl = document.createElement("span");
+    nameEl.className = "category-name";
+    nameEl.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+    summary.appendChild(nameEl);
+
+    // Text set after the topLevel.forEach loop below, not here - groupState()
+    // can still sync a kit parent's checked status to match its children
+    // during that loop, so counting before it ran could show a stale,
+    // off-by-one figure for this render.
+    var countEl = document.createElement("span");
+    countEl.className = "category-count";
+    summary.appendChild(countEl);
+
+    var weightEl = document.createElement("span");
+    weightEl.className = "category-weight";
+    weightEl.textContent = formatWeight(sumWeight(catItems));
+    summary.appendChild(weightEl);
+
     details.appendChild(summary);
 
     var ul = document.createElement("ul");
@@ -440,43 +516,77 @@
     var topLevel = catItems.filter(function (it) { return !it.parentName; });
     topLevel.forEach(function (item) {
       var children = catItems.filter(function (it) { return it.parentName === item.name; });
-      var row = renderItem(item);
       if (children.length) {
-        var collapsed = state.collapsedItemGroups.has(item._id);
-        row.querySelector(".item-name").insertBefore(buildGroupToggle(item, collapsed), row.querySelector(".item-name").firstChild);
-      }
-      ul.appendChild(row);
-      if (children.length && !state.collapsedItemGroups.has(item._id)) {
-        children.forEach(function (child) { ul.appendChild(renderItem(child, "item-sub")); });
+        var gs = groupState(item, children);
+        var open = !state.collapsedItemGroups.has(item._id);
+        ul.appendChild(renderGroupRow(item, children, gs, open));
+        if (open) ul.appendChild(renderManifest(children));
+      } else {
+        ul.appendChild(renderItem(item));
       }
     });
     details.appendChild(ul);
+
+    var checkedCount = catItems.filter(function (it) { return checked.has(it._id); }).length;
+    countEl.textContent = checkedCount + "/" + catItems.length;
+
     return details;
   }
 
-  function renderItem(item, extraClass) {
-    var li = document.createElement("label");
-    li.className = "item" + (checked.has(item._id) ? " checked" : "") + (extraClass ? " " + extraClass : "");
+  // Whether the group as a whole - the parent item plus its children -
+  // reads as fully/partially/not packed. Two different kinds of parent:
+  //
+  // - Kit parents (weightIncludesChildren - First aid kit, Repair kit,
+  //   Water purification kit) don't represent anything beyond their own
+  //   children (their own weightG already equals the children's sum - see
+  //   extract_data.py's KIT_PARENT_NAMES), so there's no meaningful separate
+  //   "pack the kit bag itself" action. Their checked status is always
+  //   fully derived from their children and kept in sync here.
+  // - Every other group (Cup, Coffee, Firepit, Rucksack, ...) carries its
+  //   own real weight/consumable amount alongside its children, so the
+  //   parent's own checked-ness has to be a real, independently-toggled
+  //   entry in `checked` (set by the group checkbox below, exactly like a
+  //   leaf item) for that weight to actually reach the totals - deriving
+  //   it from children only, like kit parents, would silently drop the
+  //   parent's own weight from every sum the moment one child is left
+  //   unchecked (this was the bug: bulk-toggling used to touch only the
+  //   children, never the parent itself).
+  function groupState(item, children) {
+    var childDone = children.filter(function (c) { return checked.has(c._id); }).length;
+    var childrenAllDone = children.length > 0 && childDone === children.length;
+    if (item.weightIncludesChildren) {
+      if (childrenAllDone) checked.add(item._id); else checked.delete(item._id);
+      return { allDone: childrenAllDone, partial: !childrenAllDone && childDone > 0 };
+    }
+    var doneCount = childDone + (checked.has(item._id) ? 1 : 0);
+    var allDone = doneCount === children.length + 1;
+    return { allDone: allDone, partial: !allDone && doneCount > 0 };
+  }
+
+  // Group-parent row (an item with sub-items, e.g. Firepit, First aid kit).
+  // Deliberately a plain <li>, not a <label> wrapping the checkbox like a
+  // leaf renderItem() row - a label would make ANY click inside it toggle
+  // the checkbox natively, which would fight with wanting a click elsewhere
+  // on the row to open/close the manifest instead. The checkbox here bulk-
+  // toggles every child at once (see the change handler); an indeterminate
+  // state (a ring instead of a filled dot, styled in styles.css) shows when
+  // only some children are packed.
+  function renderGroupRow(item, children, gs, open) {
+    var li = document.createElement("li");
+    li.className = "item item-group" + (gs.allDone ? " checked" : "") + (open ? " open" : "");
 
     var cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.checked = checked.has(item._id);
+    cb.checked = gs.allDone;
+    cb.indeterminate = gs.partial;
+    cb.setAttribute("aria-label", "Pack " + item.name + " and its contents");
+    cb.addEventListener("click", function (e) { e.stopPropagation(); });
     cb.addEventListener("change", function () {
-      if (cb.checked) {
-        checked.add(item._id);
-        // Checking a sub-item implies its parent is packed too - but this
-        // is one-directional and doesn't repeat: checking/unchecking the
-        // parent never touches the child, and unchecking a sub-item never
-        // unchecks its parent either.
-        if (item.parentName) checked.add(item.category + "::" + item.parentName);
-        // Checking an item that itself has sub-items expands them, so
-        // packing the parent naturally surfaces its accessories to pack too.
-        if (items.some(function (it) { return it.category === item.category && it.parentName === item.name; })) {
-          state.collapsedItemGroups.delete(item._id);
-        }
-      } else {
-        checked.delete(item._id);
-      }
+      var setTo = cb.checked;
+      if (setTo) checked.add(item._id); else checked.delete(item._id);
+      children.forEach(function (c) {
+        if (setTo) checked.add(c._id); else checked.delete(c._id);
+      });
       renderChecklist();
     });
     li.appendChild(cb);
@@ -484,6 +594,98 @@
     var body = document.createElement("div");
     body.className = "item-body";
     body.appendChild(itemNameEl(item));
+    var meta = buildMeta(item);
+    // A real <button>, not the plain badge() span the other meta pieces
+    // use - the row's own click-anywhere-to-open/close behaviour (below)
+    // isn't reachable by keyboard on a plain <li>, so this is the only way
+    // a keyboard user can expand/collapse the manifest. No separate click
+    // handler needed: a real button's click (mouse or synthesized by
+    // Enter/Space) bubbles up to the row's own listener just like any
+    // other click, and e.target there is the button, not the checkbox, so
+    // it isn't caught by that listener's "was it the checkbox" guard.
+    var disclosure = document.createElement("button");
+    disclosure.type = "button";
+    disclosure.className = "badge badge-disclosure";
+    disclosure.textContent = open ? "− close" : "+ manifest";
+    disclosure.setAttribute("aria-expanded", open);
+    disclosure.setAttribute("aria-label", (open ? "Collapse" : "Expand") + " " + item.name + " contents");
+    meta.appendChild(disclosure);
+    body.appendChild(meta);
+    if (item.comment) {
+      var comment = document.createElement("div");
+      comment.className = "item-comment";
+      comment.textContent = item.comment;
+      body.appendChild(comment);
+    }
+    li.appendChild(body);
+
+    li.addEventListener("click", function (e) {
+      if (e.target === cb) return;
+      if (open) state.collapsedItemGroups.add(item._id);
+      else state.collapsedItemGroups.delete(item._id);
+      saveState();
+      renderChecklist();
+    });
+
+    return li;
+  }
+
+  // The expanded "kit manifest" under an open group row - each child keeps
+  // its own individually-checkable row (renderItem, same as any leaf item),
+  // numbered with a roman numeral instead of an emoji (this app's one-level
+  // nesting limit means these are always leaves, never groups themselves).
+  function renderManifest(children) {
+    var li = document.createElement("li");
+    li.className = "item-manifest";
+
+    var divider = document.createElement("div");
+    divider.className = "manifest-divider";
+    var label = document.createElement("span");
+    label.className = "manifest-divider-label";
+    label.textContent = "Kit manifest";
+    var rule = document.createElement("span");
+    rule.className = "manifest-divider-rule";
+    divider.appendChild(label);
+    divider.appendChild(rule);
+    li.appendChild(divider);
+
+    var childList = document.createElement("div");
+    childList.className = "items";
+    children.forEach(function (child, i) {
+      childList.appendChild(renderItem(child, "item-sub", toRoman(i + 1)));
+    });
+    li.appendChild(childList);
+
+    var totalRow = document.createElement("div");
+    totalRow.className = "manifest-total";
+    var totalLabel = document.createElement("span");
+    totalLabel.className = "manifest-total-label";
+    totalLabel.textContent = "Kit total";
+    var totalValue = document.createElement("span");
+    totalValue.textContent = formatWeight(sumWeight(children));
+    totalRow.appendChild(totalLabel);
+    totalRow.appendChild(totalValue);
+    li.appendChild(totalRow);
+
+    return li;
+  }
+
+  function renderItem(item, extraClass, numeral) {
+    var li = document.createElement("label");
+    li.className = "item" + (checked.has(item._id) ? " checked" : "") + (extraClass ? " " + extraClass : "");
+
+    var cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = checked.has(item._id);
+    cb.addEventListener("change", function () {
+      if (cb.checked) checked.add(item._id); else checked.delete(item._id);
+      renderChecklist();
+    });
+    li.appendChild(cb);
+
+    var body = document.createElement("div");
+    body.className = "item-body";
+    body.appendChild(itemNameEl(item, numeral));
     body.appendChild(buildMeta(item));
     if (item.comment) {
       var comment = document.createElement("div");
@@ -495,40 +697,33 @@
     return li;
   }
 
-  function itemNameEl(item, suffix) {
+  function itemNameEl(item, numeral) {
     var name = document.createElement("div");
     name.className = "item-name";
-    if (item.emoji) {
+    if (numeral) {
+      var num = document.createElement("span");
+      num.className = "item-numeral";
+      num.textContent = numeral;
+      name.appendChild(num);
+    } else if (item.emoji) {
       var icon = document.createElement("span");
       icon.className = "item-emoji";
       icon.textContent = item.emoji;
       name.appendChild(icon);
     }
-    name.appendChild(document.createTextNode(item.name + (suffix || "")));
+    name.appendChild(document.createTextNode(item.name));
     return name;
   }
 
-  // Small disclosure arrow prepended to a parent item's name, for items with
-  // sub-items - stopPropagation keeps its click from also toggling the
-  // outer row's packed checkbox (the same technique buildChargeToggle uses
-  // for its own nested checkbox).
-  function buildGroupToggle(item, collapsed) {
-    var btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "item-group-toggle";
-    btn.textContent = collapsed ? "▸" : "▾";
-    btn.setAttribute("aria-label", (collapsed ? "Expand" : "Collapse") + " " + item.name + " sub-items");
-    btn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      if (collapsed) state.collapsedItemGroups.delete(item._id);
-      else state.collapsedItemGroups.add(item._id);
-      saveState();
-      renderChecklist();
-    });
-    return btn;
-  }
-
   function effectiveWeight(item) {
+    // Kit-parent items (First aid kit, Repair kit, Water purification kit)
+    // carry a headline weightG that's meant to equal the sum of their own
+    // inlined children, not an amount on top of them - counting both would
+    // double the kit's real weight in every total/budget/category sum.
+    // buildMeta() still shows the parent's own weightG badge directly (not
+    // via this function), so the headline figure stays visible for
+    // comparison against the manifest's "Kit total".
+    if (item.weightIncludesChildren) return 0;
     if (item.perNightAmount != null) {
       var amount = getAmount(item);
       var grams = item.perNightUnit === "l" ? amount * 1000 : amount;
@@ -571,72 +766,6 @@
     return list.reduce(function (sum, it) { return sum + effectiveWeight(it); }, 0);
   }
 
-  function fillPercent(packedWeight, totalWeight) {
-    return totalWeight ? (100 * packedWeight / totalWeight) + "%" : "0%";
-  }
-
-  function updateProgress(visible) {
-    var total = visible.length;
-    var packedItems = visible.filter(function (it) { return checked.has(it._id); });
-    var done = packedItems.length;
-    document.getElementById("progress-text").textContent = done + " of " + total + " packed";
-
-    // Pack weight is base gear only: worn/on-body items aren't in the pack
-    // at all, and consumables (food, fuel, toiletries) get their own
-    // dedicated bar below rather than double-counting here too.
-    var weighable = visible.filter(function (it) { return !it.onBody && !it.consumable; });
-    var packedWeighable = packedItems.filter(function (it) { return !it.onBody && !it.consumable; });
-    var totalWeight = sumWeight(weighable);
-    var packedWeight = sumWeight(packedWeighable);
-    document.getElementById("progress-fill").style.width = fillPercent(packedWeight, totalWeight);
-
-    var summaryEl = document.getElementById("weight-summary");
-    summaryEl.innerHTML = "";
-    summaryEl.appendChild(document.createTextNode(
-      "Pack weight: " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far "
-    ));
-    if (packedWeight > 0) {
-      var cls = weightClass(packedWeight);
-      var classBadge = document.createElement("span");
-      classBadge.className = "badge weight-class weight-class-" + cls.toLowerCase();
-      classBadge.textContent = cls;
-      classBadge.title = "Excludes consumables (food, fuel, toiletries...) and anything worn / on body - see the Consumables bar below for those";
-      summaryEl.appendChild(classBadge);
-    }
-  }
-
-  function updateAnjoProgress() {
-    var anjoItems = items.filter(function (it) {
-      return it.category === "Anjo" && it.onBody && tripOk(it) && seasonOk(it);
-    });
-    var total = anjoItems.length;
-    var packedItems = anjoItems.filter(function (it) { return checked.has(it._id); });
-    var done = packedItems.length;
-    document.getElementById("anjo-progress-text").textContent = "🐾 " + done + " of " + total + " on Anjo";
-
-    var totalWeight = sumWeight(anjoItems);
-    var packedWeight = sumWeight(packedItems);
-    document.getElementById("anjo-progress-fill").style.width = fillPercent(packedWeight, totalWeight);
-    document.getElementById("anjo-weight-summary").textContent =
-      "On Anjo (worn + pouches): " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
-  }
-
-  function updateConsumablesProgress() {
-    var consumableItems = items.filter(function (it) {
-      return it.consumable && tripOk(it) && seasonOk(it);
-    });
-    var total = consumableItems.length;
-    var packedItems = consumableItems.filter(function (it) { return checked.has(it._id); });
-    var done = packedItems.length;
-    document.getElementById("consumables-progress-text").textContent = done + " of " + total + " consumables packed";
-
-    var totalWeight = sumWeight(consumableItems);
-    var packedWeight = sumWeight(packedItems);
-    document.getElementById("consumables-progress-fill").style.width = fillPercent(packedWeight, totalWeight);
-    document.getElementById("consumables-weight-summary").textContent =
-      "Consumables (yours + Anjo's): " + formatWeight(totalWeight) + " — " + formatWeight(packedWeight) + " packed so far";
-  }
-
   function weightClass(totalGrams) {
     var kg = totalGrams / 1000;
     var label = WEIGHT_CLASS_THRESHOLDS[0][1];
@@ -644,6 +773,215 @@
       if (kg >= pair[0]) label = pair[1];
     });
     return label;
+  }
+
+  // Consolidates what were three separate progress computations (pack /
+  // Anjo / consumables) into one pass - feeds both the tally strip (counts)
+  // and the budget panel (weights) below.
+  function computeTallies(visible) {
+    var packedItems = visible.filter(function (it) { return checked.has(it._id); });
+
+    var anjoItems = items.filter(function (it) {
+      return it.category === "Anjo" && it.onBody && tripOk(it) && seasonOk(it);
+    });
+    var anjoPacked = anjoItems.filter(function (it) { return checked.has(it._id); });
+
+    var consItems = items.filter(function (it) {
+      return it.consumable && tripOk(it) && seasonOk(it);
+    });
+    var consPacked = consItems.filter(function (it) { return checked.has(it._id); });
+
+    // Pack weight is base gear only: worn/on-body items aren't in the pack
+    // at all, and consumables get their own dedicated bar rather than
+    // double-counting here too.
+    var weighable = visible.filter(function (it) { return !it.onBody && !it.consumable; });
+    var weighablePacked = packedItems.filter(function (it) { return !it.onBody && !it.consumable; });
+
+    return {
+      you: {
+        total: visible.length, packed: packedItems.length,
+        weightTotal: sumWeight(weighable), weightPacked: sumWeight(weighablePacked),
+      },
+      anjo: {
+        total: anjoItems.length, packed: anjoPacked.length,
+        weightTotal: sumWeight(anjoItems), weightPacked: sumWeight(anjoPacked),
+      },
+      cons: {
+        total: consItems.length, packed: consPacked.length,
+        weightTotal: sumWeight(consItems), weightPacked: sumWeight(consPacked),
+      },
+    };
+  }
+
+  function renderTallyStrip(t) {
+    var wrap = document.getElementById("tally-strip");
+    wrap.innerHTML = "";
+    [
+      ["Packed", t.you],
+      ["On Anjo", t.anjo],
+      ["Consumables", t.cons],
+    ].forEach(function (pair) {
+      var cell = document.createElement("div");
+      cell.className = "tally-cell";
+
+      var num = document.createElement("div");
+      num.className = "tally-num mono";
+      num.appendChild(document.createTextNode(String(pair[1].packed)));
+      var of = document.createElement("span");
+      of.className = "tally-of";
+      of.textContent = "/" + pair[1].total;
+      num.appendChild(of);
+      cell.appendChild(num);
+
+      var label = document.createElement("div");
+      label.className = "tally-label";
+      label.textContent = pair[0];
+      cell.appendChild(label);
+
+      wrap.appendChild(cell);
+    });
+  }
+
+  function budgetCapStepper(label, valueG, onChange, ariaLabel) {
+    // ariaLabel lets a caller give the buttons a distinguishable name (e.g.
+    // "Anjo budget") without also duplicating that word in the visible
+    // label - the Anjo stepper's visible label is "" because " · Anjo "
+    // already precedes it as plain text.
+    ariaLabel = ariaLabel || label;
+    var wrap = document.createElement("span");
+    wrap.className = "budget-cap";
+    wrap.appendChild(document.createTextNode(label + " "));
+
+    var minus = document.createElement("button");
+    minus.type = "button";
+    minus.className = "stepper-btn stepper-btn-sm";
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "Decrease " + ariaLabel);
+    minus.addEventListener("click", function () { onChange(Math.max(1000, valueG - 500)); });
+
+    var val = document.createElement("span");
+    val.textContent = (valueG / 1000).toFixed(1) + " kg";
+
+    var plus = document.createElement("button");
+    plus.type = "button";
+    plus.className = "stepper-btn stepper-btn-sm";
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "Increase " + ariaLabel);
+    plus.addEventListener("click", function () { onChange(Math.min(50000, valueG + 500)); });
+
+    wrap.appendChild(minus);
+    wrap.appendChild(val);
+    wrap.appendChild(plus);
+    return wrap;
+  }
+
+  function budgetBarRow(label, total, packed, cap, note, noteClass) {
+    var row = document.createElement("div");
+    row.className = "budget-row";
+
+    var over = total > cap;
+
+    var head = document.createElement("div");
+    head.className = "budget-row-head";
+
+    var lab = document.createElement("span");
+    lab.className = "budget-row-label";
+    lab.textContent = label;
+    head.appendChild(lab);
+
+    var val = document.createElement("span");
+    val.className = "budget-row-value mono";
+    val.textContent = formatWeight(total);
+    head.appendChild(val);
+
+    if (note) {
+      var noteEl = document.createElement("span");
+      noteEl.className = "budget-row-note" + (noteClass ? " " + noteClass : "");
+      noteEl.textContent = "· " + note;
+      head.appendChild(noteEl);
+    }
+
+    var pct = document.createElement("span");
+    pct.className = "budget-row-pct mono" + (over ? " over" : "");
+    pct.textContent = (cap ? Math.round(100 * total / cap) : 0) + "%";
+    head.appendChild(pct);
+
+    row.appendChild(head);
+
+    var track = document.createElement("div");
+    track.className = "budget-track" + (over ? " over" : "");
+
+    var totalFill = document.createElement("div");
+    totalFill.className = "budget-fill-total";
+    totalFill.style.width = Math.min(100, cap ? 100 * total / cap : 0) + "%";
+    track.appendChild(totalFill);
+
+    var packedFill = document.createElement("div");
+    packedFill.className = "budget-fill-packed";
+    packedFill.style.width = Math.min(100, cap ? 100 * packed / cap : 0) + "%";
+    track.appendChild(packedFill);
+
+    row.appendChild(track);
+    return row;
+  }
+
+  function renderBudgetPanel(t) {
+    var wrap = document.getElementById("budget-panel");
+    wrap.innerHTML = "";
+
+    var header = document.createElement("div");
+    header.className = "budget-header";
+
+    var eyebrow = document.createElement("div");
+    eyebrow.className = "panel-eyebrow";
+    eyebrow.textContent = "Weight budget";
+    header.appendChild(eyebrow);
+
+    var caps = document.createElement("div");
+    caps.className = "budget-caps mono";
+    caps.appendChild(budgetCapStepper("Budget", state.budgetG, function (next) {
+      state.budgetG = next;
+      saveState();
+      renderChecklist();
+    }));
+    caps.appendChild(document.createTextNode(" · Anjo "));
+    caps.appendChild(budgetCapStepper("", state.dogBudgetG, function (next) {
+      state.dogBudgetG = next;
+      saveState();
+      renderChecklist();
+    }, "Anjo budget"));
+    header.appendChild(caps);
+    wrap.appendChild(header);
+
+    // Classifies the same figure the row displays as its headline value
+    // (weightTotal) - it was previously computed from weightPacked instead,
+    // which could show a misleading class (e.g. "Ultralight" right next to
+    // a much heavier total) until most of the trip's gear was packed.
+    var cls = t.you.weightTotal > 0 ? weightClass(t.you.weightTotal) : null;
+    wrap.appendChild(budgetBarRow(
+      "On your back", t.you.weightTotal, t.you.weightPacked, state.budgetG,
+      cls, cls === "Heavy" ? "heavy" : null
+    ));
+    wrap.appendChild(budgetBarRow("On Anjo", t.anjo.weightTotal, t.anjo.weightPacked, state.dogBudgetG));
+    wrap.appendChild(budgetBarRow("Consumables", t.cons.weightTotal, t.cons.weightPacked, state.budgetG));
+
+    var legend = document.createElement("div");
+    legend.className = "budget-legend";
+    [
+      ["legend-packed", "Packed"],
+      ["legend-remaining", "Still to pack"],
+      ["legend-headroom", "Budget remaining"],
+      ["legend-over", "Over budget"],
+    ].forEach(function (pair) {
+      var item = document.createElement("div");
+      item.className = "legend-item";
+      var swatch = document.createElement("span");
+      swatch.className = "legend-swatch " + pair[0];
+      item.appendChild(swatch);
+      item.appendChild(document.createTextNode(pair[1]));
+      legend.appendChild(item);
+    });
+    wrap.appendChild(legend);
   }
 
   function renderUnusedGear() {
@@ -682,6 +1020,7 @@
   wireSegmented("season-filter", "season");
 
   var fireToggle = document.getElementById("fire-toggle");
+  var fireToggleLabel = document.getElementById("fire-toggle-label");
   fireToggle.addEventListener("click", function () {
     state.noOpenFires = !state.noOpenFires;
     syncFireToggle();
@@ -689,8 +1028,8 @@
   });
 
   function syncFireToggle() {
-    fireToggle.classList.toggle("active", state.noOpenFires);
     fireToggle.setAttribute("aria-pressed", state.noOpenFires);
+    fireToggleLabel.textContent = state.noOpenFires ? "Forbidden" : "Allowed";
   }
 
   document.getElementById("nights-minus").addEventListener("click", function () {
