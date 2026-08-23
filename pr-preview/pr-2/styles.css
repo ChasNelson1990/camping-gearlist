@@ -677,7 +677,10 @@ ul.items {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-li.item:last-child,
+/* Not scoped to a tag name: a leaf row is a <label> (renderItem), a group
+   row is an <li> (renderGroupRow) - both carry the .item class, so this
+   needs to match either. */
+.item:last-child,
 .item-manifest:last-child { border-bottom: none; }
 
 .item.item-sub {

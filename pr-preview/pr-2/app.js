@@ -883,7 +883,11 @@
     header.appendChild(caps);
     wrap.appendChild(header);
 
-    var cls = t.you.weightPacked > 0 ? weightClass(t.you.weightPacked) : null;
+    // Classifies the same figure the row displays as its headline value
+    // (weightTotal) - it was previously computed from weightPacked instead,
+    // which could show a misleading class (e.g. "Ultralight" right next to
+    // a much heavier total) until most of the trip's gear was packed.
+    var cls = t.you.weightTotal > 0 ? weightClass(t.you.weightTotal) : null;
     wrap.appendChild(budgetBarRow(
       "On your back", t.you.weightTotal, t.you.weightPacked, state.budgetG,
       cls, cls === "Heavy" ? "heavy" : null
