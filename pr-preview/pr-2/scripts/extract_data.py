@@ -824,7 +824,10 @@ def build_kit_child_items(rows, parent_name, category, trips):
         raw_name = field(row, "name")
         if not raw_name:
             continue
-        quantity = parse_num(field(row, "quantity")) or 1
+        # `or 1` would also catch an explicit 0 (falsy) and silently turn it
+        # into 1 - only fall back to 1 when the cell was blank/unparseable.
+        raw_quantity = parse_num(field(row, "quantity"))
+        quantity = 1 if raw_quantity is None else raw_quantity
         weight_each = parse_num(field(row, "weight_g"))
         weight_total = weight_each * quantity if weight_each is not None else None
         name = name_override.get(raw_name, raw_name)
