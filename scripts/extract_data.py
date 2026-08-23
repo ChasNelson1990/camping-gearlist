@@ -75,11 +75,13 @@ def check_columns(fieldnames, required, label):
 # any other grouped item, e.g. Firepit's Charcoal/Firelighters). Previously
 # these were separate standalone pages (first-aid-kit.html etc.) - folded
 # into the main list so nothing requires leaving the checklist to see.
-KIT_PARENTS = {
-    "First aid kit": {"category": "Health", "trips": (True, True, True)},
-    "Repair kit": {"category": "Basics", "trips": (True, True, True)},
-    "Water purification kit": {"category": "Kitchen", "trips": (False, True, False)},
-}
+#
+# Just names here, not category/trip flags too - those are read straight off
+# the parent's own already-built pack_items entry in main() instead, so
+# pack.csv stays the only place that data lives. Duplicating them here would
+# let a kit's contents silently drift out of sync with its own parent row
+# (different category/trips) if pack.csv changed without a matching edit here.
+KIT_PARENT_NAMES = {"First aid kit", "Repair kit", "Water purification kit"}
 
 # Items whose listed weight is a depleting/per-trip substance rather than
 # durable gear - excluded from the weight-class calculation (which is meant
@@ -658,7 +660,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             "onBody": onbody_raw or None,
             "researchLinks": research_links.get(name, []),
             "consumable": is_consumable,
-            # True only for the 3 kit-parent rows (KIT_PARENTS) - their own
+            # True only for the 3 kit-parent rows (KIT_PARENT_NAMES) - their own
             # weightG is a hand-entered headline figure that's meant to
             # equal the sum of their now-inlined children (see the
             # kit-drift warning in main()), not an amount carried in
@@ -667,7 +669,7 @@ def build_items(rows, category_const=None, research_links=None, consumable_detai
             # isn't counted twice - once as its own line, once via its
             # children - while its badge still shows the real headline
             # number for comparison against the manifest's own "Kit total".
-            "weightIncludesChildren": name in KIT_PARENTS,
+            "weightIncludesChildren": name in KIT_PARENT_NAMES,
             "parentName": consumable["parent"] if consumable else ITEM_PARENT.get(name),
             "perNightAmount": consumable["amount"] if consumable else None,
             "perNightUnit": consumable["unit"] if consumable else None,
@@ -759,7 +761,7 @@ def make_synthetic_item(name, category, parent_name, weight_g=None, weight_note=
     """Build a plain (non-consumable) synthetic child item - same shape as
     build_items()' output, minus anything that only ever applies to a real
     pack.csv/anjo.csv row. Used for kit contents synthesized from their own
-    CSV (see KIT_PARENTS) rather than a row of the main sheet."""
+    CSV (see KIT_PARENT_NAMES) rather than a row of the main sheet."""
     overnight, long_trek, car_camp = trips
     return {
         "name": name,
@@ -1066,14 +1068,21 @@ def main():
     # Kit contents (first aid / repair / water purification) - synthesized
     # as ordinary parentName children of their kit's own pack.csv row, so
     # they render inline in the same "kit manifest" as any other grouped
-    # item instead of needing their own standalone page (see KIT_PARENTS).
+    # item instead of needing their own standalone page (see KIT_PARENT_NAMES).
+    # Category and trip flags are read straight from each parent's own
+    # already-built pack_items entry (not hand-duplicated) so pack.csv stays
+    # the only place that data lives - see KIT_PARENT_NAMES's own comment.
     kit_children = []
-    kit_children += build_first_aid_child_items(
-        first_aid_rows, "First aid kit", **KIT_PARENTS["First aid kit"])
-    kit_children += build_kit_child_items(
-        repair_kit_rows, "Repair kit", **KIT_PARENTS["Repair kit"])
-    kit_children += build_kit_child_items(
-        water_kit_rows, "Water purification kit", **KIT_PARENTS["Water purification kit"])
+    for parent_name, rows, builder in (
+        ("First aid kit", first_aid_rows, build_first_aid_child_items),
+        ("Repair kit", repair_kit_rows, build_kit_child_items),
+        ("Water purification kit", water_kit_rows, build_kit_child_items),
+    ):
+        parent = next((it for it in pack_items if it["name"] == parent_name), None)
+        if parent is None:
+            raise SystemExit(f"{parent_name!r} (KIT_PARENT_NAMES) has no matching row in pack.csv")
+        trips = (parent["overnight"], parent["longTrek"], parent["carCamp"])
+        kit_children += builder(rows, parent_name, parent["category"], trips)
     pack_items += kit_children
 
     anjo_items = build_items(anjo_rows, category_const="Anjo",
@@ -1203,7 +1212,7 @@ def main():
     # children, so an edit to a kit CSV doesn't silently leave the parent
     # row's badge showing a stale total (the UI itself also surfaces this:
     # the parent's own badge vs. the manifest's "Kit total" when expanded).
-    for kit_name in KIT_PARENTS:
+    for kit_name in KIT_PARENT_NAMES:
         children = [it for it in kit_children if it["parentName"] == kit_name]
         kit_sum = sum(it["weightG"] or 0 for it in children)
         listed = next((it["weightG"] for it in pack_items if it["name"] == kit_name), None)
