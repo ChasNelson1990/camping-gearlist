@@ -488,8 +488,7 @@
     topLevel.forEach(function (item) {
       var children = catItems.filter(function (it) { return it.parentName === item.name; });
       if (children.length) {
-        var gs = groupState(children);
-        if (gs.allDone) checked.add(item._id); else checked.delete(item._id);
+        var gs = groupState(item, children);
         var open = !state.collapsedItemGroups.has(item._id);
         ul.appendChild(renderGroupRow(item, children, gs, open));
         if (open) ul.appendChild(renderManifest(children));
@@ -501,11 +500,34 @@
     return details;
   }
 
-  function groupState(children) {
-    var doneCount = children.filter(function (c) { return checked.has(c._id); }).length;
-    var allDone = children.length > 0 && doneCount === children.length;
-    var noneDone = doneCount === 0;
-    return { doneCount: doneCount, allDone: allDone, partial: !allDone && !noneDone };
+  // Whether the group as a whole - the parent item plus its children -
+  // reads as fully/partially/not packed. Two different kinds of parent:
+  //
+  // - Kit parents (weightIncludesChildren - First aid kit, Repair kit,
+  //   Water purification kit) don't represent anything beyond their own
+  //   children (their own weightG already equals the children's sum - see
+  //   extract_data.py's KIT_PARENTS), so there's no meaningful separate
+  //   "pack the kit bag itself" action. Their checked status is always
+  //   fully derived from their children and kept in sync here.
+  // - Every other group (Cup, Coffee, Firepit, Rucksack, ...) carries its
+  //   own real weight/consumable amount alongside its children, so the
+  //   parent's own checked-ness has to be a real, independently-toggled
+  //   entry in `checked` (set by the group checkbox below, exactly like a
+  //   leaf item) for that weight to actually reach the totals - deriving
+  //   it from children only, like kit parents, would silently drop the
+  //   parent's own weight from every sum the moment one child is left
+  //   unchecked (this was the bug: bulk-toggling used to touch only the
+  //   children, never the parent itself).
+  function groupState(item, children) {
+    var childDone = children.filter(function (c) { return checked.has(c._id); }).length;
+    var childrenAllDone = children.length > 0 && childDone === children.length;
+    if (item.weightIncludesChildren) {
+      if (childrenAllDone) checked.add(item._id); else checked.delete(item._id);
+      return { allDone: childrenAllDone, partial: !childrenAllDone && childDone > 0 };
+    }
+    var doneCount = childDone + (checked.has(item._id) ? 1 : 0);
+    var allDone = doneCount === children.length + 1;
+    return { allDone: allDone, partial: !allDone && doneCount > 0 };
   }
 
   // Group-parent row (an item with sub-items, e.g. Firepit, First aid kit).
@@ -524,10 +546,11 @@
     cb.type = "checkbox";
     cb.checked = gs.allDone;
     cb.indeterminate = gs.partial;
-    cb.setAttribute("aria-label", "Pack all " + item.name + " contents");
+    cb.setAttribute("aria-label", "Pack " + item.name + " and its contents");
     cb.addEventListener("click", function (e) { e.stopPropagation(); });
     cb.addEventListener("change", function () {
       var setTo = cb.checked;
+      if (setTo) checked.add(item._id); else checked.delete(item._id);
       children.forEach(function (c) {
         if (setTo) checked.add(c._id); else checked.delete(c._id);
       });
