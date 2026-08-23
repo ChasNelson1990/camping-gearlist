@@ -502,9 +502,16 @@ a:hover { color: var(--maroon); }
   color: var(--teal);
 }
 
-.weather-attribution {
-  text-align: right;
+.weather-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem 1rem;
   padding: .5rem 1.1rem .8rem;
+}
+
+.weather-attribution {
   font: 400 .62rem/1 'Courier Prime', monospace;
   letter-spacing: .1em;
   text-transform: uppercase;
