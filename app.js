@@ -342,13 +342,10 @@
     }
     if (item.season) wrap.appendChild(badge(item.season, "badge-season"));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
-    if (item.current) {
-      if (item.currentIsUrl) {
-        wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true, item.currentNote));
-      } else {
-        wrap.appendChild(badge(item.current));
-      }
-    }
+    // A URL current item links from its own name instead (itemNameEl()) -
+    // only the non-URL case (a plain-text description of the owned item)
+    // still needs a badge here.
+    if (item.current && !item.currentIsUrl) wrap.appendChild(badge(item.current));
     if (item.researchLinks) {
       item.researchLinks.forEach(function (link) {
         wrap.appendChild(linkBadge(link.url, link.label, false));
@@ -699,7 +696,28 @@
       num.textContent = numeral;
       name.appendChild(num);
     }
-    name.appendChild(document.createTextNode(item.name));
+    if (item.currentIsUrl) {
+      var link = document.createElement("a");
+      link.href = item.current;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = item.name;
+      // currentLabel (the specific product/model, e.g. "Osprey Exos 48" for
+      // an item named just "Rucksack") used to be the link's own visible
+      // text via the badge this replaced - kept reachable as a tooltip
+      // instead of dropped, alongside currentNote (e.g. a stale-generation
+      // caveat) if the item has one too.
+      var title = [item.currentLabel, item.currentNote].filter(Boolean).join(" — ");
+      if (title) link.title = title;
+      // Leaf rows are a <label> wrapping the checkbox (any inner click
+      // would otherwise also toggle it) and group rows have their own
+      // row-level click-to-open/close listener - stopping propagation here
+      // means following the link is the only thing that happens.
+      link.addEventListener("click", function (e) { e.stopPropagation(); });
+      name.appendChild(link);
+    } else {
+      name.appendChild(document.createTextNode(item.name));
+    }
     return name;
   }
 
