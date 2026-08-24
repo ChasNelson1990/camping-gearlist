@@ -318,28 +318,23 @@
     interactive = interactive !== false;
     var wrap = document.createElement("div");
     wrap.className = "item-meta";
+    // The headline weight (what effectiveWeight()/rowWeightLabel() compute -
+    // a plain figure for most items, the live total for a stepper-driven
+    // one) lives in the row's own end-of-row .item-weight column instead of
+    // here (see buildWeightCell()) - this only adds the interactive amount/
+    // quantity steppers themselves, which have no row-end equivalent.
+    // quantityMax's per-unit "each" reference weight lives on that same
+    // column as a title tooltip (rowWeightLabel()) rather than its own chip.
     if (item.perNightAmount != null) {
       if (interactive) {
         wrap.appendChild(buildConsumableStepper(item));
-        if (item.scalesWithNights === false) {
-          wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " total"));
-        } else {
-          var nights = state.nights;
-          wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " / " + nights + " night" + (nights === 1 ? "" : "s")));
-        }
       } else if (item.scalesWithNights === false) {
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + " total"));
       } else {
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
       }
     } else if (item.quantityMax != null) {
-      wrap.appendChild(badge(formatWeight(item.weightG) + " each"));
-      if (interactive) {
-        wrap.appendChild(buildQuantityStepper(item));
-        wrap.appendChild(badge("→ " + formatWeight(effectiveWeight(item)) + " total"));
-      }
-    } else if (item.weightG) {
-      wrap.appendChild(badge(formatWeight(item.weightG), null, item.weightNote));
+      if (interactive) wrap.appendChild(buildQuantityStepper(item));
     }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.fireCaution && state.noOpenFires) {
@@ -614,6 +609,7 @@
       body.appendChild(comment);
     }
     li.appendChild(body);
+    li.appendChild(buildWeightCell(item));
 
     li.addEventListener("click", function (e) {
       if (e.target === cb) return;
@@ -690,6 +686,7 @@
       body.appendChild(comment);
     }
     li.appendChild(body);
+    li.appendChild(buildWeightCell(item));
     return li;
   }
 
@@ -711,8 +708,8 @@
     // carry a headline weightG that's meant to equal the sum of their own
     // inlined children, not an amount on top of them - counting both would
     // double the kit's real weight in every total/budget/category sum.
-    // buildMeta() still shows the parent's own weightG badge directly (not
-    // via this function), so the headline figure stays visible for
+    // rowWeightLabel() below still shows the parent's own weightG directly
+    // (not via this function), so the headline figure stays visible for
     // comparison against the manifest's "Kit total".
     if (item.weightIncludesChildren) return 0;
     if (item.perNightAmount != null) {
@@ -725,6 +722,39 @@
       return (item.weightG || 0) * getQuantity(item);
     }
     return item.weightG || 0;
+  }
+
+  // The single headline weight shown at the end of the row - a plain
+  // reference weight for most items, but the live total (already reflecting
+  // the current stepper amount/quantity) for anything effectiveWeight()
+  // computes specially. Mirrors the same item-type priority buildMeta()
+  // itself used to render as a badge, just relocated: one figure per row,
+  // right-aligned like a ledger, rather than mixed in with the other badges.
+  function rowWeightLabel(item) {
+    if (item.weightIncludesChildren) {
+      return item.weightG ? { text: formatWeight(item.weightG), title: null } : null;
+    }
+    if (item.quantityMax != null) {
+      return { text: formatWeight(effectiveWeight(item)), title: formatWeight(item.weightG) + " each" };
+    }
+    if (item.perNightAmount != null) {
+      return { text: formatWeight(effectiveWeight(item)), title: null };
+    }
+    if (item.weightG) {
+      return { text: formatWeight(item.weightG), title: item.weightNote || null };
+    }
+    return null;
+  }
+
+  function buildWeightCell(item) {
+    var cell = document.createElement("span");
+    cell.className = "item-weight";
+    var label = rowWeightLabel(item);
+    if (label) {
+      cell.textContent = label.text;
+      if (label.title) cell.title = label.title;
+    }
+    return cell;
   }
 
   function stepSize(item, amount) {
