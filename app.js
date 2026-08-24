@@ -706,8 +706,9 @@
   // same condition effectiveWeight() uses for adding anjoWeightG.
   function firstAidQtyLabel(item) {
     if (item.humanQty == null && item.anjoQty == null) return null;
-    var qty = (item.humanQty || 0) + (item.anjoQty != null && state.categories.has("Anjo") ? item.anjoQty : 0);
-    return qty ? "×" + qty : null;
+    var q = firstAidLiveQty(item);
+    var total = q.human + q.anjo;
+    return total ? "×" + total : null;
   }
 
   // The reactive quantity line (if any) plus the item's own free-text
@@ -752,6 +753,19 @@
     return name;
   }
 
+  // Live human/Anjo quantities for a first-aid-kit child (humanQty/anjoQty
+  // and their optional *PerNight rates, set by build_first_aid_child_items) -
+  // base count plus an optional per-night rate x the current Nights value,
+  // with the Anjo side only counted while that category's enabled. Used by
+  // both effectiveWeight() and firstAidQtyLabel() so the weight shown and
+  // the quantity chip can never disagree.
+  function firstAidLiveQty(item) {
+    return {
+      human: (item.humanQty || 0) + (item.humanQtyPerNight || 0) * state.nights,
+      anjo: state.categories.has("Anjo") ? (item.anjoQty || 0) + (item.anjoQtyPerNight || 0) * state.nights : 0,
+    };
+  }
+
   function effectiveWeight(item) {
     // Kit-parent items (First aid kit, Repair kit, Water purification kit)
     // carry a headline weightG that's meant to equal the sum of their own
@@ -770,13 +784,15 @@
     if (item.quantityMax != null) {
       return (item.weightG || 0) * getQuantity(item);
     }
-    // First-aid-kit children only (anjoQty set by build_first_aid_child_items) -
-    // weightG is already the human-baseline; add Anjo's portion only while
-    // the Anjo category is actually enabled, so this item's contribution to
-    // every sum (budget bars, category weight, this kit's own live total)
-    // reacts to the Anjo toggle the same way its own row display does.
-    if (item.anjoQty != null && state.categories.has("Anjo")) {
-      return (item.weightG || 0) + (item.anjoWeightG || 0);
+    // First-aid-kit children only (unitWeightG set by
+    // build_first_aid_child_items) - the live human+Anjo quantity times its
+    // own per-unit weight, so this item's contribution to every sum
+    // (budget bars, category weight, this kit's own live total) reacts to
+    // both the Nights stepper and the Anjo toggle the same way its own row
+    // display does.
+    if (item.unitWeightG != null) {
+      var q = firstAidLiveQty(item);
+      return (q.human + q.anjo) * item.unitWeightG;
     }
     return item.weightG || 0;
   }
@@ -804,10 +820,11 @@
     if (item.perNightAmount != null) {
       return { text: formatWeight(effectiveWeight(item)), title: null };
     }
-    // weightG is falsy (0/null) for a first-aid dog-exclusive row (no
-    // human-side weight at all) until Anjo's toggled on - anjoQty being set
-    // is what still routes it through effectiveWeight() in that case.
-    if (item.weightG || item.anjoQty != null) {
+    // weightG isn't populated for first-aid children at all any more
+    // (superseded by unitWeightG + firstAidLiveQty()) - unitWeightG being
+    // set is what routes those through effectiveWeight() here, including a
+    // dog-exclusive row with nothing to show until Anjo's toggled on.
+    if (item.weightG || item.unitWeightG != null) {
       var eff = effectiveWeight(item);
       return eff ? { text: formatWeight(eff), title: item.weightNote || null } : null;
     }
