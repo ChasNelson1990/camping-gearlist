@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gear Research — Camping Checklist</title>
-<meta name="description" content="Product comparisons and reference sheets behind the camping gear checklist.">
+<meta name="description" content="Product comparisons, trip planning and reference sheets behind the camping gear checklist.">
 <script>(function(){try{document.documentElement.setAttribute("data-theme",localStorage.getItem("camping-theme")==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,10 +13,34 @@
 <link rel="stylesheet" href="research.css">
 </head>
 <body>
-<div id="app"></div>
-<script src="../research-data.js"></script>
-<script src="research.js"></script>
-<script>renderResearchIndex();</script>
+<header class="topbar">
+  <h1 style="font-size:1.15rem;margin:0;">Gear Research</h1>
+  <div class="topbar-actions">
+    <a class="research-link" href="../index.html">Checklist →</a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme"></button>
+  </div>
+</header>
+<script>document.getElementById("theme-toggle").textContent = document.documentElement.getAttribute("data-theme") === "light" ? "Daylight" : "Nightfall";</script>
+<main class="research-main">
+  <p class="description">The comparison spreadsheets behind the packing list. Rows marked ★ are what's actually in the current pack list, where a confident match exists.</p>
+  <div class="groups">
+    <section>
+      <h2>Gear comparisons</h2>
+      <ul class="sheet-list">
+      <li><a href="waterproof-jackets.html"><div class="sheet-title">Waterproof jackets</div><div class="sheet-desc">Rain jacket options compared by weight, hydrostatic head, breathability, and the sheet's own HH*B/weight performance score and price-per-ratio cost-efficiency score.</div></a></li>
+      <li><a href="flasks.html"><div class="sheet-title">Insulated flasks</div><div class="sheet-desc">Insulated bottle/flask options compared by hot/cold retention time, volume, weight, and cost - open research, nothing in the current pack list is one of these yet.</div></a></li>
+      <li><a href="bags.html"><div class="sheet-title">Backpacks</div><div class="sheet-desc">Backpack options compared by weight, volume, features, and the sheet's own cost-per-(volume/weight) efficiency score.</div></a></li>
+      <li><a href="tents.html"><div class="sheet-title">Tents</div><div class="sheet-desc">Tent options compared by weight, pack size, floor/fly fabric ratings, whether the dog fits inside, and cost-per-area-efficiency.</div></a></li>
+      <li><a href="insulated-jackets-2022.html"><div class="sheet-title">Insulated jackets (2022)</div><div class="sheet-desc">Earlier insulated-jacket comparison by weight, insulation rating, and price-per-normalised-insulation.</div></a></li>
+      <li><a href="insulated-jackets-2024.html"><div class="sheet-title">Insulated jackets (2024)</div><div class="sheet-desc">A later, larger insulated-jacket comparison using CLO/g/m² (warmth per weight) instead of the 2022 sheet's insulation rating - no single combined ratio column here, so rows aren't ranked, just listed.</div></a></li>
+      <li><a href="power.html"><div class="sheet-title">Power banks &amp; solar panels</div><div class="sheet-desc">Power bank / solar panel options compared by weight, solar/battery output, and the sheet's own price-per-ratio score.</div></a></li>
+      <li><a href="chairs.html"><div class="sheet-title">Camp chairs</div><div class="sheet-desc">Camp chair options compared by weight, seat/back height, and price - no combined ratio column in this sheet, so it's listed rather than ranked.</div></a></li>
+      <li><a href="snack-bars.html"><div class="sheet-title">Snack bars</div><div class="sheet-desc">Snack bar / energy ball nutrition comparison: calories, protein and fibre per gram, feeding the trek food-planning sheet - the packing list just says &quot;Food&quot;, so no single bar is marked as the current pick.</div></a></li>
+      <li><a href="stoves.html"><div class="sheet-title">Stoves</div><div class="sheet-desc">Stove options compared by fuel type, weight, boil/burn time, and the sheet's own features/weight/cost score. The row literally named &quot;Current Stove&quot; was the Vango gas stove that used to cover both overnight and long-trek trips in the pack list - since retired in favour of trip-specific setups (the overnight one is now the Spirit burner group), so there's no current single pack-list match here until the long-trek option is rebuilt.</div></a></li>
+      </ul>
+    </section>
+  </div>
+</main>
 <script src="../theme.js"></script>
 </body>
 </html>

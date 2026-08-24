@@ -89,21 +89,6 @@ body {
   padding: 0 0 2rem;
 }
 
-@media (min-width: 720px) {
-  body { max-width: 940px; }
-}
-
-@media (min-width: 1100px) {
-  body { max-width: 1240px; }
-}
-
-@media (min-width: 1500px) {
-  /* Widens further so the .multi column-width layout below (320px per
-     column) can fit more columns on very wide screens instead of being
-     capped at ~3 - 1760px comfortably fits 5. */
-  body { max-width: 1760px; }
-}
-
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--maroon); }
 
@@ -487,10 +472,11 @@ a:hover { color: var(--maroon); }
   color: var(--soft);
 }
 
-.weather-icon {
-  font-size: 1.6rem;
-  line-height: 1;
-  margin: .15rem 0;
+.weather-condition {
+  font: 400 .78rem/1.2 'Jost', sans-serif;
+  font-style: italic;
+  color: var(--soft);
+  margin: .1rem 0;
 }
 
 .weather-temps {
@@ -643,28 +629,12 @@ main#review {
 }
 
 @media (min-width: 720px) {
-  /* column-width lets the browser create as many columns as the viewport
-     fits, regardless of how much content there is - fine when there are
-     several uneven-height categories (avoids grid's row-locked gaps below
-     short ones), but it can leave a phantom empty column when there are
-     only one or two. Only used where that's actually the case. */
-  main#checklist.multi,
-  main#review.multi,
-  #unused-gear-content.multi {
-    column-width: 320px;
-    column-gap: 1.5rem;
-  }
-  main#checklist.multi .category,
-  main#review.multi .category,
-  #unused-gear-content.multi .category {
-    break-inside: avoid-column;
-    -webkit-column-break-inside: avoid;
-  }
-
   /* A single wide card (e.g. the first-aid kit) flows its own items into
-     columns instead of leaving one long list in all that width. Unlike
-     .multi above, there's always enough items to fill every column, so a
-     plain column-count is safe here. */
+     columns instead of leaving one long list in all that width - there's
+     always enough items to fill every column, so a plain column-count is
+     safe here (unlike tiling whole categories side by side, which was
+     tried and dropped: it read as noisy, and left phantom empty columns
+     whenever there were only one or two categories to fill them). */
   ul.items.flow {
     column-count: 2;
     column-gap: 1.25rem;
@@ -681,12 +651,6 @@ main#review {
   }
 }
 
-/* margin-bottom, not margin-top: in the multi-column layout below, a
-   category pushed to the top of a new column (2nd, 3rd...) has its
-   margin-top stripped by the browser's column-fragmentation rules - only
-   the very first column keeps it, leaving the others visibly higher.
-   Trailing margins are dropped consistently at both the top and bottom of
-   a fragment, so margin-bottom keeps all columns aligned. */
 .category {
   margin-bottom: 1.1rem;
   border: 1px solid var(--rule);
@@ -821,12 +785,6 @@ ul.items {
 .item.item-group.checked > .item-body .item-name {
   text-decoration: line-through;
   color: var(--soft);
-}
-
-.item-emoji {
-  display: inline-block;
-  font-size: 1.1em;
-  text-decoration: none;
 }
 
 .item-numeral {
