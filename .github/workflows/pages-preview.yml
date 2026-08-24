@@ -25,16 +25,24 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
-concurrency:
-  group: preview-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   deploy-production:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    # Merging a PR fires a `push` to main and a `pull_request: closed` event
+    # at the same instant. A concurrency group shared with the preview jobs
+    # below would race this against that PR's deploy-preview/clear-preview
+    # run - with cancel-in-progress, one of the two gets killed at random,
+    # which is exactly what silently dropped several production deploys
+    # (main sat stale on an old commit for a day while later merges' pushes
+    # kept losing that race). Keyed only on the job name, not github.ref, so
+    # it still does its one useful job of cancelling a stale in-flight
+    # production deploy when a newer push to main supersedes it.
+    concurrency:
+      group: pages-production
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: JamesIves/github-pages-deploy-action@4a3abc783e1a24aeb44c16e869ad83caf6b4cc23 # v4.7.4
@@ -56,6 +64,13 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    # Keyed per-PR (not on github.ref, and not shared with deploy-production)
+    # so a rapid second push to the same PR cancels the first preview deploy
+    # instead of racing it, without ever contending with production or other
+    # PRs' preview jobs - see the comment on deploy-production's group above.
+    concurrency:
+      group: pages-preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
@@ -77,6 +92,12 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    # Same per-PR group as deploy-preview above (not shared with
+    # deploy-production) - this is the other half of the fix for the race
+    # that was silently dropping production deploys on every merge.
+    concurrency:
+      group: pages-preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
