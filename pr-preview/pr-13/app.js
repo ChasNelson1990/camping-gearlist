@@ -440,7 +440,11 @@
   function renderChecklist() {
     var main = document.getElementById("checklist");
     main.innerHTML = "";
-    var visible = visibleActiveItems();
+    // anjoRelevant() filtered here (not just inside renderCategorySection)
+    // so computeTallies() below - which reads this same `visible` directly,
+    // not through renderCategorySection - can't still count a first-aid
+    // row that's actually hidden because Anjo's toggled off.
+    var visible = visibleActiveItems().filter(anjoRelevant);
 
     if (!visible.length) {
       var empty = document.createElement("p");
@@ -471,7 +475,11 @@
   }
 
   function renderCategorySection(cat, catItems) {
-    catItems = catItems.filter(anjoRelevant);
+    // catItems is expected pre-filtered by anjoRelevant() (both callers -
+    // renderChecklist()'s `visible` and renderUnusedGear()'s `unused` - do
+    // this themselves) rather than repeated here, so a count taken from
+    // either of those source lists (e.g. computeTallies()) can't disagree
+    // with what this function actually renders.
     var details = document.createElement("details");
     details.className = "category";
     details.open = !state.collapsedCategories.has(cat);
@@ -702,8 +710,8 @@
   // set by build_first_aid_child_items) - a single combined count, not a
   // human/Anjo breakdown, matching effectiveWeight()'s own combined weight.
   // null for every other item, since those fields are only ever set here.
-  // Anjo's portion only counts while the Anjo category is actually enabled,
-  // same condition effectiveWeight() uses for adding anjoWeightG.
+  // Delegates to firstAidLiveQty() for the actual numbers, so this and
+  // effectiveWeight() always agree on both the Nights and Anjo reactivity.
   function firstAidQtyLabel(item) {
     if (item.humanQty == null && item.anjoQty == null) return null;
     var q = firstAidLiveQty(item);
@@ -1112,7 +1120,7 @@
     // other category.
     var unused = items.filter(function (it) {
       return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it) && fireOk(it));
-    });
+    }).filter(anjoRelevant);
     document.getElementById("unused-gear-count").textContent = "(" + unused.length + ")";
     var wrap = document.getElementById("unused-gear-content");
     wrap.innerHTML = "";
