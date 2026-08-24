@@ -4876,7 +4876,7 @@ const GEAR_ITEMS = [
     "weightNote": null,
     "cost": null,
     "comment": null,
-    "humanQty": 10.0,
+    "humanQty": 5.0,
     "humanQtyPerNight": null,
     "anjoQty": null,
     "anjoQtyPerNight": null,
