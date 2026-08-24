@@ -321,9 +321,10 @@
     // The headline weight (what effectiveWeight()/rowWeightLabel() compute -
     // a plain figure for most items, the live total for a stepper-driven
     // one) lives in the row's own end-of-row .item-weight column instead of
-    // here (see buildWeightCell()) - this only adds the badges that don't
-    // have a row-end equivalent: the interactive amount/quantity steppers
-    // themselves, and quantityMax's per-unit "each" reference weight.
+    // here (see buildWeightCell()) - this only adds the interactive amount/
+    // quantity steppers themselves, which have no row-end equivalent.
+    // quantityMax's per-unit "each" reference weight lives on that same
+    // column as a title tooltip (rowWeightLabel()) rather than its own chip.
     if (item.perNightAmount != null) {
       if (interactive) {
         wrap.appendChild(buildConsumableStepper(item));
@@ -333,7 +334,6 @@
         wrap.appendChild(badge(item.perNightAmount + " " + item.perNightUnit + "/night"));
       }
     } else if (item.quantityMax != null) {
-      wrap.appendChild(badge(formatWeight(item.weightG) + " each"));
       if (interactive) wrap.appendChild(buildQuantityStepper(item));
     }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
@@ -734,7 +734,10 @@
     if (item.weightIncludesChildren) {
       return item.weightG ? { text: formatWeight(item.weightG), title: null } : null;
     }
-    if (item.perNightAmount != null || item.quantityMax != null) {
+    if (item.quantityMax != null) {
+      return { text: formatWeight(effectiveWeight(item)), title: formatWeight(item.weightG) + " each" };
+    }
+    if (item.perNightAmount != null) {
       return { text: formatWeight(effectiveWeight(item)), title: null };
     }
     if (item.weightG) {
