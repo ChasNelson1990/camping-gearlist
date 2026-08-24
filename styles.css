@@ -787,6 +787,15 @@ ul.items {
   color: var(--soft);
 }
 
+/* Same underline-only-link language as .item-link (the badge this
+   replaced) - rule-coloured, maroon on hover - but without that class's
+   badge sizing, since this is the item's own name at its normal size. */
+.item-name a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+}
+.item-name a:hover { text-decoration-color: var(--maroon); }
+
 /* Right-aligned, fixed-width ledger column at the row's true edge (a
    sibling of .item-body, not part of the wrapping .item-meta badges) so
    every row's weight lines up down the page regardless of how much badge
