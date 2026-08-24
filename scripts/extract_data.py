@@ -853,8 +853,8 @@ def build_first_aid_child_items(rows, parent_name, category, trips):
     """first-aid-kit.csv -> child items. Each row may be relevant to the
     human kit, the dog's kit, or both (for_human/for_dog columns, a count of
     that item carried for that purpose) - folded into a "×N" / "Anjo +N"
-    comment note rather than a separate UI, since every other kit here has
-    no such split."""
+    comment note (or just "Anjo ×N" for a dog-only row) rather than a
+    separate UI, since every other kit here has no such split."""
     name_override = KIT_CHILD_NAME_OVERRIDE.get(parent_name, {})
     items = []
     for row in rows:
