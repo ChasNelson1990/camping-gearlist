@@ -440,7 +440,11 @@
   function renderChecklist() {
     var main = document.getElementById("checklist");
     main.innerHTML = "";
-    var visible = visibleActiveItems();
+    // anjoRelevant() filtered here (not just inside renderCategorySection)
+    // so computeTallies() below - which reads this same `visible` directly,
+    // not through renderCategorySection - can't still count a first-aid
+    // row that's actually hidden because Anjo's toggled off.
+    var visible = visibleActiveItems().filter(anjoRelevant);
 
     if (!visible.length) {
       var empty = document.createElement("p");
@@ -462,7 +466,20 @@
     saveState();
   }
 
+  // Hides a first-aid-kit child that's exclusively for Anjo (anjoQty set,
+  // no humanQty at all - e.g. the elastic bandage) while the Anjo category
+  // is off. Every other item (humanQty set, or neither field set at all)
+  // is unaffected.
+  function anjoRelevant(it) {
+    return it.humanQty != null || it.anjoQty == null || state.categories.has("Anjo");
+  }
+
   function renderCategorySection(cat, catItems) {
+    // catItems is expected pre-filtered by anjoRelevant() (both callers -
+    // renderChecklist()'s `visible` and renderUnusedGear()'s `unused` - do
+    // this themselves) rather than repeated here, so a count taken from
+    // either of those source lists (e.g. computeTallies()) can't disagree
+    // with what this function actually renders.
     var details = document.createElement("details");
     details.className = "category";
     details.open = !state.collapsedCategories.has(cat);
@@ -599,10 +616,11 @@
     disclosure.setAttribute("aria-label", (open ? "Collapse" : "Expand") + " " + item.name + " contents");
     meta.appendChild(disclosure);
     body.appendChild(meta);
-    if (item.comment) {
+    var commentText = displayComment(item);
+    if (commentText) {
       var comment = document.createElement("div");
       comment.className = "item-comment";
-      comment.textContent = item.comment;
+      comment.textContent = commentText;
       body.appendChild(comment);
     }
     li.appendChild(body);
@@ -676,15 +694,37 @@
     body.className = "item-body";
     body.appendChild(itemNameEl(item, numeral));
     body.appendChild(buildMeta(item));
-    if (item.comment) {
+    var commentText = displayComment(item);
+    if (commentText) {
       var comment = document.createElement("div");
       comment.className = "item-comment";
-      comment.textContent = item.comment;
+      comment.textContent = commentText;
       body.appendChild(comment);
     }
     li.appendChild(body);
     li.appendChild(buildWeightCell(item));
     return li;
+  }
+
+  // Reactive "×N" quantity line for a first-aid-kit child (humanQty/anjoQty
+  // set by build_first_aid_child_items) - a single combined count, not a
+  // human/Anjo breakdown, matching effectiveWeight()'s own combined weight.
+  // null for every other item, since those fields are only ever set here.
+  // Delegates to firstAidLiveQty() for the actual numbers, so this and
+  // effectiveWeight() always agree on both the Nights and Anjo reactivity.
+  function firstAidQtyLabel(item) {
+    if (item.humanQty == null && item.anjoQty == null) return null;
+    var q = firstAidLiveQty(item);
+    var total = q.human + q.anjo;
+    return total ? "×" + total : null;
+  }
+
+  // The reactive quantity line (if any) plus the item's own free-text
+  // comment (e.g. a "Values TBC" note) - same " · " join buildMeta's old
+  // static comment string used, just computed at render time instead of
+  // baked into data.js, so it can react to the Anjo toggle.
+  function displayComment(item) {
+    return [firstAidQtyLabel(item), item.comment].filter(Boolean).join(" · ") || null;
   }
 
   function itemNameEl(item, numeral) {
@@ -721,14 +761,27 @@
     return name;
   }
 
+  // Live human/Anjo quantities for a first-aid-kit child (humanQty/anjoQty
+  // and their optional *PerNight rates, set by build_first_aid_child_items) -
+  // base count plus an optional per-night rate x the current Nights value,
+  // with the Anjo side only counted while that category's enabled. Used by
+  // both effectiveWeight() and firstAidQtyLabel() so the weight shown and
+  // the quantity chip can never disagree.
+  function firstAidLiveQty(item) {
+    return {
+      human: (item.humanQty || 0) + (item.humanQtyPerNight || 0) * state.nights,
+      anjo: state.categories.has("Anjo") ? (item.anjoQty || 0) + (item.anjoQtyPerNight || 0) * state.nights : 0,
+    };
+  }
+
   function effectiveWeight(item) {
     // Kit-parent items (First aid kit, Repair kit, Water purification kit)
     // carry a headline weightG that's meant to equal the sum of their own
     // inlined children, not an amount on top of them - counting both would
     // double the kit's real weight in every total/budget/category sum.
-    // rowWeightLabel() below still shows the parent's own weightG directly
-    // (not via this function), so the headline figure stays visible for
-    // comparison against the manifest's "Kit total".
+    // rowWeightLabel() below live-sums the children instead of reading this
+    // headline figure, so it can never drift from what this function (via
+    // sumWeight()) computes for them.
     if (item.weightIncludesChildren) return 0;
     if (item.perNightAmount != null) {
       var amount = getAmount(item);
@@ -738,6 +791,16 @@
     }
     if (item.quantityMax != null) {
       return (item.weightG || 0) * getQuantity(item);
+    }
+    // First-aid-kit children only (unitWeightG set by
+    // build_first_aid_child_items) - the live human+Anjo quantity times its
+    // own per-unit weight, so this item's contribution to every sum
+    // (budget bars, category weight, this kit's own live total) reacts to
+    // both the Nights stepper and the Anjo toggle the same way its own row
+    // display does.
+    if (item.unitWeightG != null) {
+      var q = firstAidLiveQty(item);
+      return (q.human + q.anjo) * item.unitWeightG;
     }
     return item.weightG || 0;
   }
@@ -750,7 +813,14 @@
   // right-aligned like a ledger, rather than mixed in with the other badges.
   function rowWeightLabel(item) {
     if (item.weightIncludesChildren) {
-      return item.weightG ? { text: formatWeight(item.weightG), title: null } : null;
+      // Live sum of this kit's own children (via effectiveWeight(), same as
+      // every other total) rather than a static headline figure - keeps
+      // this row, the manifest's own "Kit total", and every budget/category
+      // sum permanently in agreement, and lets First Aid Kit's total react
+      // to the Anjo toggle along with its children.
+      var kids = items.filter(function (it) { return it.parentName === item.name; });
+      var total = sumWeight(kids);
+      return total ? { text: formatWeight(total), title: null } : null;
     }
     if (item.quantityMax != null) {
       return { text: formatWeight(effectiveWeight(item)), title: formatWeight(item.weightG) + " each" };
@@ -758,8 +828,13 @@
     if (item.perNightAmount != null) {
       return { text: formatWeight(effectiveWeight(item)), title: null };
     }
-    if (item.weightG) {
-      return { text: formatWeight(item.weightG), title: item.weightNote || null };
+    // weightG isn't populated for first-aid children at all any more
+    // (superseded by unitWeightG + firstAidLiveQty()) - unitWeightG being
+    // set is what routes those through effectiveWeight() here, including a
+    // dog-exclusive row with nothing to show until Anjo's toggled on.
+    if (item.weightG || item.unitWeightG != null) {
+      var eff = effectiveWeight(item);
+      return eff ? { text: formatWeight(eff), title: item.weightNote || null } : null;
     }
     return null;
   }
@@ -820,9 +895,14 @@
   function computeTallies(visible) {
     var packedItems = visible.filter(function (it) { return checked.has(it._id); });
 
-    var anjoItems = items.filter(function (it) {
+    // Empty (not just excluded from packed/weight sums) when the Anjo
+    // category itself is toggled off - previously sourced from the
+    // unfiltered `items` regardless of state.categories, so this tally
+    // (and the budget bar/stepper it feeds) never actually responded to
+    // the Anjo chip.
+    var anjoItems = state.categories.has("Anjo") ? items.filter(function (it) {
       return it.category === "Anjo" && it.onBody && tripOk(it) && seasonOk(it);
-    });
+    }) : [];
     var anjoPacked = anjoItems.filter(function (it) { return checked.has(it._id); });
 
     var consItems = items.filter(function (it) {
@@ -855,11 +935,13 @@
   function renderTallyStrip(t) {
     var wrap = document.getElementById("tally-strip");
     wrap.innerHTML = "";
-    [
-      ["Packed", t.you],
-      ["On Anjo", t.anjo],
-      ["Consumables", t.cons],
-    ].forEach(function (pair) {
+    // "On Anjo" is dropped entirely (not just zeroed) while the Anjo
+    // category is off - t.anjo is already empty in that case (see
+    // computeTallies()), so showing "0/0" here would just be noise.
+    var pairs = [["Packed", t.you]];
+    if (state.categories.has("Anjo")) pairs.push(["On Anjo", t.anjo]);
+    pairs.push(["Consumables", t.cons]);
+    pairs.forEach(function (pair) {
       var cell = document.createElement("div");
       cell.className = "tally-cell";
 
@@ -983,12 +1065,14 @@
       saveState();
       renderChecklist();
     }));
-    caps.appendChild(document.createTextNode(" · Anjo "));
-    caps.appendChild(budgetCapStepper("", state.dogBudgetG, function (next) {
-      state.dogBudgetG = next;
-      saveState();
-      renderChecklist();
-    }, "Anjo budget"));
+    if (state.categories.has("Anjo")) {
+      caps.appendChild(document.createTextNode(" · Anjo "));
+      caps.appendChild(budgetCapStepper("", state.dogBudgetG, function (next) {
+        state.dogBudgetG = next;
+        saveState();
+        renderChecklist();
+      }, "Anjo budget"));
+    }
     header.appendChild(caps);
     wrap.appendChild(header);
 
@@ -1001,7 +1085,9 @@
       "On your back", t.you.weightTotal, t.you.weightPacked, state.budgetG,
       cls, cls === "Heavy" ? "heavy" : null
     ));
-    wrap.appendChild(budgetBarRow("On Anjo", t.anjo.weightTotal, t.anjo.weightPacked, state.dogBudgetG));
+    if (state.categories.has("Anjo")) {
+      wrap.appendChild(budgetBarRow("On Anjo", t.anjo.weightTotal, t.anjo.weightPacked, state.dogBudgetG));
+    }
     wrap.appendChild(budgetBarRow("Consumables", t.cons.weightTotal, t.cons.weightPacked, state.budgetG));
 
     var legend = document.createElement("div");
@@ -1034,7 +1120,7 @@
     // other category.
     var unused = items.filter(function (it) {
       return state.categories.has(it.category) && !(tripOk(it) && seasonOk(it) && fireOk(it));
-    });
+    }).filter(anjoRelevant);
     document.getElementById("unused-gear-count").textContent = "(" + unused.length + ")";
     var wrap = document.getElementById("unused-gear-content");
     wrap.innerHTML = "";
