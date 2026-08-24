@@ -710,8 +710,8 @@
   // set by build_first_aid_child_items) - a single combined count, not a
   // human/Anjo breakdown, matching effectiveWeight()'s own combined weight.
   // null for every other item, since those fields are only ever set here.
-  // Anjo's portion only counts while the Anjo category is actually enabled,
-  // same condition effectiveWeight() uses for adding anjoWeightG.
+  // Delegates to firstAidLiveQty() for the actual numbers, so this and
+  // effectiveWeight() always agree on both the Nights and Anjo reactivity.
   function firstAidQtyLabel(item) {
     if (item.humanQty == null && item.anjoQty == null) return null;
     var q = firstAidLiveQty(item);
