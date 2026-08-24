@@ -1010,12 +1010,18 @@ details#unused-gear summary::after {
   letter-spacing: 0;
 }
 
-.unused-note {
+/* Shared note-paragraph look; margin stays per-class rather than folded in
+   here since each matches its own container's own indent convention -
+   unused-note sits in details#unused-gear (1rem throughout), noscript-note
+   in a .panel (1.1rem throughout, e.g. .budget-panel's own padding). */
+.unused-note,
+.noscript-note {
   font-size: .8rem;
   color: var(--soft);
-  margin: 0 1rem 1rem;
   max-width: 56ch;
 }
+.unused-note { margin: 0 1rem 1rem; }
+.noscript-note { margin: 0 1.1rem 1.1rem; }
 
 #unused-gear-content { padding: 1.1rem 1rem 1rem; }
 
