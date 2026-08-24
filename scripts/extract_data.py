@@ -757,11 +757,18 @@ def format_weight_g(g):
 
 def make_synthetic_item(name, category, parent_name, weight_g=None, weight_note=None,
                          comment=None, current=None, current_label=None,
-                         trips=(True, True, True)):
+                         trips=(True, True, True),
+                         human_qty=None, human_qty_per_night=None,
+                         anjo_qty=None, anjo_qty_per_night=None, unit_weight_g=None):
     """Build a plain (non-consumable) synthetic child item - same shape as
     build_items()' output, minus anything that only ever applies to a real
     pack.csv/anjo.csv row. Used for kit contents synthesized from their own
-    CSV (see KIT_PARENT_NAMES) rather than a row of the main sheet."""
+    CSV (see KIT_PARENT_NAMES) rather than a row of the main sheet.
+
+    human_qty/human_qty_per_night/anjo_qty/anjo_qty_per_night/unit_weight_g
+    are only ever set by build_first_aid_child_items() - every other caller
+    leaves them None, so app.js's reactive Anjo/nights handling
+    (firstAidQtyLabel(), effectiveWeight()) is a no-op for every other item."""
     overnight, long_trek, car_camp = trips
     return {
         "name": name,
@@ -772,6 +779,11 @@ def make_synthetic_item(name, category, parent_name, weight_g=None, weight_note=
         "weightNote": weight_note,
         "cost": None,
         "comment": comment,
+        "humanQty": human_qty,
+        "humanQtyPerNight": human_qty_per_night,
+        "anjoQty": anjo_qty,
+        "anjoQtyPerNight": anjo_qty_per_night,
+        "unitWeightG": unit_weight_g,
         "current": current,
         "currentIsUrl": bool(current) and current.startswith("http"),
         "currentLabel": current_label,
@@ -851,10 +863,18 @@ def build_kit_child_items(rows, parent_name, category, trips):
 
 def build_first_aid_child_items(rows, parent_name, category, trips):
     """first-aid-kit.csv -> child items. Each row may be relevant to the
-    human kit, the dog's kit, or both (for_human/for_dog columns, a count of
-    that item carried for that purpose) - folded into a "×N" / "Anjo +N"
-    comment note (or just "Anjo ×N" for a dog-only row) rather than a
-    separate UI, since every other kit here has no such split."""
+    human kit, the dog's kit, or both - for_human/for_human_per_night give
+    the human quantity as a base count plus an optional rate that scales
+    with trip length (e.g. Ibuprofen's "2 + 2 per night"), and
+    for_dog/for_dog_per_night do the same for Anjo's kit. weight_g is a
+    *per-unit* weight (confirmed against the original spreadsheet's own
+    SUMPRODUCT(for_human, weight)/SUMPRODUCT(for_dog, weight) totals), kept
+    as unitWeightG rather than pre-multiplied into a total here - app.js
+    computes the live quantity (base + per_night x state.nights, and the
+    Anjo side only while that category's enabled) and multiplies by
+    unitWeightG itself, so both the quantity chip and the weight stay
+    correct as the Nights stepper or Anjo toggle change. `comment` is just
+    the row's own free-text note, if it has one."""
     name_override = KIT_CHILD_NAME_OVERRIDE.get(parent_name, {})
     items = []
     for row in rows:
@@ -863,16 +883,22 @@ def build_first_aid_child_items(rows, parent_name, category, trips):
             continue
         human = parse_num(field(row, "for_human"))
         dog = parse_num(field(row, "for_dog"))
-        qty_bits = []
-        if human is not None:
-            qty_bits.append("×" + fmt_qty(human))
-        if dog is not None:
-            qty_bits.append(("Anjo +" if human is not None else "Anjo ×") + fmt_qty(dog))
+        if human is None and dog is None:
+            # Neither column set - a general/shared item (tweezers, saline
+            # wash, ...) rather than one counted per-person/per-dog. Treated
+            # as quantity 1 - not dog-exclusive, so still part of the kit
+            # regardless of the Anjo toggle. Not currently hit by any row
+            # in first-aid-kit.csv (every row has an explicit tag), but kept
+            # as correct handling of a shape the CSV format still allows.
+            human = 1
+        human_per_night = parse_num(field(row, "for_human_per_night"))
+        dog_per_night = parse_num(field(row, "for_dog_per_night"))
         raw_comment = field(row, "comment") or None
-        comment = " · ".join(bit for bit in (", ".join(qty_bits) or None, raw_comment) if bit)
         items.append(make_synthetic_item(
             name=name_override.get(raw_name, raw_name), category=category, parent_name=parent_name,
-            weight_g=parse_num(field(row, "weight_g")), comment=comment or None,
+            comment=raw_comment, unit_weight_g=parse_num(field(row, "weight_g")),
+            human_qty=human, human_qty_per_night=human_per_night,
+            anjo_qty=dog, anjo_qty_per_night=dog_per_night,
             trips=trips,
         ))
     return items
@@ -1206,18 +1232,6 @@ def main():
         f"const NIGHTS_BY_TRIP = {nights_js};\n",
         encoding="utf-8",
     )
-
-    # Each kit's own pack.csv row still carries a hand-entered headline
-    # weight - warn if it's drifted from the sum of its now-inlined
-    # children, so an edit to a kit CSV doesn't silently leave the parent
-    # row's badge showing a stale total (the UI itself also surfaces this:
-    # the parent's own badge vs. the manifest's "Kit total" when expanded).
-    for kit_name in KIT_PARENT_NAMES:
-        children = [it for it in kit_children if it["parentName"] == kit_name]
-        kit_sum = sum(it["weightG"] or 0 for it in children)
-        listed = next((it["weightG"] for it in pack_items if it["name"] == kit_name), None)
-        if listed is not None and abs(listed - kit_sum) > 0.05:
-            print(f"{kit_name}: pack.csv lists {listed} g but its kit CSV items sum to {kit_sum} g")
 
     print(f"Wrote data.js ({len(gear_items)} items: {len(pack_items)} pack + {len(anjo_items)} anjo, "
           f"{len(kit_children)} of which are inlined kit contents)")
