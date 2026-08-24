@@ -1,0 +1,19 @@
+,Brand,Type,Weight,Volume,Additional,Max,Cost,Rainshell?,Hydration?,Additional Entry?,Front Pocket,Attach Tent to Bottom?,Volume per Weight,Cost per (Volume per Weight)
+Orion 45,AlpKit,Mountaineering,0.99,45,,45,£85.00,FALSE,,,,,45.4545454545455,£1.87
+Pacific Crest 55,AlpKit,Trekking,1.744,55,,55,£80.00,TRUE,,,,,31.5366972477064,£2.54
+AirZone Camino Trek 40:50,Lowe Alpine,Hiking,1.53,40,10,50,£120.00,TRUE,FALSE,Bottom,FALSE,Possibly?,26.1437908496732,£4.59
+Halcyon 45:50,Lowe Alpine,Mountaineering,1.4,45,5,50,£130.00,FALSE,FALSE,Side,FALSE,FALSE,32.1428571428571,£4.04
+AirZone Trek 45:55,Lowe Alpine,Hiking,1.63,45,10,55,£150.00,TRUE,FALSE,Front,Mesh,Possibly?,27.6073619631902,£5.43
+Sirac 50,Lowe Alpine,Trekking,1.78,50,,50,£130.00,TRUE,TRUE,Bottom,FALSE,TRUE,28.0898876404494,£4.63
+Cholatse 52:57,Lowe Alpine,Hiking,1.85,52,5,57,£155.00,TRUE,TRUE,Bottom and Front,Zipped,TRUE,28.1081081081081,£5.51
+Manaslu 55:70,Lowe Alpine,Trekking,2.34,55,15,70,£175.00,TRUE,TRUE,Front,Stash,TRUE,23.5042735042735,£7.45
+Cerro Torre 65:85,Lowe Alpine,Trekking,2.88,65,20,85,£240.00,TRUE,TRUE,Bottom and Front,Stash and Zipped,TRUE,22.5694444444444,£10.63
+Levity 60,Osprey,Hiking,0.868,60,,60,£200.00,FALSE,TRUE,,Fabric,FALSE,69.1244239631336,£2.89
+Archeon 45,Osprey,Hiking,2,45,,45,£220.00,TRUE,TRUE,Front,FALSE,FALSE,22.5,£9.78
+Kestrel 48,Osprey,Hiking,1.6,48,,48,£160.00,TRUE,TRUE,Bottom and Front,Stash,TRUE,30,£5.33
+Levity 45,Osprey,Hiking,0.8,45,,45,£180.00,FALSE,TRUE,,Fabric,FALSE,56.25,£3.20
+Exos 48,Osprey,Hiking,1.3,48,,48,£190.00,,TRUE,,Mesh,TRUE,36.9230769230769,£5.15
+Aether Pro 70,Osprey,Mountaineering,1.8,70,,70,£320.00,,TRUE,,FALSE,TRUE,38.8888888888889,£8.23
+Exos 58,Osprey,Trekking,1.7,58,,58,£165.00,FALSE,TRUE,,Mesh,TRUE,34.1176470588235,£4.84
+Atmos AG 50,Osprey,Trekking,2.1,50,,50,£255.00,TRUE,TRUE,Bottom,Fabric,TRUE,23.8095238095238,£10.71
+Rook 50,Osprey,Trekking,1.6,50,,50,£140.00,TRUE,TRUE,Bottom,FALSE,TRUE,31.25,£4.48
