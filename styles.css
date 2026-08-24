@@ -1017,6 +1017,13 @@ details#unused-gear summary::after {
   max-width: 56ch;
 }
 
+.noscript-note {
+  font-size: .8rem;
+  color: var(--soft);
+  margin: 0 1.1rem 1.1rem;
+  max-width: 56ch;
+}
+
 #unused-gear-content { padding: 1.1rem 1rem 1rem; }
 
 /* ---------------------------------------------------------------------
