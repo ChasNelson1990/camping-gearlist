@@ -487,10 +487,11 @@ a:hover { color: var(--maroon); }
   color: var(--soft);
 }
 
-.weather-icon {
-  font-size: 1.6rem;
-  line-height: 1;
-  margin: .15rem 0;
+.weather-condition {
+  font: 400 .78rem/1.2 'Jost', sans-serif;
+  font-style: italic;
+  color: var(--soft);
+  margin: .1rem 0;
 }
 
 .weather-temps {
@@ -821,12 +822,6 @@ ul.items {
 .item.item-group.checked > .item-body .item-name {
   text-decoration: line-through;
   color: var(--soft);
-}
-
-.item-emoji {
-  display: inline-block;
-  font-size: 1.1em;
-  text-decoration: none;
 }
 
 .item-numeral {
