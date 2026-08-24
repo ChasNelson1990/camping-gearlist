@@ -39,7 +39,7 @@
 <noscript>
   <div class="panel">
     <div class="panel-eyebrow">JavaScript required</div>
-    <p class="noscript-note">This checklist is rendered entirely in the browser — the gear list, weather forecast, and weight budget below won't appear until JavaScript is turned on.</p>
+    <p class="noscript-note">This checklist is rendered entirely in the browser — the gear list, weather forecast, and weight budget below won't load until JavaScript is turned on.</p>
   </div>
 </noscript>
 
@@ -91,7 +91,7 @@
     </div>
   </div>
   <div class="panel-rule"></div>
-  <div class="panel-cell">
+  <div class="panel-cell" role="group" aria-label="Categories">
     <div class="chip-row" id="category-chips" aria-label="Categories"></div>
   </div>
 </div>
@@ -100,12 +100,12 @@
 
 <div class="panel budget-panel" id="budget-panel"></div>
 
-<main id="checklist" class="multi"></main>
+<main id="checklist"></main>
 
 <details id="unused-gear">
   <summary>Unused gear <span id="unused-gear-count" class="mono"></span></summary>
   <p class="unused-note">Gear you own that doesn't match the current trip type or season filters — switch filters above to bring it back into the main list.</p>
-  <div id="unused-gear-content" class="multi"></div>
+  <div id="unused-gear-content"></div>
 </details>
 
 <div class="page-divider"><span></span><span class="page-divider-diamond"></span><span></span></div>

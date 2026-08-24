@@ -89,21 +89,6 @@ body {
   padding: 0 0 2rem;
 }
 
-@media (min-width: 720px) {
-  body { max-width: 940px; }
-}
-
-@media (min-width: 1100px) {
-  body { max-width: 1240px; }
-}
-
-@media (min-width: 1500px) {
-  /* Widens further so the .multi column-width layout below (320px per
-     column) can fit more columns on very wide screens instead of being
-     capped at ~3 - 1760px comfortably fits 5. */
-  body { max-width: 1760px; }
-}
-
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--maroon); }
 
@@ -644,28 +629,12 @@ main#review {
 }
 
 @media (min-width: 720px) {
-  /* column-width lets the browser create as many columns as the viewport
-     fits, regardless of how much content there is - fine when there are
-     several uneven-height categories (avoids grid's row-locked gaps below
-     short ones), but it can leave a phantom empty column when there are
-     only one or two. Only used where that's actually the case. */
-  main#checklist.multi,
-  main#review.multi,
-  #unused-gear-content.multi {
-    column-width: 320px;
-    column-gap: 1.5rem;
-  }
-  main#checklist.multi .category,
-  main#review.multi .category,
-  #unused-gear-content.multi .category {
-    break-inside: avoid-column;
-    -webkit-column-break-inside: avoid;
-  }
-
   /* A single wide card (e.g. the first-aid kit) flows its own items into
-     columns instead of leaving one long list in all that width. Unlike
-     .multi above, there's always enough items to fill every column, so a
-     plain column-count is safe here. */
+     columns instead of leaving one long list in all that width - there's
+     always enough items to fill every column, so a plain column-count is
+     safe here (unlike tiling whole categories side by side, which was
+     tried and dropped: it read as noisy, and left phantom empty columns
+     whenever there were only one or two categories to fill them). */
   ul.items.flow {
     column-count: 2;
     column-gap: 1.25rem;
@@ -682,12 +651,6 @@ main#review {
   }
 }
 
-/* margin-bottom, not margin-top: in the multi-column layout below, a
-   category pushed to the top of a new column (2nd, 3rd...) has its
-   margin-top stripped by the browser's column-fragmentation rules - only
-   the very first column keeps it, leaving the others visibly higher.
-   Trailing margins are dropped consistently at both the top and bottom of
-   a fragment, so margin-bottom keeps all columns aligned. */
 .category {
   margin-bottom: 1.1rem;
   border: 1px solid var(--rule);
@@ -821,6 +784,39 @@ ul.items {
 .item.checked .item-name,
 .item.item-group.checked > .item-body .item-name {
   text-decoration: line-through;
+  color: var(--soft);
+}
+
+/* Same underline-only-link language as .item-link (the badge this
+   replaced) - rule-coloured, maroon on hover - but without that class's
+   badge sizing, since this is the item's own name at its normal size. */
+.item-name a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+}
+.item-name a:hover { text-decoration-color: var(--maroon); }
+
+/* Right-aligned, fixed-width ledger column at the row's true edge (a
+   sibling of .item-body, not part of the wrapping .item-meta badges) so
+   every row's weight lines up down the page regardless of how much badge
+   content wraps above it. */
+.item-weight {
+  flex: 0 0 auto;
+  width: 4.4rem;
+  padding-top: .05rem;
+  font: 400 .78rem/1.3 'Courier Prime', monospace;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.item.checked .item-weight,
+.item.item-group.checked > .item-weight {
+  color: var(--soft);
+}
+
+.item.item-sub .item-weight {
+  width: 3.6rem;
+  font-size: .68rem;
   color: var(--soft);
 }
 
@@ -1014,19 +1010,18 @@ details#unused-gear summary::after {
   letter-spacing: 0;
 }
 
-.unused-note {
-  font-size: .8rem;
-  color: var(--soft);
-  margin: 0 1rem 1rem;
-  max-width: 56ch;
-}
-
+/* Shared note-paragraph look; margin stays per-class rather than folded in
+   here since each matches its own container's own indent convention -
+   unused-note sits in details#unused-gear (1rem throughout), noscript-note
+   in a .panel (1.1rem throughout, e.g. .budget-panel's own padding). */
+.unused-note,
 .noscript-note {
   font-size: .8rem;
   color: var(--soft);
-  margin: 0 1.1rem 1.1rem;
   max-width: 56ch;
 }
+.unused-note { margin: 0 1rem 1rem; }
+.noscript-note { margin: 0 1.1rem 1.1rem; }
 
 #unused-gear-content { padding: 1.1rem 1rem 1rem; }
 
