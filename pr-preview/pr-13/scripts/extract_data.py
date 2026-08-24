@@ -865,10 +865,11 @@ def build_first_aid_child_items(rows, parent_name, category, trips):
     (confirmed against the original spreadsheet's own
     SUMPRODUCT(for_human, weight)/SUMPRODUCT(for_dog, weight) totals) - the
     human-baseline weightG here is that quantity's total, not the bare
-    per-unit figure. The "×N"/"Anjo +N" quantity line itself isn't baked in
-    as a static comment any more - app.js's firstAidQtyLabel() builds it
-    live from humanQty/anjoQty so it can react to the Anjo category toggle;
-    `comment` here is just the row's own free-text note, if it has one."""
+    per-unit figure. The "×N" quantity line itself isn't baked in as a
+    static comment any more - app.js's firstAidQtyLabel() builds it live
+    from humanQty/anjoQty (as one combined count, not a human/Anjo
+    breakdown) so it can react to the Anjo category toggle; `comment` here
+    is just the row's own free-text note, if it has one."""
     name_override = KIT_CHILD_NAME_OVERRIDE.get(parent_name, {})
     items = []
     for row in rows:
