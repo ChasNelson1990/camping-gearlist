@@ -4751,7 +4751,7 @@ const GEAR_ITEMS = [
     "quantityMin": 1
   },
   {
-    "name": "Paracetemol",
+    "name": "Paracetamol",
     "emoji": null,
     "category": "Health",
     "number": 1.0,
