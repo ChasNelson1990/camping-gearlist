@@ -1,0 +1,24 @@
+name,number,weight_g,cost_gbp,comment,current,season,overnight,long_trek,car_camp,on_body
+Front Range pack,1,480,£90.00,,https://ruffwear.co.uk/products/front-range-day-pack,,,,,TRUE
+Switchbak pack,1,453,£77.00,,https://ruffwear.co.uk/products/switchbak-dog-harness,,TRUE,TRUE,TRUE,TRUE
+Sleeping bag,1,740,£125.00,,https://ruffwear.co.uk/products/highlands-dog-sleeping-bag,,,,TRUE,
+Sleeping mat (half-length),1,166,,,https://summits.co.uk/products/therm-a-rest-neoair-uberlite-sleeping-pad-small-length-updated,,,,TRUE,
+Blanket,1,373,£65.00,,https://web.archive.org/web/20231202052149/https://www.thermarest.com/ie/sleeping-bags-and-quilts/blankets-and-ponchos/juno-blanket/juno-blanket.html,,TRUE,TRUE,,
+XXS compression sack for blanket,1,46,£20.00,,https://web.archive.org/web/20220817232042/https://ultralightoutdoorgear.co.uk/ultra-sil-event-compression-drysacks/,,TRUE,TRUE,,
+Half Bag,0,250,£298.00,TO BUY?,https://www.phdesigns.co.uk/alpine-ultra-down-half-sleeping-bag-pied-delephant,,,,,
+Water,1,0,,Filter for subsequent days,0.85 l,,TRUE,TRUE,TRUE,
+Bowl,1,5,£16.00,,https://web.archive.org/web/20220814121846/https://www.treadlitegear.co.uk/hound-o--cuben-fiber-ultralight-collapsible-folding-dog-bowl-89-p.asp,,TRUE,TRUE,TRUE,RIGHT
+Drybag for food,1,19.3,£13.00,,https://web.archive.org/web/20241207080732/https://www.exped.com/en/products/storage/fold-drybag-ul,,TRUE,TRUE,TRUE,
+Food,1,,,,,,TRUE,TRUE,TRUE,
+Poo bags,1,34,,,,,TRUE,TRUE,TRUE,RIGHT
+Towel,1,42.4,£18.00,,https://web.archive.org/web/20240420134552/https://www.packtowl.com/ie/shop/towels/ultralite-towel/ultralite.html,,TRUE,TRUE,TRUE,RIGHT
+Drybag for poo,1,19.3,,,,,TRUE,TRUE,TRUE,RIGHT
+Knot-a-Hitch,1,340,£90.00,,https://ruffwear.co.uk/products/knot-a-hitch,,,,TRUE,
+Hitch Hiker,1,225,£80.00,,https://ruffwear.co.uk/products/hitch-hiker-leash,,,,,
+Beacon,1,20,£34.00,,https://ruffwear.co.uk/products/the-beacon-safety-dog-light,,TRUE,TRUE,TRUE,TRUE
+Leash,1,91,£39.00,,https://web.archive.org/web/20220525201306/https://ruffwear.co.uk/products/patroller-dog-leash,,,,TRUE,
+Front Range harness,1,165,£55.00,,https://ruffwear.co.uk/products/front-range-everyday-dog-harness,,,,TRUE,
+Raincoat,1,136,£80.00,,https://ruffwear.co.uk/products/sun-shower-dog-raincoat,,TRUE,TRUE,TRUE,LEFT
+Insulating Jacket,1,180,£110.00,,https://ruffwear.co.uk/products/vert-waterproof-insulated-dog-jacket,,TRUE,TRUE,TRUE,
+Merino neck tube,1,43,,,,Winter,TRUE,TRUE,TRUE,
+Total,,,"£1,155.00",,,,13,13,13,8
