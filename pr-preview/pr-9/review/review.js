@@ -2,11 +2,6 @@
   "use strict";
 
   var CATEGORY_ORDER = ["Basics", "Kitchen", "Health", "Electronics", "Clothing", "Miscellaneous", "Anjo"];
-  var CATEGORY_EMOJI = {
-    Basics: "🎒", Kitchen: "🍳", Health: "🩹", Electronics: "🔌",
-    Clothing: "👕", Miscellaneous: "🧰", Anjo: "🐾",
-  };
-  var TRIP_EMOJI = { overnight: "🌙", longTrek: "🥾", carCamp: "🚗" };
   var items = GEAR_ITEMS;
 
   var ROMAN_NUMERALS = [
@@ -62,22 +57,22 @@
   function seasonSuffix(item, tripKey) {
     var byTrip = item.seasonByTrip;
     var season = byTrip && byTrip[tripKey] !== undefined ? byTrip[tripKey] : item.season;
-    return season ? " (" + (season === "Summer" ? "☀" : "❄") + " " + season + " only)" : "";
+    return season ? " (" + season + " only)" : "";
   }
 
   function tripLabel(item) {
     var flags = [];
-    if (item.overnight) flags.push(TRIP_EMOJI.overnight + " Overnight" + seasonSuffix(item, "overnight"));
-    if (item.longTrek) flags.push(TRIP_EMOJI.longTrek + " Long trek" + seasonSuffix(item, "longTrek"));
-    if (item.carCamp) flags.push(TRIP_EMOJI.carCamp + " Car camp" + seasonSuffix(item, "carCamp"));
-    if (!item.seasonByTrip && flags.length === 3) return "🧳 All trips";
+    if (item.overnight) flags.push("Overnight" + seasonSuffix(item, "overnight"));
+    if (item.longTrek) flags.push("Long trek" + seasonSuffix(item, "longTrek"));
+    if (item.carCamp) flags.push("Car camp" + seasonSuffix(item, "carCamp"));
+    if (!item.seasonByTrip && flags.length === 3) return "All trips";
     if (!flags.length) return "No trips flagged";
     return flags.join(", ");
   }
 
   function seasonLabel(item) {
-    if (!item.season) return "🌦 All seasons";
-    return (item.season === "Summer" ? "☀" : "❄") + " " + item.season;
+    if (!item.season) return "All seasons";
+    return item.season;
   }
 
   function buildMeta(item) {
@@ -98,9 +93,9 @@
     wrap.appendChild(badge(seasonLabel(item), "badge-season"));
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
-    if (item.needsCharge) wrap.appendChild(badge("🔋 needs charging"));
-    if (item.requiresOpenFire) wrap.appendChild(badge("🚫🔥 requires open fire"));
-    if (item.fireCaution) wrap.appendChild(badge("⚠️ fire caution", "badge-fire-caution", item.fireCaution));
+    if (item.needsCharge) wrap.appendChild(badge("needs charging"));
+    if (item.requiresOpenFire) wrap.appendChild(badge("requires open fire"));
+    if (item.fireCaution) wrap.appendChild(badge("fire caution", "badge-fire-caution", item.fireCaution));
     if (item.current) {
       if (item.currentIsUrl) {
         wrap.appendChild(linkBadge(item.current, "↗ " + (item.currentLabel || "view item"), true, item.currentNote));
@@ -119,12 +114,6 @@
   function itemNameEl(item) {
     var name = document.createElement("div");
     name.className = "item-name";
-    if (item.emoji) {
-      var icon = document.createElement("span");
-      icon.className = "item-emoji";
-      icon.textContent = item.emoji;
-      name.appendChild(icon);
-    }
     name.appendChild(document.createTextNode(item.name));
     return name;
   }
@@ -158,7 +147,7 @@
     summary.appendChild(numeral);
     var nameEl = document.createElement("span");
     nameEl.className = "category-name";
-    nameEl.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+    nameEl.textContent = cat;
     summary.appendChild(nameEl);
     var countEl = document.createElement("span");
     countEl.className = "category-count";
