@@ -69,6 +69,7 @@
     }
 
     var calloutEl = document.getElementById("callout");
+    calloutEl.innerHTML = "";
     if (sheet.currentPick) {
       var cp = sheet.currentPick;
       var text = "★ Currently used: " + pickLabel;
@@ -78,6 +79,7 @@
     if (sheet.note) calloutEl.appendChild(el("div", "callout note", sheet.note));
 
     var table = document.getElementById("table");
+    table.innerHTML = "";
     var thead = document.createElement("thead");
     var headRow = document.createElement("tr");
     sheet.columns.forEach(function (col) {
