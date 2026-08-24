@@ -698,19 +698,16 @@
     return li;
   }
 
-  // Reactive "×N"/"Anjo +N" quantity line for a first-aid-kit child
-  // (humanQty/anjoQty set by build_first_aid_child_items) - null for every
-  // other item, since those fields are only ever set there. Anjo's portion
-  // only shows while the Anjo category is actually enabled, matching
-  // effectiveWeight()'s own condition for adding anjoWeightG.
+  // Reactive "×N" quantity line for a first-aid-kit child (humanQty/anjoQty
+  // set by build_first_aid_child_items) - a single combined count, not a
+  // human/Anjo breakdown, matching effectiveWeight()'s own combined weight.
+  // null for every other item, since those fields are only ever set here.
+  // Anjo's portion only counts while the Anjo category is actually enabled,
+  // same condition effectiveWeight() uses for adding anjoWeightG.
   function firstAidQtyLabel(item) {
     if (item.humanQty == null && item.anjoQty == null) return null;
-    var bits = [];
-    if (item.humanQty != null) bits.push("×" + item.humanQty);
-    if (item.anjoQty != null && state.categories.has("Anjo")) {
-      bits.push((item.humanQty != null ? "Anjo +" : "Anjo ×") + item.anjoQty);
-    }
-    return bits.length ? bits.join(", ") : null;
+    var qty = (item.humanQty || 0) + (item.anjoQty != null && state.categories.has("Anjo") ? item.anjoQty : 0);
+    return qty ? "×" + qty : null;
   }
 
   // The reactive quantity line (if any) plus the item's own free-text
