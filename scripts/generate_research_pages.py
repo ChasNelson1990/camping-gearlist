@@ -17,6 +17,15 @@ THEME_INIT_SCRIPT = (
     'catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>'
 )
 
+# Sets the toggle's own label text ("Daylight"/"Nightfall") rather than an
+# icon - same pattern as index.html and review/index.html, so all three
+# match instead of this page alone using a static emoji glyph.
+THEME_TOGGLE_LABEL_SCRIPT = (
+    '<script>document.getElementById("theme-toggle").textContent = '
+    'document.documentElement.getAttribute("data-theme") === "light" ? '
+    '"Daylight" : "Nightfall";</script>'
+)
+
 PAGE_TEMPLATE = """<!doctype html>
 <html lang="en">
 <head>
@@ -33,9 +42,10 @@ PAGE_TEMPLATE = """<!doctype html>
   <a class="research-link" href="index.html">← All research</a>
   <div class="topbar-actions">
     <a class="research-link" href="../index.html">Checklist</a>
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme"></button>
   </div>
 </header>
+{theme_toggle_label}
 <main class="research-main">
   <h1 id="title"></h1>
   <p id="description" class="description"></p>
@@ -63,12 +73,13 @@ INDEX_TEMPLATE = """<!doctype html>
 </head>
 <body>
 <header class="topbar">
-  <h1 style="font-size:1.15rem;margin:0;">📊 Gear Research</h1>
+  <h1 style="font-size:1.15rem;margin:0;">Gear Research</h1>
   <div class="topbar-actions">
     <a class="research-link" href="../index.html">Checklist →</a>
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">☀️</button>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme"></button>
   </div>
 </header>
+{theme_toggle_label}
 <main class="research-main">
   <p class="description">The comparison spreadsheets behind the packing list. Rows marked ★ are what's actually in the current pack list, where a confident match exists.</p>
   <div class="groups">
@@ -106,6 +117,7 @@ def main():
             description=esc(sheet["description"]),
             slug_json=json.dumps(sheet["slug"]),
             theme_init=THEME_INIT_SCRIPT,
+            theme_toggle_label=THEME_TOGGLE_LABEL_SCRIPT,
         )
         (ROOT / "research" / f"{sheet['slug']}.html").write_text(html, encoding="utf-8")
 
@@ -126,7 +138,11 @@ def main():
         groups_html.append(f'    <section>\n      <h2>{esc(group)}</h2>\n      <ul class="sheet-list">\n{li}\n      </ul>\n    </section>')
 
     (ROOT / "research" / "index.html").write_text(
-        INDEX_TEMPLATE.format(groups="\n".join(groups_html), theme_init=THEME_INIT_SCRIPT),
+        INDEX_TEMPLATE.format(
+            groups="\n".join(groups_html),
+            theme_init=THEME_INIT_SCRIPT,
+            theme_toggle_label=THEME_TOGGLE_LABEL_SCRIPT,
+        ),
         encoding="utf-8",
     )
 
