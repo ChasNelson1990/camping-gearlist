@@ -17,6 +17,17 @@ THEME_INIT_SCRIPT = (
     'catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>'
 )
 
+# Same Google Fonts links as index.html/review/index.html - without them,
+# the Jost/Courier Prime referenced throughout styles.css silently fall
+# back to system fonts on every research page (there's no other way these
+# fonts get loaded; see the no-@import note at the top of styles.css).
+FONT_LINKS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+    '<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600'
+    '&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">'
+)
+
 # Sets the toggle's own label text ("Daylight"/"Nightfall") rather than an
 # icon - same pattern as index.html and review/index.html, so all three
 # match instead of this page alone using a static emoji glyph.
@@ -34,6 +45,7 @@ PAGE_TEMPLATE = """<!doctype html>
 <title>{title} — Camping Gear Research</title>
 <meta name="description" content="{description}">
 {theme_init}
+{font_links}
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="research.css">
 </head>
@@ -68,6 +80,7 @@ INDEX_TEMPLATE = """<!doctype html>
 <title>Gear Research — Camping Checklist</title>
 <meta name="description" content="Product comparisons, trip planning and reference sheets behind the camping gear checklist.">
 {theme_init}
+{font_links}
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="research.css">
 </head>
@@ -117,6 +130,7 @@ def main():
             description=esc(sheet["description"]),
             slug_json=json.dumps(sheet["slug"]),
             theme_init=THEME_INIT_SCRIPT,
+            font_links=FONT_LINKS,
             theme_toggle_label=THEME_TOGGLE_LABEL_SCRIPT,
         )
         (ROOT / "research" / f"{sheet['slug']}.html").write_text(html, encoding="utf-8")
@@ -141,6 +155,7 @@ def main():
         INDEX_TEMPLATE.format(
             groups="\n".join(groups_html),
             theme_init=THEME_INIT_SCRIPT,
+            font_links=FONT_LINKS,
             theme_toggle_label=THEME_TOGGLE_LABEL_SCRIPT,
         ),
         encoding="utf-8",
