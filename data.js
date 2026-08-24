@@ -25,7 +25,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/bags.html",
-        "label": "📊 backpacks"
+        "label": "backpacks"
       }
     ],
     "consumable": false,
@@ -134,7 +134,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/tents.html",
-        "label": "📊 tents"
+        "label": "tents"
       }
     ],
     "consumable": false,
@@ -649,7 +649,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/chairs.html",
-        "label": "📊 camp chairs"
+        "label": "camp chairs"
       }
     ],
     "consumable": false,
@@ -2728,7 +2728,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/power.html",
-        "label": "📊 power banks & solar panels"
+        "label": "power banks & solar panels"
       }
     ],
     "consumable": false,
@@ -3311,7 +3311,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/insulated-jackets-2024.html",
-        "label": "📊 insulated jackets (2024)"
+        "label": "insulated jackets (2024)"
       }
     ],
     "consumable": false,
@@ -3384,7 +3384,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/waterproof-jackets.html",
-        "label": "📊 waterproof jackets"
+        "label": "waterproof jackets"
       }
     ],
     "consumable": false,
@@ -3491,7 +3491,7 @@ const GEAR_ITEMS = [
     "researchLinks": [
       {
         "url": "research/insulated-jackets-2022.html",
-        "label": "📊 insulated jackets (2022)"
+        "label": "insulated jackets (2022)"
       }
     ],
     "consumable": false,
@@ -4329,7 +4329,7 @@ const GEAR_ITEMS = [
     "weightG": 7.1,
     "weightNote": null,
     "cost": null,
-    "comment": "×1, 🐾 +1",
+    "comment": "×1, Anjo +1",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4465,7 +4465,7 @@ const GEAR_ITEMS = [
     "weightG": 2.5,
     "weightNote": null,
     "cost": null,
-    "comment": "×2, 🐾 +2",
+    "comment": "×2, Anjo +2",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4567,7 +4567,7 @@ const GEAR_ITEMS = [
     "weightG": 3.2,
     "weightNote": null,
     "cost": null,
-    "comment": "×4, 🐾 +4",
+    "comment": "×4, Anjo +4",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4601,7 +4601,7 @@ const GEAR_ITEMS = [
     "weightG": 1.3,
     "weightNote": null,
     "cost": null,
-    "comment": "×2, 🐾 +2",
+    "comment": "×2, Anjo +2",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4669,7 +4669,7 @@ const GEAR_ITEMS = [
     "weightG": 0.6,
     "weightNote": null,
     "cost": null,
-    "comment": "×8, 🐾 +2",
+    "comment": "×8, Anjo +2",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4703,7 +4703,7 @@ const GEAR_ITEMS = [
     "weightG": 0.26,
     "weightNote": null,
     "cost": null,
-    "comment": "×14, 🐾 +2",
+    "comment": "×14, Anjo +2",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4839,7 +4839,7 @@ const GEAR_ITEMS = [
     "weightG": 1.8,
     "weightNote": null,
     "cost": null,
-    "comment": "×1, 🐾 +1",
+    "comment": "×1, Anjo +1",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -4975,7 +4975,7 @@ const GEAR_ITEMS = [
     "weightG": 17.8,
     "weightNote": null,
     "cost": null,
-    "comment": "🐾 ×1",
+    "comment": "Anjo ×1",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,
@@ -5043,7 +5043,7 @@ const GEAR_ITEMS = [
     "weightG": 32.0,
     "weightNote": null,
     "cost": null,
-    "comment": "🐾 ×1",
+    "comment": "Anjo ×1",
     "current": null,
     "currentIsUrl": false,
     "currentLabel": null,

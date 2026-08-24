@@ -8,40 +8,40 @@
   var LONGITUDE = -4.2518;
 
   // WMO weather codes (the fixed vocabulary Open-Meteo's `weather_code`
-  // field uses) -> [emoji, label]. https://open-meteo.com/en/docs
+  // field uses) -> condition label. https://open-meteo.com/en/docs
   var WEATHER_CODES = {
-    0: ["☀️", "Clear sky"],
-    1: ["🌤️", "Mainly clear"],
-    2: ["⛅", "Partly cloudy"],
-    3: ["☁️", "Overcast"],
-    45: ["🌫️", "Fog"],
-    48: ["🌫️", "Rime fog"],
-    51: ["🌦️", "Light drizzle"],
-    53: ["🌦️", "Drizzle"],
-    55: ["🌧️", "Dense drizzle"],
-    56: ["🌧️", "Freezing drizzle"],
-    57: ["🌧️", "Freezing drizzle"],
-    61: ["🌦️", "Slight rain"],
-    63: ["🌧️", "Rain"],
-    65: ["🌧️", "Heavy rain"],
-    66: ["🌧️", "Freezing rain"],
-    67: ["🌧️", "Freezing rain"],
-    71: ["🌨️", "Slight snow"],
-    73: ["🌨️", "Snow"],
-    75: ["❄️", "Heavy snow"],
-    77: ["❄️", "Snow grains"],
-    80: ["🌦️", "Rain showers"],
-    81: ["🌧️", "Rain showers"],
-    82: ["⛈️", "Violent showers"],
-    85: ["🌨️", "Snow showers"],
-    86: ["❄️", "Heavy snow showers"],
-    95: ["⛈️", "Thunderstorm"],
-    96: ["⛈️", "Thunderstorm, hail"],
-    99: ["⛈️", "Thunderstorm, hail"],
+    0: "Clear sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Rime fog",
+    51: "Light drizzle",
+    53: "Drizzle",
+    55: "Dense drizzle",
+    56: "Freezing drizzle",
+    57: "Freezing drizzle",
+    61: "Slight rain",
+    63: "Rain",
+    65: "Heavy rain",
+    66: "Freezing rain",
+    67: "Freezing rain",
+    71: "Slight snow",
+    73: "Snow",
+    75: "Heavy snow",
+    77: "Snow grains",
+    80: "Rain showers",
+    81: "Rain showers",
+    82: "Violent showers",
+    85: "Snow showers",
+    86: "Heavy snow showers",
+    95: "Thunderstorm",
+    96: "Thunderstorm, hail",
+    99: "Thunderstorm, hail",
   };
 
   function weatherInfo(code) {
-    return WEATHER_CODES[code] || ["❔", "Unknown"];
+    return WEATHER_CODES[code] || "Unknown";
   }
 
   function dayLabel(dateStr, index) {
@@ -80,7 +80,7 @@
     var wrap = document.getElementById("weather-days");
     wrap.innerHTML = "";
     daily.time.forEach(function (date, i) {
-      var info = weatherInfo(daily.weather_code[i]);
+      var condition = weatherInfo(daily.weather_code[i]);
 
       var card = document.createElement("div");
       card.className = "weather-day";
@@ -90,17 +90,10 @@
       label.textContent = dayLabel(date, i);
       card.appendChild(label);
 
-      var icon = document.createElement("div");
-      icon.className = "weather-icon";
-      icon.textContent = info[0];
-      icon.title = info[1];
-      // title alone is an unreliable accessible name - not announced
-      // consistently across screen readers, and unreachable at all on
-      // touch devices (no hover). role="img" + aria-label makes the
-      // condition ("Overcast", etc) the icon's actual accessible name.
-      icon.setAttribute("role", "img");
-      icon.setAttribute("aria-label", info[1]);
-      card.appendChild(icon);
+      var conditionEl = document.createElement("div");
+      conditionEl.className = "weather-condition";
+      conditionEl.textContent = condition;
+      card.appendChild(conditionEl);
 
       var temps = document.createElement("div");
       temps.className = "weather-temps";
@@ -110,7 +103,7 @@
       var rain = document.createElement("div");
       rain.className = "weather-rain";
       var chance = daily.precipitation_probability_max[i];
-      rain.textContent = "💧 " + (chance != null ? chance + "%" : "—");
+      rain.textContent = chance != null ? chance + "% rain" : "—";
       card.appendChild(rain);
 
       wrap.appendChild(card);

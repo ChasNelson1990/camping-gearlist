@@ -2,10 +2,6 @@
   "use strict";
 
   var CATEGORY_ORDER = ["Basics", "Kitchen", "Health", "Electronics", "Clothing", "Miscellaneous", "Anjo"];
-  var CATEGORY_EMOJI = {
-    Basics: "🎒", Kitchen: "🍳", Health: "🩹", Electronics: "🔌",
-    Clothing: "👕", Miscellaneous: "🧰", Anjo: "🐾",
-  };
   var TRIP_KEYS = { overnight: "overnight", longTrek: "longTrek", carCamp: "carCamp" };
 
   var ROMAN_NUMERALS = [
@@ -347,9 +343,9 @@
     }
     if (item.consumable) wrap.appendChild(badge("consumable", "badge-consumable"));
     if (item.fireCaution && state.noOpenFires) {
-      wrap.appendChild(badge("⚠️ usable with care", "badge-fire-caution", item.fireCaution));
+      wrap.appendChild(badge("usable with care", "badge-fire-caution", item.fireCaution));
     }
-    if (item.season) wrap.appendChild(badge((item.season === "Summer" ? "☀ " : "❄ ") + item.season, "badge-season"));
+    if (item.season) wrap.appendChild(badge(item.season, "badge-season"));
     if (item.onBody) wrap.appendChild(badge(onBodyLabel(item.onBody)));
     if (item.current) {
       if (item.currentIsUrl) {
@@ -387,7 +383,7 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "chip category" + (state.categories.has(cat) ? " active" : " off");
-      btn.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+      btn.textContent = cat;
       btn.setAttribute("aria-pressed", state.categories.has(cat));
       btn.addEventListener("click", function () {
         if (state.categories.has(cat)) state.categories.delete(cat);
@@ -493,7 +489,7 @@
 
     var nameEl = document.createElement("span");
     nameEl.className = "category-name";
-    nameEl.textContent = (CATEGORY_EMOJI[cat] ? CATEGORY_EMOJI[cat] + " " : "") + cat;
+    nameEl.textContent = cat;
     summary.appendChild(nameEl);
 
     // Text set after the topLevel.forEach loop below, not here - groupState()
@@ -705,11 +701,6 @@
       num.className = "item-numeral";
       num.textContent = numeral;
       name.appendChild(num);
-    } else if (item.emoji) {
-      var icon = document.createElement("span");
-      icon.className = "item-emoji";
-      icon.textContent = item.emoji;
-      name.appendChild(icon);
     }
     name.appendChild(document.createTextNode(item.name));
     return name;

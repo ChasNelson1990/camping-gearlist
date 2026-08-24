@@ -13,10 +13,23 @@
 <link rel="stylesheet" href="research.css">
 </head>
 <body>
-<div id="app"></div>
+<header class="topbar">
+  <a class="research-link" href="index.html">← All research</a>
+  <div class="topbar-actions">
+    <a class="research-link" href="../index.html">Checklist</a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme"></button>
+  </div>
+</header>
+<script>document.getElementById("theme-toggle").textContent = document.documentElement.getAttribute("data-theme") === "light" ? "Daylight" : "Nightfall";</script>
+<main class="research-main">
+  <h1 id="title"></h1>
+  <p id="description" class="description"></p>
+  <div id="callout"></div>
+  <div class="table-wrap"><table id="table"></table></div>
+</main>
+<script src="../theme.js"></script>
 <script src="../research-data.js"></script>
 <script src="research.js"></script>
 <script>renderSheet("insulated-jackets-2022");</script>
-<script src="../theme.js"></script>
 </body>
 </html>
